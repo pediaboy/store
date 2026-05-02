@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Katalog Jualan</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { 
+            background-color: #0d0914; /* Warna background gelap */
+            color: white; 
+            font-family: Arial, sans-serif; 
+            padding: 20px; 
+            margin: 0;
+        }
+        
+        .card { 
+            background-color: #17152b; /* Warna dalam kotak */
+            border-radius: 16px; 
+            padding: 24px; 
+            border: 1px solid #2a2746; 
+            margin-bottom: 20px; 
+        }
+
+        /* Desain ilustrasi browser */
+        .mock-browser { 
+            background-color: #1e1b38; 
+            padding: 12px; 
+            border-radius: 8px; 
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .dots { 
+            display: flex; 
+            gap: 6px; 
+        }
+
+        .dot { 
+            width: 10px; 
+            height: 10px; 
+            border-radius: 50%; 
+        }
+        .dot.red { background-color: #ff5f56; }
+        .dot.yellow { background-color: #ffbd2e; }
+        .dot.green { background-color: #27c93f; }
+
+        .title { 
+            font-size: 22px; 
+            font-weight: bold; 
+            margin-bottom: 12px; 
+        }
+
+        .desc { 
+            color: #a09eb5; 
+            font-size: 15px; 
+            line-height: 1.6; 
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Card Produk 1 -->
+    <div class="card">
+        <div class="mock-browser">
+            <div class="dots">
+                <div class="dot red"></div>
+                <div class="dot yellow"></div>
+                <div class="dot green"></div>
+            </div>
+        </div>
+        <div class="title">Nama Produk Anda</div>
+        <div class="desc">
+            Deskripsi singkat tentang barang yang dijual. Tambahkan keunggulan produk di sini agar pembeli tertarik.
+        </div>
+    </div>
+
+</body>
+</html>
