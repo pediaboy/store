@@ -3,78 +3,179 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Katalog Jualan</title>
+    <title>Pediaboy Premium - Spesialis VPN & App</title>
     <style>
-        * { box-sizing: border-box; }
+        :root {
+            --bg-color: #0b0e14;
+            --card-bg: #161b22;
+            --accent-color: #3b82f6; /* Blue VPN */
+            --premium-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            --text-main: #f3f4f6;
+            --text-dim: #9ca3af;
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { 
-            background-color: #0d0914; /* Warna background gelap */
-            color: white; 
-            font-family: Arial, sans-serif; 
-            padding: 20px; 
-            margin: 0;
-        }
-        
-        .card { 
-            background-color: #17152b; /* Warna dalam kotak */
-            border-radius: 16px; 
-            padding: 24px; 
-            border: 1px solid #2a2746; 
-            margin-bottom: 20px; 
+            background-color: var(--bg-color); 
+            color: var(--text-main); 
+            font-family: 'Inter', -apple-system, sans-serif; 
+            padding: 20px; margin: 0;
+            display: flex; flex-direction: column; align-items: center;
         }
 
-        /* Desain ilustrasi browser */
-        .mock-browser { 
-            background-color: #1e1b38; 
-            padding: 12px; 
-            border-radius: 8px; 
+        .container { width: 100%; max-width: 500px; }
+
+        /* Header Area */
+        .header { text-align: center; margin: 40px 0; }
+        .header h1 { font-size: 28px; font-weight: 800; background: var(--premium-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0; }
+        .header p { color: var(--text-dim); font-size: 14px; margin-top: 8px; }
+
+        /* Grid Produk */
+        .product-card {
+            background: var(--card-bg);
+            border: 1px solid #30363d;
+            border-radius: 20px;
+            padding: 24px;
             margin-bottom: 20px;
-            display: flex;
-            align-items: center;
+            transition: all 0.3s ease;
         }
 
-        .dots { 
-            display: flex; 
-            gap: 6px; 
+        /* Ikon VPN Mockup */
+        .vpn-icon {
+            width: 50px; height: 50px;
+            border-radius: 12px;
+            background: #1f2937;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px; margin-bottom: 16px;
         }
 
-        .dot { 
-            width: 10px; 
-            height: 10px; 
-            border-radius: 50%; 
-        }
-        .dot.red { background-color: #ff5f56; }
-        .dot.yellow { background-color: #ffbd2e; }
-        .dot.green { background-color: #27c93f; }
+        .vpn-name { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+        .vpn-tag { font-size: 12px; color: #34d399; font-weight: 600; margin-bottom: 12px; display: block; }
+        .vpn-desc { color: var(--text-dim); font-size: 14px; line-height: 1.5; margin-bottom: 20px; }
 
-        .title { 
-            font-size: 22px; 
-            font-weight: bold; 
-            margin-bottom: 12px; 
+        /* Area Rahasia (Harga & Tombol Order) */
+        .price-section {
+            display: none; /* Awalnya sembunyi */
+            padding-top: 20px;
+            border-top: 1px dashed #30363d;
+            text-align: center;
+            animation: fadeIn 0.4s ease;
         }
 
-        .desc { 
-            color: #a09eb5; 
-            font-size: 15px; 
-            line-height: 1.6; 
+        .price-tag { font-size: 22px; font-weight: 800; color: #ffffff; margin-bottom: 15px; display: block; }
+
+        /* Tombol-Tombol */
+        .btn-check {
+            width: 100%; padding: 14px;
+            background: #1f2937; border: 1px solid var(--accent-color);
+            color: white; border-radius: 12px; font-weight: 600;
+            cursor: pointer; transition: 0.2s;
         }
+
+        .btn-order {
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 14px;
+            background: var(--premium-gradient);
+            color: white; border-radius: 12px; font-weight: 700;
+            text-decoration: none; box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        footer { text-align: center; color: #4b5563; font-size: 12px; margin: 40px 0; }
     </style>
 </head>
 <body>
 
-    <!-- Card Produk 1 -->
-    <div class="card">
-        <div class="mock-browser">
-            <div class="dots">
-                <div class="dot red"></div>
-                <div class="dot yellow"></div>
-                <div class="dot green"></div>
+    <div class="container">
+        <div class="header">
+            <h1>PEDIABOY PREMIUM</h1>
+            <p>Aplikasi & VPN Premium Termurah & Tercepat</p>
+        </div>
+
+        <div class="product-card">
+            <div class="vpn-icon">🦈</div>
+            <span class="vpn-name">Surfshark VPN</span>
+            <span class="vpn-tag">Unlimited Devices • High Speed</span>
+            <p class="vpn-desc">Privasi total tanpa batas perangkat. Cocok untuk streaming Netflix luar negeri & bypass sensor.</p>
+            
+            <button class="btn-check" onclick="togglePrice('surfshark')">Cek Harga</button>
+            
+            <div id="surfshark" class="price-section">
+                <span class="price-tag">Rp 25.000 <small style="font-weight: 400; font-size: 12px; color: #9ca3af;">/Bulan</small></span>
+                <a href="https://wa.me/pediaboy?text=Halo+Pediaboy,+saya+mau+order+Surfshark+Premium" class="btn-order">
+                    🛒 Pesan via WhatsApp
+                </a>
             </div>
         </div>
-        <div class="title">Nama Produk Anda</div>
-        <div class="desc">
-            Deskripsi singkat tentang barang yang dijual. Tambahkan keunggulan produk di sini agar pembeli tertarik.
+
+        <div class="product-card">
+            <div class="vpn-icon">🛡️</div>
+            <span class="vpn-name">NordVPN Premium</span>
+            <span class="vpn-tag">Security Focus • No Logs</span>
+            <p class="vpn-desc">Keamanan tingkat militer. Server terbanyak di dunia untuk koneksi yang sangat stabil.</p>
+            
+            <button class="btn-check" onclick="togglePrice('nord')">Cek Harga</button>
+            
+            <div id="nord" class="price-section">
+                <span class="price-tag">Rp 30.000 <small style="font-weight: 400; font-size: 12px; color: #9ca3af;">/Bulan</small></span>
+                <a href="https://wa.me/pediaboy?text=Halo+Pediaboy,+saya+mau+order+NordVPN+Premium" class="btn-order">
+                    🛒 Pesan via WhatsApp
+                </a>
+            </div>
         </div>
+
+        <div class="product-card">
+            <div class="vpn-icon">⚡</div>
+            <span class="vpn-name">ExpressVPN</span>
+            <span class="vpn-tag">Ultra Fast • Premium Choice</span>
+            <p class="vpn-desc">Rajanya kecepatan. Sangat stabil untuk gaming dan video kualitas 4K tanpa buffering.</p>
+            
+            <button class="btn-check" onclick="togglePrice('express')">Cek Harga</button>
+            
+            <div id="express" class="price-section">
+                <span class="price-tag">Rp 45.000 <small style="font-weight: 400; font-size: 12px; color: #9ca3af;">/Bulan</small></span>
+                <a href="https://wa.me/pediaboy?text=Halo+Pediaboy,+saya+mau+order+ExpressVPN+Premium" class="btn-order">
+                    🛒 Pesan via WhatsApp
+                </a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="vpn-icon">🕵️</div>
+            <span class="vpn-name">IPVanish VPN</span>
+            <span class="vpn-tag">Pure Privacy • Affordable</span>
+            <p class="vpn-desc">Sembunyikan jejak digital Anda sepenuhnya dengan harga yang sangat terjangkau.</p>
+            
+            <button class="btn-check" onclick="togglePrice('ipvanish')">Cek Harga</button>
+            
+            <div id="ipvanish" class="price-section">
+                <span class="price-tag">Rp 20.000 <small style="font-weight: 400; font-size: 12px; color: #9ca3af;">/Bulan</small></span>
+                <a href="https://wa.me/pediaboy?text=Halo+Pediaboy,+saya+mau+order+IPVanish+Premium" class="btn-order">
+                    🛒 Pesan via WhatsApp
+                </a>
+            </div>
+        </div>
+
+        <footer>&copy; 2026 Pediaboy Store. Powered by Vercel.</footer>
     </div>
 
+    <script>
+        function togglePrice(id) {
+            const section = document.getElementById(id);
+            const btn = section.previousElementSibling;
+            
+            if (section.style.display === "block") {
+                section.style.display = "none";
+                btn.innerText = "Cek Harga";
+            } else {
+                section.style.display = "block";
+                btn.innerText = "Tutup Detail";
+            }
+        }
+    </script>
 </body>
 </html>
