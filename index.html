@@ -101,7 +101,7 @@
         .mock-line.long { width: 80%; }
         .mock-line.full { width: 100%; }
 
-        /* Area Logo & Judul */
+        /* Area Logo & Judul (SUDAH DIPERBAIKI) */
         .app-title-area {
             display: flex;
             align-items: center;
@@ -110,21 +110,20 @@
         }
 
         .app-logo-box {
-            width: 45px;
-            height: 45px;
-            background-color: #ffffff; /* Background putih agar logo selalu terlihat jelas */
-            border-radius: 10px;
+            width: 42px;
+            height: 42px;
+            /* Background putih dihapus sepenuhnya */
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 6px;
             flex-shrink: 0;
         }
 
         .app-logo {
-            max-width: 100%;
-            max-height: 100%;
+            width: 100%;
+            height: 100%;
             object-fit: contain;
+            border-radius: 8px; /* Menjaga sudut icon tetap rapi */
         }
 
         .title { font-size: 22px; font-weight: bold; margin: 0; color: #ffffff; }
@@ -212,7 +211,8 @@
 
             <div class="app-title-area">
                 <div class="app-logo-box">
-                    <img src="https://cdn.worldvectorlogo.com/logos/surfshark-1.svg" class="app-logo" alt="Surfshark Logo">
+                    <!-- Ikon aslinya, full warna, tanpa background putih -->
+                    <img src="https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/surfshark.png" class="app-logo" alt="Surfshark Logo">
                 </div>
                 <div class="title">Surfshark VPN</div>
             </div>
@@ -253,7 +253,7 @@
 
             <div class="app-title-area">
                 <div class="app-logo-box">
-                    <img src="https://cdn.worldvectorlogo.com/logos/nordvpn.svg" class="app-logo" alt="NordVPN Logo">
+                    <img src="https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/nordvpn.png" class="app-logo" alt="NordVPN Logo">
                 </div>
                 <div class="title">NordVPN Premium</div>
             </div>
@@ -294,7 +294,7 @@
 
             <div class="app-title-area">
                 <div class="app-logo-box">
-                    <img src="https://cdn.worldvectorlogo.com/logos/expressvpn-1.svg" class="app-logo" alt="ExpressVPN Logo">
+                    <img src="https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/expressvpn.png" class="app-logo" alt="ExpressVPN Logo">
                 </div>
                 <div class="title">ExpressVPN</div>
             </div>
@@ -317,7 +317,7 @@
         <footer>&copy; 2026 Pediaboy Premium. All Rights Reserved.</footer>
     </div>
 
-    <!-- Script untuk animasi harga -->
+    <!-- Script untuk animasi harga tetap utuh -->
     <script>
         function togglePrice(id) {
             const section = document.getElementById(id);
