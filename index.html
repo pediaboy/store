@@ -3,335 +3,333 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pediaboy Premium - Spesialis VPN</title>
+    <title>Pediaboy - Bot JPM & Premium Apps</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-main: #060b14; /* Navy sangat gelap */
+            --bg-card: #0d1526;
+            --border-color: #1e293b;
+            --accent-cyan: #0ea5e9;
+            --accent-glow: rgba(14, 165, 233, 0.4);
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+        }
+
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         
         body { 
-            background-color: #080310; 
-            color: #ffffff; 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
-            padding: 16px; 
+            background-color: var(--bg-main); 
+            color: var(--text-main); 
+            font-family: 'Poppins', sans-serif; 
             margin: 0;
+            padding-bottom: 50px;
+            /* Efek background bintik/grid tipis */
+            background-image: radial-gradient(circle at 50% 0%, #111a2f 0%, transparent 50%), 
+                              radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 100% 100%, 20px 20px;
+        }
+
+        /* Navbar Sesuai Video */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 60px;
+            background: rgba(6, 11, 20, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 100;
+        }
+        .nav-logo { font-weight: 800; font-size: 18px; display: flex; align-items: center; gap: 8px;}
+        .nav-logo span { color: var(--accent-cyan); }
+        .nav-btn {
+            background: rgba(14, 165, 233, 0.1);
+            color: var(--accent-cyan);
+            border: 1px solid var(--accent-cyan);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .container { 
+            width: 100%; 
+            max-width: 500px; 
+            margin: 0 auto; 
+            padding: 90px 20px 20px; /* Padding top untuk navbar */
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        .container { width: 100%; max-width: 500px; padding-top: 20px; }
-
-        /* Header Area */
-        .header { text-align: center; margin-bottom: 20px; }
-        .header h1 { font-size: 26px; font-weight: 800; margin: 0; color: #ffffff; }
-        .header p { color: #8b85a3; font-size: 14px; margin-top: 8px; }
-
-        /* Tombol Instagram */
-        .btn-ig {
-            display: flex;
+        /* Hero Section (Atas) */
+        .hero { text-align: center; margin-bottom: 30px; }
+        
+        .badge {
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
-            gap: 10px;
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-            color: white;
-            border-radius: 12px;
-            font-weight: bold;
-            text-decoration: none;
-            margin-bottom: 30px;
-            font-size: 15px;
-            box-shadow: 0 4px 15px rgba(220, 39, 67, 0.3);
+            gap: 8px;
+            background: rgba(14, 165, 233, 0.1);
+            border: 1px solid var(--accent-cyan);
+            color: var(--accent-cyan);
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+        .badge .dot { width: 8px; height: 8px; background: var(--accent-cyan); border-radius: 50%; box-shadow: 0 0 8px var(--accent-cyan);}
+
+        .hero h1 { 
+            font-size: 32px; 
+            font-weight: 800; 
+            margin: 0 0 15px 0; 
+            line-height: 1.2;
+            text-shadow: 0 0 30px rgba(255,255,255,0.1);
+        }
+        .hero h1 span { color: var(--accent-cyan); }
+        .hero p { color: var(--text-dim); font-size: 14px; line-height: 1.6; margin: 0; }
+
+        /* Tombol IG Sesuai Tema */
+        .btn-ig {
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 14px;
+            background: linear-gradient(90deg, #f09433, #bc1888);
+            color: white; border-radius: 12px; font-weight: 700;
+            text-decoration: none; margin-bottom: 30px; font-size: 15px;
         }
 
-        /* Card Utama */
+        /* Grid Statistik (Mirip di Video) */
+        .stats-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 15px;
+            width: 100%; margin-bottom: 40px;
+        }
+        .stat-box {
+            background: var(--bg-card); border: 1px solid var(--border-color);
+            padding: 15px; border-radius: 12px; text-align: center;
+        }
+        .stat-num { font-size: 24px; font-weight: 800; color: var(--accent-cyan); margin-bottom: 4px; }
+        .stat-label { font-size: 11px; color: var(--text-dim); font-weight: 600; letter-spacing: 0.5px; }
+
+        /* Label Section */
+        .section-label {
+            text-align: center; font-size: 20px; font-weight: 800; 
+            margin: 30px 0 20px; width: 100%;
+        }
+
+        /* Card Produk & Harga (Meniru gaya video) */
         .card { 
-            background-color: #120c23; 
+            background-color: var(--bg-card); 
             border-radius: 16px; 
             padding: 24px; 
-            border: 1px solid #2d244a; 
-            margin-bottom: 24px;
-        }
-
-        /* Mockup Browser Area */
-        .mockup {
-            background-color: #18122d;
-            border-radius: 10px;
-            border: 1px solid #2d244a;
-            overflow: hidden;
-            margin-bottom: 24px;
-        }
-
-        .mockup-header {
-            display: flex;
-            align-items: center;
-            padding: 12px 16px;
-            background-color: #1a1430;
-            border-bottom: 1px solid #2d244a;
-        }
-
-        .mockup-dots { display: flex; gap: 6px; width: 60px; }
-        .dot { width: 10px; height: 10px; border-radius: 50%; }
-        .dot.red { background-color: #ff5f56; }
-        .dot.yellow { background-color: #ffbd2e; }
-        .dot.green { background-color: #27c93f; }
-
-        .mockup-address {
-            flex-grow: 1;
-            background-color: #241c40;
-            border-radius: 6px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 11px;
-            color: #8b85a3;
-        }
-
-        .mockup-right { display: flex; gap: 6px; width: 60px; justify-content: flex-end; }
-        .dot-square { width: 12px; height: 12px; border-radius: 3px; background-color: #382e59; }
-
-        .mockup-body {
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        .mock-line { height: 12px; border-radius: 6px; background-color: #241c40; }
-        .mock-line.short { width: 40%; background-color: #3b2f63; }
-        .mock-line.long { width: 80%; }
-        .mock-line.full { width: 100%; }
-
-        /* Area Logo & Judul */
-        .app-title-area {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 12px;
-        }
-
-        .app-logo-box {
-            width: 42px;
-            height: 42px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .app-logo {
+            border: 1px solid var(--border-color); 
+            margin-bottom: 20px;
             width: 100%;
-            height: 100%;
-            object-fit: contain;
-            border-radius: 8px; 
+            position: relative;
+            overflow: hidden;
+        }
+        .card.highlight {
+            border: 1px solid var(--accent-cyan);
+            box-shadow: 0 0 20px rgba(14, 165, 233, 0.15);
         }
 
-        .title { font-size: 22px; font-weight: bold; margin: 0; color: #ffffff; }
-        .desc { color: #a09eb5; font-size: 15px; line-height: 1.6; margin-bottom: 24px; }
+        .card-header { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
+        .icon-box {
+            width: 48px; height: 48px;
+            background: rgba(14, 165, 233, 0.1);
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px; border: 1px solid rgba(14, 165, 233, 0.3);
+        }
+        .icon-box img { width: 30px; height: 30px; object-fit: contain; border-radius: 6px; }
+        
+        .card-title { font-size: 20px; font-weight: 700; margin: 0; }
+        .card-price { color: var(--accent-cyan); font-weight: 800; font-size: 18px; margin-top: 4px; }
+        .card-price small { font-size: 12px; font-weight: 400; color: var(--text-dim); }
 
-        /* Area Tombol Harga & Order */
-        .action-area {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+        .card-desc { color: var(--text-dim); font-size: 14px; line-height: 1.5; margin-bottom: 20px; }
+
+        /* Checklist Fitur */
+        .feature-list { list-style: none; padding: 0; margin: 0 0 20px 0; }
+        .feature-list li {
+            display: flex; align-items: center; gap: 10px;
+            font-size: 13px; color: #cbd5e1; margin-bottom: 10px;
+        }
+        .feature-list li svg { width: 16px; height: 16px; color: var(--accent-cyan); flex-shrink: 0; }
+
+        /* Tombol Action */
+        .btn-action {
+            display: block; width: 100%; padding: 14px;
+            background: var(--bg-main);
+            border: 1px solid var(--accent-cyan);
+            color: var(--accent-cyan); border-radius: 10px;
+            font-weight: 700; text-align: center; text-decoration: none;
+            transition: 0.3s;
+        }
+        .card.highlight .btn-action {
+            background: var(--accent-cyan);
+            color: #fff;
+            box-shadow: 0 4px 15px var(--accent-glow);
         }
 
-        .btn-check {
-            width: 100%; padding: 14px;
-            background-color: #1f183b; 
-            border: 1px solid #4a3b82;
-            color: white; border-radius: 10px; font-weight: 600; font-size: 15px;
-            cursor: pointer; transition: 0.2s;
+        /* Footer CTA Sesuai Video */
+        .footer-cta {
+            margin-top: 40px; text-align: center; width: 100%;
         }
-
-        .price-section {
-            display: none; 
-            text-align: center;
-            animation: fadeIn 0.3s ease;
-            background-color: #18122d;
-            border: 1px solid #2d244a;
-            padding: 16px;
-            border-radius: 10px;
+        .footer-cta h2 { font-size: 24px; font-weight: 800; margin-bottom: 15px; }
+        .btn-wa-big {
+            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+            background: #10b981; color: white; padding: 16px 30px;
+            border-radius: 30px; font-weight: 700; font-size: 16px;
+            text-decoration: none; box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+            width: 100%;
         }
-
-        .price-tag { font-size: 20px; font-weight: bold; color: #4ade80; margin-bottom: 12px; display: block; }
-
-        .btn-wa {
-            display: block;
-            width: 100%; padding: 14px;
-            background-color: #6366f1; 
-            color: white; border-radius: 8px; font-weight: bold;
-            text-decoration: none; font-size: 15px;
-            text-align: center;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        footer { text-align: center; color: #4b5563; font-size: 12px; margin: 30px 0; }
     </style>
 </head>
 <body>
 
+    <div class="navbar">
+        <div class="nav-logo">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--accent-cyan)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+            PEDIABOY
+        </div>
+        <a href="https://wa.me/pediaboy" class="nav-btn">WA Admin</a>
+    </div>
+
     <div class="container">
         
-        <div class="header">
-            <h1>PEDIABOY PREMIUM</h1>
-            <p>Spesialis Aplikasi & VPN Premium</p>
+        <div class="hero">
+            <div class="badge">
+                <div class="dot"></div> BOT & APP AKTIF 24/7
+            </div>
+            <h1>Pusat Layanan<br><span>Bot JPM & VPN</span></h1>
+            <p>Solusi bot WhatsApp tercanggih untuk promosi dan layanan VPN Premium dengan kecepatan maksimal.</p>
         </div>
 
-        <!-- Tombol Instagram -->
         <a href="https://www.instagram.com/elthoriqqqq_?igsh=MTE1MXgzZ3hzNG5hdQ%3D%3D&utm_source=qr" class="btn-ig" target="_blank">
-            <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm3.98-10.822a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
-            </svg>
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm3.98-10.822a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
             Follow Instagram Kami
         </a>
 
-        <!-- PRODUK 1: SURFSHARK -->
-        <div class="card" style="border-color: #27648f;">
-            <div class="mockup">
-                <div class="mockup-header">
-                    <div class="mockup-dots">
-                        <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
-                    </div>
-                    <div class="mockup-address">surfshark-premium.app</div>
-                    <div class="mockup-right">
-                        <div class="dot-square"></div><div class="dot-square"></div>
-                    </div>
-                </div>
-                <div class="mockup-body">
-                    <div class="mock-line short" style="background-color: #3b82f6;"></div>
-                    <div class="mock-line full"></div>
-                    <div class="mock-line long"></div>
-                </div>
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-num">580+</div>
+                <div class="stat-label">DATA GRUP</div>
             </div>
+            <div class="stat-box">
+                <div class="stat-num">99%</div>
+                <div class="stat-label">UPTIME BOT</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-num">10K+</div>
+                <div class="stat-label">PESAN TERKIRIM</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-num">100%</div>
+                <div class="stat-label">PREMIUM VPN</div>
+            </div>
+        </div>
 
-            <div class="app-title-area">
-                <div class="app-logo-box">
-                    <img src="https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/surfshark.png" class="app-logo" alt="Surfshark Logo">
+        <div class="section-label">Layanan Bot JPM</div>
+
+        <div class="card highlight">
+            <div class="card-header">
+                <div class="icon-box">🤖</div>
+                <div>
+                    <h3 class="card-title">Script Bot JPM</h3>
+                    <div class="card-price">Tanya Admin <small>/ Lifetime</small></div>
                 </div>
-                <div class="title">Surfshark VPN</div>
             </div>
+            <p class="card-desc">Script WhatsApp canggih berbasis Node.js/Baileys. Auto join grup, kelola konten & jadwal promosi otomatis.</p>
             
-            <div class="desc">
-                Privasi total tanpa batas perangkat. Cocok untuk streaming Netflix luar negeri & bypass sensor dengan koneksi super stabil.
-            </div>
-
-            <div class="action-area">
-                <button class="btn-check" onclick="togglePrice('surfshark')">Lihat Harga Premium</button>
-                <div id="surfshark" class="price-section">
-                    <span class="price-tag">Rp 25.000 / Bulan</span>
-                    <a href="https://wa.me/pediaboy?text=Halo+Pediaboy,+saya+mau+order+Surfshark+Premium" class="btn-wa">
-                        Order via WhatsApp
-                    </a>
-                </div>
-            </div>
+            <svg style="display:none;" id="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            
+            <ul class="feature-list">
+                <li><svg><use href="#check-icon"></use></svg> Auto Join 500+ Grup</li>
+                <li><svg><use href="#check-icon"></use></svg> Auto Get Link Grup Terbaru</li>
+                <li><svg><use href="#check-icon"></use></svg> Custom Auto Reply & Notifikasi</li>
+                <li><svg><use href="#check-icon"></use></svg> Anti-Delay & Anti Banned</li>
+            </ul>
+            <a href="https://wa.me/pediaboy?text=Halo+Admin,+saya+mau+order+Script+Bot+JPM" class="btn-action">Sewa / Beli Script JPM</a>
         </div>
 
-        <!-- PRODUK 2: NORD VPN -->
-        <div class="card" style="border-color: #2a3b63;">
-            <div class="mockup">
-                <div class="mockup-header">
-                    <div class="mockup-dots">
-                        <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
-                    </div>
-                    <div class="mockup-address">nordvpn-secure.app</div>
-                    <div class="mockup-right">
-                        <div class="dot-square"></div><div class="dot-square"></div>
-                    </div>
-                </div>
-                <div class="mockup-body">
-                    <div class="mock-line short" style="background-color: #10b981;"></div>
-                    <div class="mock-line full"></div>
-                    <div class="mock-line long"></div>
-                </div>
-            </div>
 
-            <div class="app-title-area">
-                <div class="app-logo-box">
-                    <img src="https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/nordvpn.png" class="app-logo" alt="NordVPN Logo">
+        <div class="section-label">Layanan VPN Premium</div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="icon-box">
+                    <img src="https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/surfshark.png" alt="Surfshark">
                 </div>
-                <div class="title">NordVPN Premium</div>
-            </div>
-
-            <div class="desc">
-                Keamanan tingkat militer dengan server terbanyak di dunia. Menjaga data Anda tetap aman tanpa pencatatan log (No Logs).
-            </div>
-
-            <div class="action-area">
-                <button class="btn-check" onclick="togglePrice('nord')">Lihat Harga Premium</button>
-                <div id="nord" class="price-section">
-                    <span class="price-tag">Rp 30.000 / Bulan</span>
-                    <a href="https://wa.me/pediaboy?text=Halo+Pediaboy,+saya+mau+order+NordVPN+Premium" class="btn-wa">
-                        Order via WhatsApp
-                    </a>
+                <div>
+                    <h3 class="card-title">Surfshark VPN</h3>
+                    <div class="card-price">Rp 25.000 <small>/ Bulan</small></div>
                 </div>
             </div>
+            <p class="card-desc">Privasi total tanpa batas perangkat. Cocok untuk streaming Netflix luar negeri & bypass sensor.</p>
+            <ul class="feature-list">
+                <li><svg><use href="#check-icon"></use></svg> Unlimited Devices</li>
+                <li><svg><use href="#check-icon"></use></svg> High Speed Server</li>
+                <li><svg><use href="#check-icon"></use></svg> Support Garansi 1x</li>
+            </ul>
+            <a href="https://wa.me/pediaboy?text=Halo+Admin,+saya+mau+order+Surfshark+Premium" class="btn-action">Order Surfshark</a>
         </div>
 
-        <!-- PRODUK 3: EXPRESS VPN (FIXED LOGO) -->
-        <div class="card" style="border-color: #5c2b3e;">
-            <div class="mockup">
-                <div class="mockup-header">
-                    <div class="mockup-dots">
-                        <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
-                    </div>
-                    <div class="mockup-address">expressvpn-fast.app</div>
-                    <div class="mockup-right">
-                        <div class="dot-square"></div><div class="dot-square"></div>
-                    </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="icon-box">
+                    <img src="https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/nordvpn.png" alt="NordVPN">
                 </div>
-                <div class="mockup-body">
-                    <div class="mock-line short" style="background-color: #ef4444;"></div>
-                    <div class="mock-line full"></div>
-                    <div class="mock-line long"></div>
+                <div>
+                    <h3 class="card-title">NordVPN Premium</h3>
+                    <div class="card-price">Rp 30.000 <small>/ Bulan</small></div>
                 </div>
             </div>
-
-            <div class="app-title-area">
-                <div class="app-logo-box">
-                    <!-- Menggunakan gambar resmi dari website ExpressVPN agar tidak error dan warnanya pas -->
-                    <img src="https://www.expressvpn.com/apple-touch-icon.png" class="app-logo" alt="ExpressVPN Logo">
-                </div>
-                <div class="title">ExpressVPN</div>
-            </div>
-
-            <div class="desc">
-                Rajanya kecepatan. Sangat andal untuk kebutuhan gaming kompetitif dan menonton video kualitas 4K tanpa buffering.
-            </div>
-
-            <div class="action-area">
-                <button class="btn-check" onclick="togglePrice('express')">Lihat Harga Premium</button>
-                <div id="express" class="price-section">
-                    <span class="price-tag">Rp 45.000 / Bulan</span>
-                    <a href="https://wa.me/pediaboy?text=Halo+Pediaboy,+saya+mau+order+ExpressVPN+Premium" class="btn-wa">
-                        Order via WhatsApp
-                    </a>
-                </div>
-            </div>
+            <p class="card-desc">Keamanan tingkat militer. Server terbanyak di dunia untuk koneksi yang sangat stabil.</p>
+            <ul class="feature-list">
+                <li><svg><use href="#check-icon"></use></svg> Security Focus & No Logs</li>
+                <li><svg><use href="#check-icon"></use></svg> 5000+ Global Servers</li>
+                <li><svg><use href="#check-icon"></use></svg> Support Garansi 1x</li>
+            </ul>
+            <a href="https://wa.me/pediaboy?text=Halo+Admin,+saya+mau+order+NordVPN+Premium" class="btn-action">Order NordVPN</a>
         </div>
 
-        <footer>&copy; 2026 Pediaboy Premium. All Rights Reserved.</footer>
+        <div class="card">
+            <div class="card-header">
+                <div class="icon-box">
+                    <img src="https://www.expressvpn.com/apple-touch-icon.png" alt="ExpressVPN">
+                </div>
+                <div>
+                    <h3 class="card-title">ExpressVPN</h3>
+                    <div class="card-price">Rp 45.000 <small>/ Bulan</small></div>
+                </div>
+            </div>
+            <p class="card-desc">Rajanya kecepatan. Sangat stabil untuk gaming dan video kualitas 4K tanpa buffering.</p>
+            <ul class="feature-list">
+                <li><svg><use href="#check-icon"></use></svg> Ultra Fast Connection</li>
+                <li><svg><use href="#check-icon"></use></svg> Best for Gaming & 4K Video</li>
+                <li><svg><use href="#check-icon"></use></svg> Support Garansi 1x</li>
+            </ul>
+            <a href="https://wa.me/pediaboy?text=Halo+Admin,+saya+mau+order+ExpressVPN+Premium" class="btn-action">Order ExpressVPN</a>
+        </div>
+
+        <div class="footer-cta">
+            <h2>Siap Menggunakan Jasa Kami?</h2>
+            <p style="color: var(--text-dim); font-size: 14px; margin-bottom: 20px;">Jangan ketinggalan! Bergabung bersama ratusan seller lainnya.</p>
+            <a href="https://wa.me/pediaboy" class="btn-wa-big">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                Chat Admin Sekarang
+            </a>
+        </div>
+
     </div>
 
-    <!-- Script untuk animasi harga tetap utuh -->
-    <script>
-        function togglePrice(id) {
-            const section = document.getElementById(id);
-            const btn = section.previousElementSibling;
-            
-            if (section.style.display === "block") {
-                section.style.display = "none";
-                btn.innerText = "Lihat Harga Premium";
-                btn.style.backgroundColor = "#1f183b";
-            } else {
-                section.style.display = "block";
-                btn.innerText = "Tutup Harga";
-                btn.style.backgroundColor = "#2d244a";
-            }
-        }
-    </script>
 </body>
 </html>
