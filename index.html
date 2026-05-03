@@ -8,7 +8,7 @@
     <style>
         :root {
             --bg-color: #03050a; 
-            --glass-bg: rgba(13, 17, 28, 0.8);
+            --glass-bg: rgba(13, 17, 28, 0.85);
             --neon-blue: #00f2fe;
             --neon-purple: #8b5cf6;
             --neon-pink: #ec4899;
@@ -35,7 +35,7 @@
             display: flex; flex-direction: column; align-items: center;
         }
 
-        /* HEADER & ANIMASI TEKS */
+        /* HEADER ANIMASI */
         .header { text-align: center; margin-bottom: 40px; }
         .header h1 {
             font-size: 42px; font-weight: 900; letter-spacing: 2px;
@@ -55,7 +55,7 @@
             width: 100%; padding: 15px; background: rgba(236, 72, 153, 0.1);
             border: 1px solid rgba(236, 72, 153, 0.5);
             color: #fff; border-radius: 14px; font-weight: 700;
-            text-decoration: none; margin-bottom: 40px;
+            text-decoration: none; margin-bottom: 40px; font-size: 15px;
         }
 
         .section-title {
@@ -87,7 +87,9 @@
             background: transparent; border: 1px solid var(--neon-blue);
             color: var(--neon-blue); border-radius: 12px;
             font-weight: 700; cursor: pointer; font-family: 'Outfit', sans-serif;
+            transition: 0.3s;
         }
+        .btn-action:active { transform: scale(0.95); }
         .card-purple .btn-action { border-color: var(--neon-purple); color: var(--neon-purple); }
 
         /* SUPPORT BY */
@@ -97,39 +99,63 @@
         }
         .support-name { display: block; font-size: 18px; font-weight: 900; color: var(--neon-pink); letter-spacing: 2px; margin-top: 5px;}
 
-        /* MODAL LIST HARGA */
+        /* SISTEM MODAL DENGAN SLIDE ANIMASI */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px);
-            z-index: 999; display: none; opacity: 0; transition: 0.3s;
+            background: rgba(0, 0, 0, 0.9); backdrop-filter: blur(15px);
+            z-index: 999; display: none; opacity: 0; transition: 0.4s;
         }
         .modal-overlay.active { display: block; opacity: 1; }
 
         .custom-modal {
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9);
-            width: 90%; max-width: 400px; background: #0d111c;
-            border: 1px solid var(--neon-blue); border-radius: 20px; padding: 25px; 
-            z-index: 1000; display: none; opacity: 0; transition: 0.3s;
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 90%; max-width: 420px; height: auto; min-height: 350px;
+            background: #0d111c; border: 1px solid rgba(0, 242, 254, 0.3);
+            border-radius: 24px; overflow: hidden; z-index: 1000;
+            display: none; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
-        .custom-modal.active { display: block; opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        .custom-modal.active { display: block; animation: modalPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
 
-        .price-list { list-style: none; margin-top: 15px; }
-        .price-item {
-            display: flex; justify-content: space-between; align-items: center;
-            background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px;
-            margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.1);
+        @keyframes modalPop {
+            from { opacity: 0; transform: translate(-50%, -45%) scale(0.9); }
+            to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
         }
-        .price-item:hover { border-color: var(--neon-blue); background: rgba(0, 242, 254, 0.05); }
-        .price-item span { font-weight: 600; }
-        .price-item strong { color: var(--neon-blue); font-size: 18px; }
+
+        /* Container untuk transisi Slide antar langkah */
+        .modal-slider {
+            display: flex; width: 200%; height: 100%;
+            transition: transform 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+        .step-view { width: 50%; padding: 30px; flex-shrink: 0; }
+
+        /* Step 1: Form Nama */
+        .input-group { margin-top: 20px; }
+        .input-group label { display: block; font-size: 13px; color: var(--text-muted); margin-bottom: 8px; }
+        .input-group input {
+            width: 100%; padding: 15px; border-radius: 12px; background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.1); color: #fff; font-family: 'Outfit'; outline: none;
+        }
+        .btn-next {
+            width: 100%; padding: 15px; background: var(--neon-blue); color: #000;
+            border: none; border-radius: 12px; font-weight: 800; margin-top: 20px; cursor: pointer;
+        }
+
+        /* Step 2: List Harga */
+        .price-list { margin-top: 15px; }
+        .price-item {
+            display: flex; justify-content: space-between; padding: 14px;
+            background: rgba(255,255,255,0.03); border-radius: 12px;
+            margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.05);
+            animation: itemFade 0.5s forwards; opacity: 0;
+        }
+        @keyframes itemFade { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: translateX(0); } }
 
         .btn-order-wa {
-            width: 100%; padding: 15px; background: var(--neon-blue);
-            color: #000; border: none; border-radius: 12px; font-weight: 800;
-            margin-top: 15px; cursor: pointer; font-family: 'Outfit', sans-serif;
+            width: 100%; padding: 15px; background: #10b981; color: #fff;
+            border: none; border-radius: 12px; font-weight: 800; margin-top: 15px; cursor: pointer;
         }
 
-        /* REVEAL ANIMASI */
+        /* REVEAL SCROLL */
         .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s all ease; }
         .reveal.active { opacity: 1; transform: translateY(0); }
     </style>
@@ -148,37 +174,33 @@
         <div class="card card-purple reveal">
             <h3 class="card-title">Bot JPM Pro</h3>
             <p class="card-desc">Sistem push promosi tercanggih. Auto Rekap Proses & Done.</p>
-            <button class="btn-action" onclick="openModal('JPM')">Lihat Daftar Harga</button>
+            <button class="btn-action" onclick="initOrder('JPM')">Lihat Daftar Harga</button>
         </div>
 
         <div class="section-title reveal">🛡️ Premium Access</div>
         
-        <!-- IPVanish -->
         <div class="card reveal">
             <h3 class="card-title">IPVanish VPN</h3>
             <p class="card-desc">Privasi tinggi dengan kecepatan optimal. Paket Sharing Hemat.</p>
-            <button class="btn-action" onclick="openModal('IPVanish')">Lihat Daftar Harga</button>
+            <button class="btn-action" onclick="initOrder('IPVanish')">Lihat Daftar Harga</button>
         </div>
 
-        <!-- Surfshark -->
         <div class="card reveal">
             <h3 class="card-title">Surfshark VPN</h3>
-            <p class="card-desc">Server super banyak & koneksi wusss ⚡ Cocok buat anak GB / Joki MMR.</p>
-            <button class="btn-action" onclick="openModal('Surfshark')">Lihat Daftar Harga</button>
+            <p class="card-desc">Server super banyak & koneksi wusss ⚡ Cocok buat GB / Joki.</p>
+            <button class="btn-action" onclick="initOrder('Surfshark')">Lihat Daftar Harga</button>
         </div>
 
-        <!-- NordVPN -->
         <div class="card reveal">
             <h3 class="card-title">NordVPN</h3>
-            <p class="card-desc">Keamanan militer dengan ribuan server global. Stabil & Aman.</p>
-            <button class="btn-action" onclick="openModal('NordVPN')">Lihat Daftar Harga</button>
+            <p class="card-desc">Keamanan militer global. Stabil & Sangat Aman.</p>
+            <button class="btn-action" onclick="initOrder('NordVPN')">Lihat Daftar Harga</button>
         </div>
 
-        <!-- ExpressVPN -->
         <div class="card reveal">
             <h3 class="card-title">ExpressVPN</h3>
-            <p class="card-desc">Rajanya kecepatan VPN. Paling stabil untuk gaming & streaming.</p>
-            <button class="btn-action" onclick="openModal('ExpressVPN')">Lihat Daftar Harga</button>
+            <p class="card-desc">Rajanya kecepatan VPN. Paling stabil untuk gaming & 4K.</p>
+            <button class="btn-action" onclick="initOrder('ExpressVPN')">Lihat Daftar Harga</button>
         </div>
 
         <div class="support-box reveal">
@@ -187,97 +209,107 @@
         </div>
     </div>
 
-    <!-- MODAL POPUP -->
+    <!-- MODAL OVERLAY -->
     <div class="modal-overlay" id="overlay" onclick="closeModal()"></div>
-    <div class="custom-modal" id="modal">
-        <h2 id="modalTitle" style="text-align: center; margin-bottom: 5px;">Daftar Harga</h2>
-        <p id="modalSub" style="text-align: center; font-size: 13px; color: var(--text-muted); margin-bottom: 20px;"></p>
-        
-        <div id="priceContent" class="price-list">
-            <!-- Isi Harga Muncul Di Sini -->
-        </div>
 
-        <button class="btn-order-wa" onclick="goToWA()">Chat Admin Sekarang</button>
+    <!-- MODAL DENGAN SLIDER -->
+    <div class="custom-modal" id="modal">
+        <div class="modal-slider" id="modalSlider">
+            
+            <!-- STEP 1: INPUT NAMA -->
+            <div class="step-view">
+                <h2 id="step1Title">Informasi Pelanggan</h2>
+                <p style="font-size: 13px; color: var(--text-muted); margin-top: 5px;">Silakan masukkan nama Anda</p>
+                <div class="input-group">
+                    <label>Nama / Username WhatsApp</label>
+                    <input type="text" id="userName" placeholder="Contoh: Thoriq">
+                </div>
+                <button class="btn-next" onclick="showPrices()">Lihat Harga Sekarang →</button>
+            </div>
+
+            <!-- STEP 2: DAFTAR HARGA -->
+            <div class="step-view">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <h2 id="modalTitle">Daftar Harga</h2>
+                    <button onclick="goBack()" style="background:none; border:none; color:var(--neon-blue); font-size:12px; cursor:pointer;">← Kembali</button>
+                </div>
+                <p id="modalSub" style="font-size: 13px; color: var(--text-muted); margin-top: 5px;"></p>
+                
+                <div id="priceContent" class="price-list">
+                    <!-- Harga di-generate JS -->
+                </div>
+
+                <button class="btn-order-wa" onclick="goToWA()">Chat Admin & Order</button>
+            </div>
+
+        </div>
     </div>
 
     <script>
-        // Animasi Scroll
+        // Reveal Scroll
         function reveal() {
             var reveals = document.querySelectorAll(".reveal");
             for (var i = 0; i < reveals.length; i++) {
                 var windowHeight = window.innerHeight;
                 var elementTop = reveals[i].getBoundingClientRect().top;
-                if (elementTop < windowHeight - 50) { reveals[i].classList.add("active"); }
-                else { reveals[i].classList.remove("active"); }
+                if (elementTop < windowHeight - 50) reveals[i].classList.add("active");
             }
         }
         window.addEventListener("scroll", reveal); reveal();
 
         let selectedProduct = "";
 
-        function openModal(type) {
+        // Tahap awal: Simpan produk & buka modal di Step 1
+        function initOrder(type) {
             selectedProduct = type;
-            const content = document.getElementById('priceContent');
-            const title = document.getElementById('modalTitle');
-            const sub = document.getElementById('modalSub');
-            content.innerHTML = "";
-
-            if(type === 'Surfshark') {
-                title.innerText = "Surfshark Premium";
-                sub.innerText = "Full Garansi & Support 24/7";
-                const prices = [
-                    {dur: "1 MINGGU", prc: "3K"},
-                    {dur: "2 BULAN", prc: "7K"},
-                    {dur: "3 BULAN", prc: "15K"}
-                ];
-                prices.forEach(p => {
-                    content.innerHTML += `<div class="price-item"><span>${p.dur}</span><strong>${p.prc}</strong></div>`;
-                });
-            } else if(type === 'IPVanish') {
-                title.innerText = "IPVanish Premium";
-                sub.innerText = "Paket Sharing Bergaransi";
-                const prices = [
-                    {dur: "1 MINGGU", prc: "5K"},
-                    {dur: "1 BULAN", prc: "13K"}
-                ];
-                prices.forEach(p => {
-                    content.innerHTML += `<div class="price-item"><span>${p.dur}</span><strong>${p.prc}</strong></div>`;
-                });
-            } else if(type === 'NordVPN') {
-                title.innerText = "NordVPN Premium";
-                sub.innerText = "Keamanan Global Terbaik";
-                const prices = [
-                    {dur: "1 MINGGU", prc: "10K"}
-                ];
-                prices.forEach(p => {
-                    content.innerHTML += `<div class="price-item"><span>${p.dur}</span><strong>${p.prc}</strong></div>`;
-                });
-            } else if(type === 'ExpressVPN') {
-                title.innerText = "ExpressVPN Premium";
-                sub.innerText = "Koneksi Tercepat & Paling Stabil";
-                const prices = [
-                    {dur: "1 MINGGU", prc: "5K"}
-                ];
-                prices.forEach(p => {
-                    content.innerHTML += `<div class="price-item"><span>${p.dur}</span><strong>${p.prc}</strong></div>`;
-                });
-            } else {
-                title.innerText = "Bot JPM Pro";
-                sub.innerText = "Sewa / Beli Script Lifetime";
-                content.innerHTML = `<div class="price-item" style="justify-content:center;"><strong>Tanya Admin via Chat</strong></div>`;
-            }
-
+            document.getElementById('step1Title').innerText = "Order " + type;
+            document.getElementById('userName').value = "";
+            document.getElementById('modalSlider').style.transform = "translateX(0)";
+            
             document.getElementById('overlay').classList.add('active');
             document.getElementById('modal').classList.add('active');
         }
 
+        // Transisi ke Step 2 (Daftar Harga)
+        function showPrices() {
+            const name = document.getElementById('userName').value;
+            if(!name) { alert("Mohon isi nama Anda terlebih dahulu!"); return; }
+
+            const content = document.getElementById('priceContent');
+            const sub = document.getElementById('modalSub');
+            content.innerHTML = "";
+            sub.innerText = "Harga Promo untuk: " + name;
+
+            const pricing = {
+                'Surfshark': [["1 MINGGU", "3K"], ["2 BULAN", "7K"], ["3 BULAN", "15K"]],
+                'IPVanish': [["1 MINGGU", "5K"], ["1 BULAN", "13K"]],
+                'NordVPN': [["1 MINGGU", "10K"]],
+                'ExpressVPN': [["1 MINGGU", "5K"]],
+                'JPM': [["Lifetime", "Tanya Admin"]]
+            };
+
+            const data = pricing[selectedProduct] || [];
+            data.forEach((p, index) => {
+                const div = document.createElement('div');
+                div.className = 'price-item';
+                div.style.animationDelay = (index * 0.1) + 's';
+                div.innerHTML = `<span>${p[0]}</span><strong>${p[1]}</strong>`;
+                content.appendChild(div);
+            });
+
+            // Animasi Slide ke Kiri
+            document.getElementById('modalSlider').style.transform = "translateX(-50%)";
+        }
+
+        function goBack() { document.getElementById('modalSlider').style.transform = "translateX(0)"; }
         function closeModal() {
             document.getElementById('overlay').classList.remove('active');
             document.getElementById('modal').classList.remove('active');
         }
 
         function goToWA() {
-            const text = `Halo Admin Pediaboy!\n\nSaya ingin order *${selectedProduct}*.\n\nMohon dibantu proses ya!`;
+            const name = document.getElementById('userName').value;
+            const text = `Halo Admin Pediaboy!\n\nNama: *${name}*\nProduk: *${selectedProduct}*\n\nSaya ingin order, mohon dibantu ya!`;
             window.open(`https://wa.me/pediaboy?text=${encodeURIComponent(text)}`, "_blank");
         }
     </script>
