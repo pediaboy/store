@@ -7,8 +7,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-dark: #03050a;
-            --card-bg: #0d111c;
+            /* Background tidak hitam polos, menggunakan dark navy/charcoal */
+            --bg-dark: #06090f; 
+            --card-bg: #0d121d;
             --neon-blue: #00f2fe;
             --neon-purple: #8b5cf6;
             --neon-pink: #ec4899;
@@ -23,53 +24,62 @@
             color: var(--text-main); 
             font-family: 'Outfit', sans-serif;
             overflow-x: hidden;
+            /* Efek tekstur background dalam agar tidak polos */
+            background-image: 
+                radial-gradient(circle at 0% 0%, rgba(0, 242, 254, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 100% 100%, rgba(139, 92, 246, 0.05) 0%, transparent 50%);
+            background-attachment: fixed;
         }
 
-        /* 1. LOADING SCREEN (PERSIS VIDEO) */
+        /* 1. LOADING SCREEN DENGAN TEKSTUR */
         #loader {
-            position: fixed; inset: 0; background: var(--bg-dark);
+            position: fixed; inset: 0; 
+            background-color: #080b12;
+            background-image: radial-gradient(circle at center, #0f172a 0%, #06090f 100%);
             display: flex; align-items: center; justify-content: center;
             z-index: 9999; transition: opacity 0.8s ease;
         }
         .loader-logo {
-            font-size: 32px; font-weight: 900; letter-spacing: 2px;
+            font-size: 32px; font-weight: 900;
+            color: var(--neon-blue);
+            text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue);
             animation: pulse 1.5s ease-in-out infinite;
         }
-        @keyframes pulse { 0%, 100% { opacity: 0.5; transform: scale(0.95); } 50% { opacity: 1; transform: scale(1); } }
+        @keyframes pulse { 0%, 100% { opacity: 0.6; transform: scale(0.95); } 50% { opacity: 1; transform: scale(1); } }
 
-        /* NAVBAR LOGO NEON PELANGI */
+        /* NAVBAR - LOGO DI POJOK KIRI */
         .navbar {
             position: fixed; top: 0; left: 0; width: 100%; height: 70px;
-            background: rgba(13, 17, 28, 0.8); backdrop-filter: blur(15px);
+            background: rgba(13, 17, 28, 0.85); backdrop-filter: blur(15px);
             display: flex; align-items: center; justify-content: space-between;
             padding: 0 20px; z-index: 2000; border-bottom: 1px solid rgba(255,255,255,0.05);
         }
         .nav-logo {
-            font-size: 24px; font-weight: 900; letter-spacing: 2px;
-            background: linear-gradient(90deg, #ff0000, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
-            background-size: 400%; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            animation: rainbowNeon 8s linear infinite;
+            font-size: 22px; font-weight: 900; letter-spacing: 1px;
+            color: var(--neon-blue);
+            text-shadow: 0 0 10px rgba(0, 242, 254, 0.8);
+            /* Tidak rainbow lagi, hanya neon biru yang kuat */
         }
-        @keyframes rainbowNeon { 0% { background-position: 0%; } 100% { background-position: 400%; } }
+
         .nav-menu-btn { background: rgba(255,255,255,0.05); border: none; padding: 10px; border-radius: 10px; cursor: pointer; }
         .nav-menu-btn span { display: block; width: 22px; height: 2px; background: #fff; margin: 5px 0; }
 
-        /* 2. HERO SECTION (PERSIS VIDEO) */
+        /* HERO SECTION */
         .hero {
             padding: 120px 20px 40px; text-align: center;
-            background-image: radial-gradient(circle at 50% 30%, rgba(139, 92, 246, 0.15), transparent 60%);
         }
-        .hero h2 { font-size: 36px; font-weight: 900; line-height: 1.2; margin-bottom: 20px; }
+        .hero h2 { font-size: 36px; font-weight: 900; line-height: 1.2; margin-bottom: 20px; color: #fff; }
         .hero p { font-size: 15px; color: var(--text-dim); line-height: 1.6; max-width: 400px; margin: 0 auto 30px; }
         
         .hero-features { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 400px; margin: 0 auto; }
         .h-feat { 
-            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
             padding: 12px; border-radius: 12px; font-size: 12px; font-weight: 600;
             display: flex; align-items: center; justify-content: center; gap: 8px;
+            color: var(--text-main);
         }
 
-        /* SIDEBAR PANEL */
+        /* SIDEBAR */
         .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 2500; display: none; backdrop-filter: blur(5px); }
         .sidebar-overlay.active { display: block; }
         .sidebar {
@@ -83,21 +93,22 @@
 
         .container { width: 100%; max-width: 480px; margin: 0 auto; padding: 20px; }
 
-        /* CARDS & SECTIONS */
+        /* CARDS */
         .section-title { font-size: 13px; font-weight: 700; color: var(--neon-blue); text-transform: uppercase; letter-spacing: 2px; margin: 40px 0 15px; display: flex; align-items: center; gap: 10px; }
         .section-title::after { content: ""; flex: 1; height: 1px; background: rgba(255,255,255,0.1); }
         
         .card { background: var(--card-bg); border-radius: 18px; padding: 24px; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px; position: relative; overflow: hidden; }
         .card::before { content: ""; position: absolute; left: 0; top: 0; height: 100%; width: 4px; background: var(--neon-blue); box-shadow: 0 0 15px var(--neon-blue); }
         .card-pink::before { background: var(--neon-pink); box-shadow: 0 0 15px var(--neon-pink); }
+        
         .btn-action { width: 100%; padding: 14px; background: transparent; border: 1px solid rgba(0, 242, 254, 0.4); color: var(--neon-blue); border-radius: 12px; font-weight: 700; cursor: pointer; }
 
-        /* ANIMASI SCROLL */
+        /* REVEAL */
         .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.7s, transform 0.7s; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        /* SORAYA NATASHA NEON */
-        .neon-branding { text-align: center; padding: 25px; margin-top: 40px; border: 2px solid var(--neon-pink); border-radius: 20px; background: rgba(236, 72, 153, 0.05); }
+        /* SORAYA NATASHA */
+        .neon-branding { text-align: center; padding: 25px; margin-top: 40px; border: 1px solid var(--neon-pink); border-radius: 20px; background: rgba(236, 72, 153, 0.05); }
         .neon-branding span { color: var(--neon-pink); font-weight: 900; font-size: 22px; letter-spacing: 4px; text-shadow: 0 0 15px var(--neon-pink); }
 
         /* FOOTER */
@@ -111,12 +122,11 @@
 
     <!-- LOADING SCREEN -->
     <div id="loader">
-        <div class="loader-logo nav-logo">PEDIABOY</div>
+        <div class="loader-logo">PEDIABOY</div>
     </div>
 
     <!-- NAVBAR -->
     <nav class="navbar">
-        <div style="width: 45px;"></div>
         <div class="nav-logo">PEDIABOY</div>
         <button class="nav-menu-btn" onclick="toggleSidebar()">
             <span></span><span></span><span></span>
@@ -128,14 +138,13 @@
     <div class="sidebar" id="sb">
         <a href="#" class="sidebar-item" onclick="toggleSidebar()">Home</a>
         <a href="#" class="sidebar-item" onclick="toggleSidebar()">Layanan</a>
-        <a href="#" class="sidebar-item" onclick="toggleSidebar()">FAQ</a>
         <a href="#" class="sidebar-item" onclick="window.open('https://wa.me/6282172222494')">Hubungi Admin</a>
     </div>
 
     <!-- HERO SECTION -->
     <section class="hero reveal">
-        <h2>Solusi VPN & Akun MLBB Premium</h2>
-        <p>Layanan premium dengan performa terbaik dan dukungan garansi penuh untuk kebutuhan Anda.</p>
+        <h2>Premium Access Store</h2>
+        <p>Solusi VPN, Bot Script, dan Akun Game kualitas terbaik dengan dukungan garansi penuh.</p>
         <div class="hero-features">
             <div class="h-feat">🚀 High Speed</div>
             <div class="h-feat">🛡️ Aman Terjamin</div>
@@ -145,25 +154,17 @@
     </section>
 
     <div class="container">
-        <!-- GAME SECTION -->
-        <div class="section-title reveal">🎮 Game Services</div>
+        <!-- LAYANAN -->
+        <div class="section-title reveal">🎮 Game Account</div>
         <div class="card card-pink reveal">
             <h3>Create Akun MLBB</h3>
             <p>Original 1 Server / Cabang Server. Allkos tinggal Bind.</p>
             <button class="btn-action" onclick="sendOrder('MLBB')">Daftar Harga</button>
         </div>
 
-        <!-- VPN SECTION -->
-        <div class="section-title reveal">🛡️ VPN Premium Access</div>
+        <div class="section-title reveal">🛡️ Premium VPN Access</div>
         <div class="card reveal"><h3>Surfshark VPN</h3><button class="btn-action" onclick="sendOrder('Surfshark')">Daftar Harga</button></div>
         <div class="card reveal"><h3>ExpressVPN</h3><button class="btn-action" onclick="sendOrder('ExpressVPN')">Daftar Harga</button></div>
-        <div class="card reveal"><h3>NordVPN</h3><button class="btn-action" onclick="sendOrder('NordVPN')">Daftar Harga</button></div>
-
-        <!-- TOS -->
-        <div class="section-title reveal">📝 Syarat & Ketentuan</div>
-        <div class="card reveal" style="font-size: 13px; color: var(--text-dim); line-height: 1.6;">
-            <p>• Garansi berlaku sesuai masa aktif.<br>• Membeli berarti setuju dengan aturan Pediaboy.</p>
-        </div>
 
         <!-- SORAYA NATASHA -->
         <div class="neon-branding reveal">
@@ -174,7 +175,7 @@
         <footer class="footer reveal">
             <div class="footer-grid">
                 <div class="footer-col"><h4>Layanan</h4><p>Akun MLBB</p><p>VPN Premium</p></div>
-                <div class="footer-col"><h4>Admin</h4><p onclick="window.open('https://wa.me/6282172222494')">WhatsApp</p><p>Telegram</p></div>
+                <div class="footer-col"><h4>Admin</h4><p onclick="window.open('https://wa.me/6282172222494')">WhatsApp</p></div>
             </div>
             <p style="margin-top:30px; font-size:11px;">© 2026 Pediaboy Store. All Rights Reserved.</p>
         </footer>
@@ -187,7 +188,7 @@
                 const loader = document.getElementById('loader');
                 loader.style.opacity = '0';
                 setTimeout(() => loader.style.display = 'none', 800);
-            }, 1500); // Tampil 1.5 detik
+            }, 1200);
         });
 
         function toggleSidebar() {
