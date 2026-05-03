@@ -68,6 +68,7 @@
 
         .container { width: 100%; max-width: 480px; margin: 0 auto; padding: 20px; }
 
+        /* SECTION TITLE */
         .section-title {
             font-size: 13px; font-weight: 700; color: var(--neon-blue);
             text-transform: uppercase; letter-spacing: 2px;
@@ -75,7 +76,7 @@
         }
         .section-title::after { content: ""; flex: 1; height: 1px; background: rgba(255,255,255,0.1); }
 
-        /* CARDS */
+        /* CARDS STYLE */
         .card {
             background: var(--card-bg); border-radius: 18px; padding: 24px;
             border: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px;
@@ -101,6 +102,12 @@
         }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
+        /* FAQ STYLE */
+        .faq-card { background: var(--card-bg); border-radius: 12px; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.05); }
+        .faq-q { padding: 15px; cursor: pointer; font-size: 14px; font-weight: 600; display: flex; justify-content: space-between; }
+        .faq-a { padding: 0 15px; max-height: 0; overflow: hidden; transition: 0.3s ease; color: var(--text-dim); font-size: 13px; }
+        .faq-card.open .faq-a { padding: 0 15px 15px; max-height: 120px; }
+
         /* SORAYA NATASHA NEON */
         .neon-branding {
             text-align: center; padding: 25px; margin-top: 40px;
@@ -112,6 +119,13 @@
             color: var(--neon-pink); font-weight: 900; font-size: 22px; letter-spacing: 4px;
             text-shadow: 0 0 15px var(--neon-pink), 0 0 30px var(--neon-pink);
         }
+
+        /* FOOTER MENU */
+        .footer { margin-top: 50px; padding: 40px 20px; border-top: 1px solid rgba(255,255,255,0.05); }
+        .footer-brand { font-size: 24px; font-weight: 900; color: #fff; margin-bottom: 15px; }
+        .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 25px; }
+        .footer-col h4 { color: #fff; font-size: 14px; margin-bottom: 12px; }
+        .footer-col p { font-size: 12px; color: var(--text-dim); margin-bottom: 8px; cursor: pointer; }
 
         /* MODAL */
         .modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 4000; display: none; backdrop-filter: blur(15px); }
@@ -146,7 +160,7 @@
     </div>
 
     <div class="container">
-        <!-- GAME SECTION -->
+        <!-- MLBB -->
         <div class="section-title reveal">🎮 Game Services</div>
         <div class="card card-pink reveal">
             <h3>Create Akun MLBB</h3>
@@ -154,7 +168,7 @@
             <button class="btn-action" onclick="initOrder('MLBB')">Daftar Harga</button>
         </div>
 
-        <!-- SCRIPT SECTION -->
+        <!-- SCRIPT -->
         <div class="section-title reveal">🔥 Exclusive Script</div>
         <div class="card card-purple reveal">
             <h3>Bot JPM Pro</h3>
@@ -162,8 +176,8 @@
             <button class="btn-action" onclick="initOrder('JPM')">Daftar Harga</button>
         </div>
 
-        <!-- VPN SECTION - SEMUA TERPISAH -->
-        <div class="section-title reveal">🛡️ VPN Premium</div>
+        <!-- VPN TERPISAH -->
+        <div class="section-title reveal">🛡️ Premium VPN Access</div>
         <div class="card reveal">
             <h3>Surfshark VPN</h3>
             <p>Koneksi stabil, server melimpah, dan garansi penuh.</p>
@@ -185,12 +199,22 @@
             <button class="btn-action" onclick="initOrder('ExpressVPN')">Daftar Harga</button>
         </div>
 
-        <!-- SYARAT & KETENTUAN (ToS) -->
-        <div class="section-title reveal">📝 Syarat & Ketentuan</div>
+        <!-- FAQ -->
+        <div class="section-title reveal">❓ Pertanyaan Umum (FAQ)</div>
+        <div class="faq-card reveal">
+            <div class="faq-q" onclick="toggleFaq(this)">Metode pembayaran apa saja? <span>▼</span></div>
+            <div class="faq-a">Kami menerima pembayaran melalui DANA, GOPAY, dan QRIS (Otomatis).</div>
+        </div>
+        <div class="faq-card reveal">
+            <div class="faq-q" onclick="toggleFaq(this)">Berapa lama prosesnya? <span>▼</span></div>
+            <div class="faq-a">Instan! Setelah sistem mendeteksi pembayaran, pesanan Anda akan langsung diproses.</div>
+        </div>
+
+        <!-- ToS -->
+        <div class="section-title reveal">📝 Syarat & Ketentuan (ToS)</div>
         <div class="card reveal" style="font-size: 13px; color: var(--text-dim); line-height: 1.6;">
-            <p>• Dilarang keras menggunakan akun/script untuk tindakan ilegal.<br>
-               • Garansi berlaku sesuai masa aktif yang dibeli.<br>
-               • Kesalahan input data oleh pembeli bukan tanggung jawab admin.<br>
+            <p>• Garansi berlaku sesuai masa aktif yang dibeli.<br>
+               • Dilarang menggunakan akun/script untuk tindakan ilegal.<br>
                • Membeli berarti setuju dengan seluruh peraturan Pediaboy Store.</p>
         </div>
 
@@ -198,6 +222,26 @@
             <p style="font-size: 10px; color: var(--text-dim); margin-bottom: 8px; letter-spacing: 2px;">POWERED BY</p>
             <span>SORAYA NATASHA</span>
         </div>
+
+        <!-- FOOTER -->
+        <footer class="footer reveal">
+            <div class="footer-brand">PEDIABOY</div>
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Layanan</h4>
+                    <p>Akun MLBB</p>
+                    <p>VPN Premium</p>
+                    <p>Bot JPM Pro</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Bantuan</h4>
+                    <p onclick="window.open('https://wa.me/6282172222494')">Hubungi Admin</p>
+                    <p>Tanya Jawab (FAQ)</p>
+                    <p>Pusat Bantuan</p>
+                </div>
+            </div>
+            <p style="margin-top:30px; font-size:11px;">© 2022 - 2026 Pediaboy Store. All Rights Reserved.</p>
+        </footer>
     </div>
 
     <div class="modal-bg" id="mBg" onclick="closeModal()"></div>
@@ -205,7 +249,7 @@
         <h2 id="mTitle" style="margin-bottom:10px;">Order</h2>
         <div id="mPrices"></div>
         <input type="text" id="uName" placeholder="Nama WhatsApp Anda..." style="width:100%; padding:14px; background:#000; border:1px solid #333; color:#fff; border-radius:12px; outline:none; margin-top:10px;">
-        <button onclick="sendWA()" style="width:100%; padding:14px; background:var(--neon-blue); border:none; border-radius:12px; font-weight:800; margin-top:20px; cursor:pointer; color:#000;">Order via WhatsApp</button>
+        <button onclick="sendWA()" style="width:100%; padding:14px; background:var(--neon-blue); border:none; border-radius:12px; font-weight:800; margin-top:20px; cursor:pointer; color:#000;">Order via WhatsApp →</button>
     </div>
 
     <script>
@@ -224,12 +268,13 @@
         }
         window.addEventListener('scroll', handleReveal); handleReveal();
 
+        function toggleFaq(el) { el.parentElement.classList.toggle('open'); }
+
         let currentType = "";
         function initOrder(type) {
             currentType = type;
             const prices = document.getElementById('mPrices');
             prices.innerHTML = "";
-            
             const pricing = {
                 'MLBB': [["LV.3 (1S)", "3K"], ["LV.12 (1S)", "6K"], ["LV.3 (Cabang)", "3K/S"], ["LV.12 (Cabang)", "5K/S"]],
                 'Surfshark': [["1 MINGGU", "3K"], ["2 BULAN", "7K"], ["3 BULAN", "15K"]],
@@ -238,11 +283,9 @@
                 'ExpressVPN': [["1 MINGGU", "5K"]],
                 'JPM': [["Lifetime", "Tanya Admin"]]
             };
-
             (pricing[type] || []).forEach(p => {
                 prices.innerHTML += `<div class="price-item"><span>${p[0]}</span><strong>${p[1]}</strong></div>`;
             });
-
             document.getElementById('mTitle').innerText = "Order " + type;
             document.getElementById('mBg').classList.add('modal-active');
             document.getElementById('mBox').classList.add('modal-active');
@@ -256,7 +299,7 @@
         function sendWA() {
             const name = document.getElementById('uName').value;
             if(!name) return alert("Masukkan nama!");
-            const text = `*───［ pediaaboyy ］───*\n*Nama:* ${name}\n*Order:* ${currentType}\n\nMohon segera diproses admin!\n*Powered by pediaboy*`;
+            const text = `*───［ pediaaboyy ］───*\n*Nama:* ${name}\n*Order:* ${currentType}\n\nMohon diproses admin!\n*Powered by pediaboy*`;
             window.open(`https://wa.me/6282172222494?text=${encodeURIComponent(text)}`, '_blank');
         }
     </script>
