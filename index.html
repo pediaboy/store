@@ -35,7 +35,6 @@
             display: flex; flex-direction: column; align-items: center;
         }
 
-        /* HEADER ANIMASI */
         .header { text-align: center; margin-bottom: 40px; }
         .header h1 {
             font-size: 42px; font-weight: 900; letter-spacing: 2px;
@@ -49,7 +48,6 @@
         }
         @keyframes gradientShine { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
 
-        /* TOMBOL INSTAGRAM */
         .btn-ig {
             display: flex; align-items: center; justify-content: center; gap: 10px;
             width: 100%; padding: 15px; background: rgba(236, 72, 153, 0.1);
@@ -65,7 +63,6 @@
         }
         .section-title::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, var(--neon-blue), transparent); }
 
-        /* KARTU PRODUK */
         .card { 
             background: var(--glass-bg); backdrop-filter: blur(12px);
             border-radius: 20px; padding: 24px; border: 1px solid rgba(255, 255, 255, 0.05); 
@@ -79,10 +76,6 @@
         .card-purple::before { background: var(--neon-purple); box-shadow: 0 0 15px var(--neon-purple); }
         .card-pink::before { background: var(--neon-pink); box-shadow: 0 0 15px var(--neon-pink); }
 
-        .card-title { font-size: 22px; font-weight: 700; margin-bottom: 5px; }
-        .card-desc { color: var(--text-muted); font-size: 14px; line-height: 1.6; margin-bottom: 20px; }
-
-        /* TOMBOL AKSI */
         .btn-action {
             display: block; width: 100%; padding: 14px;
             background: transparent; border: 1px solid var(--neon-blue);
@@ -90,29 +83,21 @@
             font-weight: 700; cursor: pointer; font-family: 'Outfit', sans-serif;
             transition: 0.3s;
         }
-        .btn-action:active { transform: scale(0.95); }
         .card-purple .btn-action { border-color: var(--neon-purple); color: var(--neon-purple); }
         .card-pink .btn-action { border-color: var(--neon-pink); color: var(--neon-pink); }
 
-        /* SUPPORT BY */
         .support-box {
             margin-top: 50px; text-align: center; padding: 20px; border-radius: 20px;
             background: rgba(236, 72, 153, 0.05); border: 1px solid rgba(236, 72, 153, 0.2);
         }
         .support-name { display: block; font-size: 18px; font-weight: 900; color: var(--neon-pink); letter-spacing: 2px; margin-top: 5px;}
 
-        /* REVEAL ANIMASI (SCROLL FADE IN/OUT) */
         .reveal {
-            opacity: 0;
-            transform: translateY(50px) scale(0.95);
+            opacity: 0; transform: translateY(50px) scale(0.95);
             transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
         }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
+        .reveal.active { opacity: 1; transform: translateY(0) scale(1); }
 
-        /* MODAL SYSTEM */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.9); backdrop-filter: blur(15px);
@@ -122,42 +107,27 @@
 
         .custom-modal {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 95%; max-width: 420px; height: auto;
-            background: #0d111c; border: 1px solid rgba(0, 242, 254, 0.3);
-            border-radius: 24px; overflow: hidden; z-index: 1000;
-            display: none; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            width: 95%; max-width: 420px; background: #0d111c;
+            border: 1px solid rgba(0, 242, 254, 0.3); border-radius: 24px; overflow: hidden;
+            z-index: 1000; display: none; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
-        .custom-modal.active { display: block; opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        .custom-modal.active { display: block; animation: modalPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+
+        @keyframes modalPop { from { opacity: 0; transform: translate(-50%, -45%) scale(0.9); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
 
         .modal-slider { display: flex; width: 200%; transition: transform 0.5s ease; }
         .step-view { width: 50%; padding: 25px; flex-shrink: 0; }
 
-        .input-group { margin-top: 15px; }
-        .input-group label { display: block; font-size: 13px; color: var(--text-muted); margin-bottom: 8px; }
         .input-group input {
             width: 100%; padding: 15px; border-radius: 12px; background: rgba(0,0,0,0.5);
             border: 1px solid rgba(255,255,255,0.1); color: #fff; font-family: 'Outfit'; outline: none;
         }
-        .btn-next {
-            width: 100%; padding: 15px; background: var(--neon-blue); color: #000;
-            border: none; border-radius: 12px; font-weight: 800; margin-top: 20px; cursor: pointer;
-        }
+        .btn-next { width: 100%; padding: 15px; background: var(--neon-blue); color: #000; border: none; border-radius: 12px; font-weight: 800; margin-top: 20px; cursor: pointer; }
 
-        .price-list { margin-top: 15px; }
-        .price-item {
-            display: flex; justify-content: space-between; padding: 12px;
-            background: rgba(255,255,255,0.03); border-radius: 10px;
-            margin-bottom: 8px; border: 1px solid rgba(255,255,255,0.05);
-            font-size: 14px;
-        }
+        .price-item { display: flex; justify-content: space-between; padding: 12px; background: rgba(255,255,255,0.03); border-radius: 10px; margin-bottom: 8px; border: 1px solid rgba(255,255,255,0.05); font-size: 14px; }
         .price-item strong { color: var(--neon-blue); }
 
-        .info-text { font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-top: 15px; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; }
-
-        .btn-order-wa {
-            width: 100%; padding: 15px; background: #10b981; color: #fff;
-            border: none; border-radius: 12px; font-weight: 800; margin-top: 15px; cursor: pointer;
-        }
+        .btn-order-wa { width: 100%; padding: 15px; background: #10b981; color: #fff; border: none; border-radius: 12px; font-weight: 800; margin-top: 15px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -170,75 +140,48 @@
 
         <a href="https://www.instagram.com/elthoriqqqq_?igsh=MTE1MXgzZ3hzNG5hdQ%3D%3D&utm_source=qr" class="btn-ig reveal" target="_blank">Follow Our Instagram</a>
 
-        <!-- MLBB SECTION -->
         <div class="section-title reveal">🎮 Mobile Legends</div>
         <div class="card card-pink reveal">
-            <h3 class="card-title">Create Akun MLBB</h3>
-            <p class="card-desc">Jasa buat akun baru Original 1 Server atau Cabang Server. Fresh & Allkos.</p>
+            <h3>Create Akun MLBB</h3>
+            <p>Original 1 Server atau Cabang Server. Fresh & Allkos.</p>
             <button class="btn-action" onclick="initOrder('MLBB')">Lihat Daftar Harga</button>
         </div>
 
         <div class="section-title reveal">🔥 Exclusive Script</div>
         <div class="card card-purple reveal">
-            <h3 class="card-title">Bot JPM Pro</h3>
-            <p class="card-desc">Sistem push promosi tercanggih. Auto Rekap Proses & Done.</p>
+            <h3>Bot JPM Pro</h3>
+            <p>Sistem push promosi tercanggih. Auto Rekap Proses & Done.</p>
             <button class="btn-action" onclick="initOrder('JPM')">Lihat Daftar Harga</button>
         </div>
 
         <div class="section-title reveal">🛡️ Premium Access</div>
-        
-        <div class="card reveal">
-            <h3 class="card-title">IPVanish VPN</h3>
-            <p class="card-desc">Privasi tinggi dengan kecepatan optimal. Paket Sharing Hemat.</p>
-            <button class="btn-action" onclick="initOrder('IPVanish')">Lihat Daftar Harga</button>
-        </div>
+        <div class="card reveal"><button class="btn-action" style="width:100%" onclick="initOrder('IPVanish')">IPVanish VPN</button></div>
+        <div class="card reveal"><button class="btn-action" style="width:100%" onclick="initOrder('Surfshark')">Surfshark VPN</button></div>
+        <div class="card reveal"><button class="btn-action" style="width:100%" onclick="initOrder('NordVPN')">NordVPN</button></div>
+        <div class="card reveal"><button class="btn-action" style="width:100%" onclick="initOrder('ExpressVPN')">ExpressVPN</button></div>
 
-        <div class="card reveal">
-            <h3 class="card-title">Surfshark VPN</h3>
-            <p class="card-desc">Server super banyak & koneksi wusss ⚡ Cocok buat GB / Joki.</p>
-            <button class="btn-action" onclick="initOrder('Surfshark')">Lihat Daftar Harga</button>
-        </div>
-
-        <div class="card reveal">
-            <h3 class="card-title">NordVPN</h3>
-            <p class="card-desc">Keamanan militer global. Stabil & Sangat Aman.</p>
-            <button class="btn-action" onclick="initOrder('NordVPN')">Lihat Daftar Harga</button>
-        </div>
-
-        <div class="card reveal">
-            <h3 class="card-title">ExpressVPN</h3>
-            <p class="card-desc">Rajanya kecepatan VPN. Paling stabil untuk gaming & 4K.</p>
-            <button class="btn-action" onclick="initOrder('ExpressVPN')">Lihat Daftar Harga</button>
-        </div>
-
+        <!-- TEKS SORAYA NATASHA KEMBALI DI SINI -->
         <div class="support-box reveal">
             <p style="font-size: 10px; letter-spacing: 2px; color: var(--text-muted);">SUPPORTED BY</p>
             <span class="support-name">SORAYA NATASHA</span>
         </div>
     </div>
 
-    <!-- MODAL OVERLAY -->
     <div class="modal-overlay" id="overlay" onclick="closeModal()"></div>
-
-    <!-- MODAL DENGAN SLIDER -->
     <div class="custom-modal" id="modal">
         <div class="modal-slider" id="modalSlider">
             <div class="step-view">
-                <h2 id="step1Title">Informasi Pelanggan</h2>
-                <div class="input-group">
-                    <label>Nama / Username WhatsApp</label>
-                    <input type="text" id="userName" placeholder="Contoh: Thoriq">
-                </div>
-                <button class="btn-next" onclick="showPrices()">Lihat Harga Sekarang →</button>
+                <h2>Informasi Pelanggan</h2>
+                <div class="input-group"><input type="text" id="userName" placeholder="Nama Anda..."></div>
+                <button class="btn-next" onclick="showPrices()">Lanjut →</button>
             </div>
             <div class="step-view">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
                     <h2 id="modalTitle">Daftar Harga</h2>
-                    <button onclick="goBack()" style="background:none; border:none; color:var(--neon-blue); cursor:pointer;">← Back</button>
+                    <button onclick="goBack()" style="background:none; border:none; color:var(--neon-blue);">← Back</button>
                 </div>
-                <div id="priceContent" class="price-list"></div>
-                <div id="infoContent" class="info-text"></div>
-                <button class="btn-order-wa" onclick="goToWA()">Chat Admin & Order</button>
+                <div id="priceContent"></div>
+                <button class="btn-order-wa" onclick="goToWA()">Chat & Order via WA</button>
             </div>
         </div>
     </div>
@@ -246,12 +189,11 @@
     <script>
         function handleScroll() {
             const reveals = document.querySelectorAll(".reveal");
-            for (let i = 0; i < reveals.length; i++) {
-                const windowHeight = window.innerHeight;
-                const elementTop = reveals[i].getBoundingClientRect().top;
-                if (elementTop < windowHeight - 100) reveals[i].classList.add("active");
-                else reveals[i].classList.remove("active");
-            }
+            reveals.forEach(r => {
+                const elementTop = r.getBoundingClientRect().top;
+                if (elementTop < window.innerHeight - 100) r.classList.add("active");
+                else r.classList.remove("active");
+            });
         }
         window.addEventListener("scroll", handleScroll);
         handleScroll();
@@ -259,7 +201,6 @@
         let selectedProduct = "";
         function initOrder(type) {
             selectedProduct = type;
-            document.getElementById('step1Title').innerText = "Order " + type;
             document.getElementById('modalSlider').style.transform = "translateX(0)";
             document.getElementById('overlay').classList.add('active');
             document.getElementById('modal').classList.add('active');
@@ -267,92 +208,32 @@
 
         function showPrices() {
             const name = document.getElementById('userName').value;
-            if(!name) { alert("Mohon isi nama Anda!"); return; }
+            if(!name) return alert("Mohon isi nama!");
             const content = document.getElementById('priceContent');
-            const info = document.getElementById('infoContent');
             content.innerHTML = "";
-            info.innerHTML = "";
-
-            if(selectedProduct === 'MLBB') {
-                content.innerHTML = `
-                    <div style="color:var(--neon-pink); font-size:12px; margin-bottom:5px; font-weight:700;">ORIGINAL ONLY 1 SERVER</div>
-                    <div class="price-item"><span>LV.3</span><strong>3K</strong></div>
-                    <div class="price-item"><span>LV.12</span><strong>6K</strong></div>
-                    <div style="color:var(--neon-pink); font-size:12px; margin:10px 0 5px; font-weight:700;">ORIGINAL CABANG SERVER (MAX 6)</div>
-                    <div class="price-item"><span>LV.3</span><strong>3K/SERVER</strong></div>
-                    <div class="price-item"><span>LV.12</span><strong>5K/SERVER</strong></div>
-                    <div style="color:var(--neon-blue); font-size:12px; margin:10px 0 5px; font-weight:700;">TUTOR BUAT AKUN</div>
-                    <div class="price-item"><span>Tutor 1S / Cabang</span><strong>Tanya Admin</strong></div>
-                `;
-                info.innerHTML = `
-                    <b>KETERANGAN:</b><br>
-                    • Fresh baru buat LV.3<br>
-                    • Login Moonton Only<br>
-                    • Allkos tinggal Bind/CE
-                `;
-            } else {
-                const pricing = {
-                    'Surfshark': [["1 MINGGU", "3K"], ["2 BULAN", "7K"], ["3 BULAN", "15K"]],
-                    'IPVanish': [["1 MINGGU", "5K"], ["1 BULAN", "13K"]],
-                    'NordVPN': [["1 MINGGU", "10K"]],
-                    'ExpressVPN': [["1 MINGGU", "5K"]],
-                    'JPM': [["Lifetime", "Tanya Admin"]]
-                };
-                const data = pricing[selectedProduct] || [];
-                data.forEach(p => {
-                    content.innerHTML += `<div class="price-item"><span>${p[0]}</span><strong>${p[1]}</strong></div>`;
-                });
-            }
-
+            
+            const pricing = {
+                'MLBB': [["LV.3 (1S)", "3K"], ["LV.12 (1S)", "6K"], ["LV.3 (Cabang)", "3K/S"], ["LV.12 (Cabang)", "5K/S"]],
+                'Surfshark': [["1 MINGGU", "3K"], ["2 BULAN", "7K"], ["3 BULAN", "15K"]],
+                'IPVanish': [["1 MINGGU", "5K"], ["1 BULAN", "13K"]],
+                'NordVPN': [["1 MINGGU", "10K"]],
+                'ExpressVPN': [["1 MINGGU", "5K"]],
+                'JPM': [["Lifetime", "Tanya Admin"]]
+            };
+            (pricing[selectedProduct] || []).forEach(p => {
+                content.innerHTML += `<div class="price-item"><span>${p[0]}</span><strong>${p[1]}</strong></div>`;
+            });
             document.getElementById('modalSlider').style.transform = "translateX(-50%)";
         }
 
         function goBack() { document.getElementById('modalSlider').style.transform = "translateX(0)"; }
-        function closeModal() {
-            document.getElementById('overlay').classList.remove('active');
-            document.getElementById('modal').classList.remove('active');
-        }
+        function closeModal() { document.getElementById('overlay').classList.remove('active'); document.getElementById('modal').classList.remove('active'); }
         
         function goToWA() {
             const name = document.getElementById('userName').value;
-            let text = "";
-
-            if (selectedProduct === "MLBB") {
-                text = `*───［ pediaaboyy ］───*\n` +
-                       `*Chat :* Online\n\n` +
-                       `*🔥 ORDER CREATE AKUN MLBB 🔥*\n` +
-                       `*Nama Pelanggan:* ${name}\n` +
-                       `*Produk:* Create Akun MLBB (Original/Cabang)\n\n` +
-                       `*KETERANGAN ACCOUNT:*\n` +
-                       `• Fresh baru buat LV.3\n` +
-                       `• Login Moonton Only\n` +
-                       `• Allkos tinggal Bind/CE\n\n` +
-                       `*Payment:*\n` +
-                       `• DANA\n` +
-                       `• GOPAY\n` +
-                       `• QRISS ALL PAYMENT\n\n` +
-                       `*Powered by pediaboy*`;
-            } else if (selectedProduct === "Surfshark") {
-                text = `*───［ pediaaboyy ］───*\n` +
-                       `*Chat :* Online\n\n` +
-                       `*🔥 READY PROMO VPN PREMIUM SURFSHARK 🔥*\n` +
-                       `*Nama Pelanggan:* ${name}\n\n` +
-                       `*LIST HARGA:*\n` +
-                       `• 1 MINGGU : 3K\n` +
-                       `• 2 BULAN : 7K\n` +
-                       `• 3 BULAN : 15K\n\n` +
-                       `✅ *Kelebihan:* Server wusss & FULL GARANSI!\n\n` +
-                       `*Powered by pediaboy*`;
-            } else {
-                text = `*───［ pediaaboyy ］───*\n` +
-                       `*Chat :* Online\n\n` +
-                       `*Nama Pelanggan:* ${name}\n` +
-                       `*Produk:* ${selectedProduct}\n\n` +
-                       `Saya ingin order produk di atas, mohon segera diproses ya admin!\n\n` +
-                       `*Powered by pediaboy*`;
-            }
-
-            window.open(`https://wa.me/pediaboy?text=${encodeURIComponent(text)}`, "_blank");
+            const phone = "082172222494";
+            let text = `*───［ pediaaboyy ］───*\n*Nama:* ${name}\n*Order:* ${selectedProduct}\n\nMohon segera diproses admin!\n*Powered by pediaboy*`;
+            window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, "_blank");
         }
     </script>
 </body>
