@@ -68,7 +68,6 @@
 
         .container { width: 100%; max-width: 480px; margin: 0 auto; padding: 20px; }
 
-        /* SECTION TITLE */
         .section-title {
             font-size: 13px; font-weight: 700; color: var(--neon-blue);
             text-transform: uppercase; letter-spacing: 2px;
@@ -141,11 +140,13 @@
         <a href="#" class="sidebar-item" onclick="toggleSidebar(); initOrder('JPM')">Bot JPM Pro</a>
         <a href="#" class="sidebar-item" onclick="toggleSidebar(); initOrder('Surfshark')">Surfshark VPN</a>
         <a href="#" class="sidebar-item" onclick="toggleSidebar(); initOrder('IPVanish')">IPVanish VPN</a>
+        <a href="#" class="sidebar-item" onclick="toggleSidebar(); initOrder('NordVPN')">NordVPN</a>
+        <a href="#" class="sidebar-item" onclick="toggleSidebar(); initOrder('ExpressVPN')">ExpressVPN</a>
         <a href="#" class="sidebar-item" onclick="window.open('https://wa.me/6282172222494')">Hubungi Admin</a>
     </div>
 
     <div class="container">
-        <!-- ALL CONTENT FROM PREVIOUS STEPS -->
+        <!-- GAME SECTION -->
         <div class="section-title reveal">🎮 Game Services</div>
         <div class="card card-pink reveal">
             <h3>Create Akun MLBB</h3>
@@ -153,6 +154,7 @@
             <button class="btn-action" onclick="initOrder('MLBB')">Daftar Harga</button>
         </div>
 
+        <!-- SCRIPT SECTION -->
         <div class="section-title reveal">🔥 Exclusive Script</div>
         <div class="card card-purple reveal">
             <h3>Bot JPM Pro</h3>
@@ -160,21 +162,39 @@
             <button class="btn-action" onclick="initOrder('JPM')">Daftar Harga</button>
         </div>
 
+        <!-- VPN SECTION - SEMUA TERPISAH -->
         <div class="section-title reveal">🛡️ VPN Premium</div>
         <div class="card reveal">
             <h3>Surfshark VPN</h3>
+            <p>Koneksi stabil, server melimpah, dan garansi penuh.</p>
             <button class="btn-action" onclick="initOrder('Surfshark')">Daftar Harga</button>
         </div>
         <div class="card reveal">
-            <h3>ExpressVPN</h3>
-            <button class="btn-action" onclick="initOrder('ExpressVPN')">Daftar Harga</button>
-        </div>
-        <div class="card reveal">
-            <h3>IPVanish / NordVPN</h3>
+            <h3>IPVanish VPN</h3>
+            <p>Privasi tinggi dengan paket sharing hemat.</p>
             <button class="btn-action" onclick="initOrder('IPVanish')">Daftar Harga</button>
         </div>
+        <div class="card reveal">
+            <h3>NordVPN</h3>
+            <p>Keamanan militer dengan server global stabil.</p>
+            <button class="btn-action" onclick="initOrder('NordVPN')">Daftar Harga</button>
+        </div>
+        <div class="card reveal">
+            <h3>ExpressVPN</h3>
+            <p>Rajanya kecepatan VPN untuk gaming & 4K.</p>
+            <button class="btn-action" onclick="initOrder('ExpressVPN')">Daftar Harga</button>
+        </div>
 
-        <div class="neon-branding">
+        <!-- SYARAT & KETENTUAN (ToS) -->
+        <div class="section-title reveal">📝 Syarat & Ketentuan</div>
+        <div class="card reveal" style="font-size: 13px; color: var(--text-dim); line-height: 1.6;">
+            <p>• Dilarang keras menggunakan akun/script untuk tindakan ilegal.<br>
+               • Garansi berlaku sesuai masa aktif yang dibeli.<br>
+               • Kesalahan input data oleh pembeli bukan tanggung jawab admin.<br>
+               • Membeli berarti setuju dengan seluruh peraturan Pediaboy Store.</p>
+        </div>
+
+        <div class="neon-branding reveal">
             <p style="font-size: 10px; color: var(--text-dim); margin-bottom: 8px; letter-spacing: 2px;">POWERED BY</p>
             <span>SORAYA NATASHA</span>
         </div>
@@ -236,7 +256,7 @@
         function sendWA() {
             const name = document.getElementById('uName').value;
             if(!name) return alert("Masukkan nama!");
-            const text = `*───［ pediaaboyy ］───*\n*Nama:* ${name}\n*Order:* ${currentType}\n\nMohon diproses admin!\n*Powered by pediaboy*`;
+            const text = `*───［ pediaaboyy ］───*\n*Nama:* ${name}\n*Order:* ${currentType}\n\nMohon segera diproses admin!\n*Powered by pediaboy*`;
             window.open(`https://wa.me/6282172222494?text=${encodeURIComponent(text)}`, '_blank');
         }
     </script>
