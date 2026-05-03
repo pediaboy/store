@@ -35,6 +35,7 @@
             display: flex; flex-direction: column; align-items: center;
         }
 
+        /* HEADER */
         .header { text-align: center; margin-bottom: 40px; }
         .header h1 {
             font-size: 42px; font-weight: 900; letter-spacing: 2px;
@@ -63,6 +64,7 @@
         }
         .section-title::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, var(--neon-blue), transparent); }
 
+        /* CARDS */
         .card { 
             background: var(--glass-bg); backdrop-filter: blur(12px);
             border-radius: 20px; padding: 24px; border: 1px solid rgba(255, 255, 255, 0.05); 
@@ -76,6 +78,9 @@
         .card-purple::before { background: var(--neon-purple); box-shadow: 0 0 15px var(--neon-purple); }
         .card-pink::before { background: var(--neon-pink); box-shadow: 0 0 15px var(--neon-pink); }
 
+        .card h3 { font-size: 22px; margin-bottom: 8px; font-weight: 700; }
+        .card p { font-size: 14px; color: var(--text-muted); line-height: 1.5; margin-bottom: 20px; }
+
         .btn-action {
             display: block; width: 100%; padding: 14px;
             background: transparent; border: 1px solid var(--neon-blue);
@@ -86,18 +91,26 @@
         .card-purple .btn-action { border-color: var(--neon-purple); color: var(--neon-purple); }
         .card-pink .btn-action { border-color: var(--neon-pink); color: var(--neon-pink); }
 
+        /* SORAYA NATASHA NEON */
         .support-box {
             margin-top: 50px; text-align: center; padding: 20px; border-radius: 20px;
-            background: rgba(236, 72, 153, 0.05); border: 1px solid rgba(236, 72, 153, 0.2);
+            background: rgba(236, 72, 153, 0.05); border: 1px solid rgba(236, 72, 153, 0.3);
+            width: 100%; box-shadow: 0 0 20px rgba(236, 72, 153, 0.1);
         }
-        .support-name { display: block; font-size: 18px; font-weight: 900; color: var(--neon-pink); letter-spacing: 2px; margin-top: 5px;}
+        .support-name { 
+            display: block; font-size: 22px; font-weight: 900; color: var(--neon-pink); 
+            letter-spacing: 3px; margin-top: 5px;
+            text-shadow: 0 0 10px var(--neon-pink), 0 0 20px var(--neon-pink);
+        }
 
+        /* ANIMASI SCROLL */
         .reveal {
             opacity: 0; transform: translateY(50px) scale(0.95);
             transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
         }
         .reveal.active { opacity: 1; transform: translateY(0) scale(1); }
 
+        /* MODAL */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.9); backdrop-filter: blur(15px);
@@ -112,21 +125,13 @@
             z-index: 1000; display: none; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
         .custom-modal.active { display: block; animation: modalPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-
         @keyframes modalPop { from { opacity: 0; transform: translate(-50%, -45%) scale(0.9); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
 
         .modal-slider { display: flex; width: 200%; transition: transform 0.5s ease; }
         .step-view { width: 50%; padding: 25px; flex-shrink: 0; }
-
-        .input-group input {
-            width: 100%; padding: 15px; border-radius: 12px; background: rgba(0,0,0,0.5);
-            border: 1px solid rgba(255,255,255,0.1); color: #fff; font-family: 'Outfit'; outline: none;
-        }
+        .input-group input { width: 100%; padding: 15px; border-radius: 12px; background: #000; border: 1px solid #333; color: #fff; font-family: 'Outfit'; outline: none; }
         .btn-next { width: 100%; padding: 15px; background: var(--neon-blue); color: #000; border: none; border-radius: 12px; font-weight: 800; margin-top: 20px; cursor: pointer; }
-
-        .price-item { display: flex; justify-content: space-between; padding: 12px; background: rgba(255,255,255,0.03); border-radius: 10px; margin-bottom: 8px; border: 1px solid rgba(255,255,255,0.05); font-size: 14px; }
-        .price-item strong { color: var(--neon-blue); }
-
+        .price-item { display: flex; justify-content: space-between; padding: 12px; background: rgba(255,255,255,0.03); border-radius: 10px; margin-bottom: 8px; border: 1px solid rgba(255,255,255,0.05); }
         .btn-order-wa { width: 100%; padding: 15px; background: #10b981; color: #fff; border: none; border-radius: 12px; font-weight: 800; margin-top: 15px; cursor: pointer; }
     </style>
 </head>
@@ -143,7 +148,7 @@
         <div class="section-title reveal">🎮 Mobile Legends</div>
         <div class="card card-pink reveal">
             <h3>Create Akun MLBB</h3>
-            <p>Original 1 Server atau Cabang Server. Fresh & Allkos.</p>
+            <p>Jasa buat akun baru Original 1 Server atau Cabang Server. Allkos tinggal Bind.</p>
             <button class="btn-action" onclick="initOrder('MLBB')">Lihat Daftar Harga</button>
         </div>
 
@@ -155,13 +160,33 @@
         </div>
 
         <div class="section-title reveal">🛡️ Premium Access</div>
-        <div class="card reveal"><button class="btn-action" style="width:100%" onclick="initOrder('IPVanish')">IPVanish VPN</button></div>
-        <div class="card reveal"><button class="btn-action" style="width:100%" onclick="initOrder('Surfshark')">Surfshark VPN</button></div>
-        <div class="card reveal"><button class="btn-action" style="width:100%" onclick="initOrder('NordVPN')">NordVPN</button></div>
-        <div class="card reveal"><button class="btn-action" style="width:100%" onclick="initOrder('ExpressVPN')">ExpressVPN</button></div>
+        
+        <div class="card reveal">
+            <h3>IPVanish VPN</h3>
+            <p>Privasi tinggi dengan kecepatan optimal. Paket Sharing Hemat.</p>
+            <button class="btn-action" onclick="initOrder('IPVanish')">Lihat Daftar Harga</button>
+        </div>
 
-        <!-- TEKS SORAYA NATASHA KEMBALI DI SINI -->
-        <div class="support-box reveal">
+        <div class="card reveal">
+            <h3>Surfshark VPN</h3>
+            <p>Server super banyak & koneksi wusss ⚡ Cocok buat GB / Joki MMR.</p>
+            <button class="btn-action" onclick="initOrder('Surfshark')">Lihat Daftar Harga</button>
+        </div>
+
+        <div class="card reveal">
+            <h3>NordVPN</h3>
+            <p>Keamanan militer dengan ribuan server global. Sangat Stabil.</p>
+            <button class="btn-action" onclick="initOrder('NordVPN')">Lihat Daftar Harga</button>
+        </div>
+
+        <div class="card reveal">
+            <h3>ExpressVPN</h3>
+            <p>Rajanya kecepatan VPN. Paling stabil untuk gaming & streaming 4K.</p>
+            <button class="btn-action" onclick="initOrder('ExpressVPN')">Lihat Daftar Harga</button>
+        </div>
+
+        <!-- SORAYA NATASHA LANGSUNG MUNCUL & BERNEON -->
+        <div class="support-box">
             <p style="font-size: 10px; letter-spacing: 2px; color: var(--text-muted);">SUPPORTED BY</p>
             <span class="support-name">SORAYA NATASHA</span>
         </div>
@@ -171,14 +196,14 @@
     <div class="custom-modal" id="modal">
         <div class="modal-slider" id="modalSlider">
             <div class="step-view">
-                <h2>Informasi Pelanggan</h2>
+                <h2 id="step1Title">Informasi Pelanggan</h2>
                 <div class="input-group"><input type="text" id="userName" placeholder="Nama Anda..."></div>
                 <button class="btn-next" onclick="showPrices()">Lanjut →</button>
             </div>
             <div class="step-view">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
                     <h2 id="modalTitle">Daftar Harga</h2>
-                    <button onclick="goBack()" style="background:none; border:none; color:var(--neon-blue);">← Back</button>
+                    <button onclick="goBack()" style="background:none; border:none; color:var(--neon-blue); cursor:pointer;">← Back</button>
                 </div>
                 <div id="priceContent"></div>
                 <button class="btn-order-wa" onclick="goToWA()">Chat & Order via WA</button>
@@ -190,8 +215,8 @@
         function handleScroll() {
             const reveals = document.querySelectorAll(".reveal");
             reveals.forEach(r => {
-                const elementTop = r.getBoundingClientRect().top;
-                if (elementTop < window.innerHeight - 100) r.classList.add("active");
+                const top = r.getBoundingClientRect().top;
+                if (top < window.innerHeight - 100) r.classList.add("active");
                 else r.classList.remove("active");
             });
         }
@@ -201,6 +226,7 @@
         let selectedProduct = "";
         function initOrder(type) {
             selectedProduct = type;
+            document.getElementById('step1Title').innerText = "Order " + type;
             document.getElementById('modalSlider').style.transform = "translateX(0)";
             document.getElementById('overlay').classList.add('active');
             document.getElementById('modal').classList.add('active');
@@ -208,10 +234,9 @@
 
         function showPrices() {
             const name = document.getElementById('userName').value;
-            if(!name) return alert("Mohon isi nama!");
+            if(!name) return alert("Isi nama dulu bos!");
             const content = document.getElementById('priceContent');
             content.innerHTML = "";
-            
             const pricing = {
                 'MLBB': [["LV.3 (1S)", "3K"], ["LV.12 (1S)", "6K"], ["LV.3 (Cabang)", "3K/S"], ["LV.12 (Cabang)", "5K/S"]],
                 'Surfshark': [["1 MINGGU", "3K"], ["2 BULAN", "7K"], ["3 BULAN", "15K"]],
@@ -231,9 +256,8 @@
         
         function goToWA() {
             const name = document.getElementById('userName').value;
-            const phone = "082172222494";
-            let text = `*───［ pediaaboyy ］───*\n*Nama:* ${name}\n*Order:* ${selectedProduct}\n\nMohon segera diproses admin!\n*Powered by pediaboy*`;
-            window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, "_blank");
+            const text = `*───［ pediaaboyy ］───*\n*Nama:* ${name}\n*Order:* ${selectedProduct}\n\nMohon segera diproses admin!\n*Powered by pediaboy*`;
+            window.open(`https://wa.me/082172222494?text=${encodeURIComponent(text)}`, "_blank");
         }
     </script>
 </body>
