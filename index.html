@@ -7,8 +7,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #03050a; /* Hitam pekat eksklusif */
-            --glass-bg: rgba(13, 17, 28, 0.6);
+            --bg-color: #03050a; 
+            --glass-bg: rgba(13, 17, 28, 0.8);
             --neon-blue: #00f2fe;
             --neon-purple: #8b5cf6;
             --neon-pink: #ec4899;
@@ -23,7 +23,6 @@
             color: var(--text-main); 
             font-family: 'Outfit', sans-serif; 
             overflow-x: hidden;
-            /* Background efek aura neon */
             background-image: 
                 radial-gradient(circle at 15% 50%, rgba(139, 92, 246, 0.1), transparent 25%),
                 radial-gradient(circle at 85% 30%, rgba(0, 242, 254, 0.1), transparent 25%);
@@ -36,273 +35,200 @@
             display: flex; flex-direction: column; align-items: center;
         }
 
-        /* Teks PEDIABOY Animasi Mengkilap */
-        .header { text-align: center; margin-bottom: 40px; position: relative; }
+        /* HEADER & ANIMASI TEKS */
+        .header { text-align: center; margin-bottom: 40px; }
         .header h1 {
-            font-size: 42px;
-            font-weight: 900;
-            letter-spacing: 2px;
+            font-size: 42px; font-weight: 900; letter-spacing: 2px;
             text-transform: uppercase;
-            /* Animasi warna */
             background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple), var(--neon-pink), var(--neon-blue));
             background-size: 300% 100%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             animation: gradientShine 4s linear infinite;
             text-shadow: 0 0 25px rgba(0, 242, 254, 0.3);
             margin-bottom: 10px;
         }
-        .header p { color: var(--text-muted); font-size: 15px; font-weight: 300; letter-spacing: 1px;}
+        @keyframes gradientShine { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
 
-        @keyframes gradientShine {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 100% 50%; }
-        }
-
-        /* Tombol Instagram */
+        /* TOMBOL INSTAGRAM */
         .btn-ig {
             display: flex; align-items: center; justify-content: center; gap: 10px;
-            width: 100%; padding: 15px;
-            background: rgba(236, 72, 153, 0.1);
+            width: 100%; padding: 15px; background: rgba(236, 72, 153, 0.1);
             border: 1px solid rgba(236, 72, 153, 0.5);
             color: #fff; border-radius: 14px; font-weight: 700;
-            text-decoration: none; margin-bottom: 40px; font-size: 15px;
-            box-shadow: 0 0 15px rgba(236, 72, 153, 0.2);
-            transition: all 0.3s ease;
+            text-decoration: none; margin-bottom: 40px;
         }
-        .btn-ig:hover { background: var(--neon-pink); box-shadow: 0 0 25px var(--neon-pink); }
 
         .section-title {
             width: 100%; font-size: 14px; color: var(--neon-blue);
             text-transform: uppercase; letter-spacing: 3px; font-weight: 700;
             margin-bottom: 20px; display: flex; align-items: center; gap: 10px;
         }
-        .section-title::after {
-            content: ""; flex: 1; height: 1px;
-            background: linear-gradient(90deg, var(--neon-blue), transparent);
-        }
+        .section-title::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, var(--neon-blue), transparent); }
 
-        /* Kartu Desain Glassmorphism & Neon */
+        /* KARTU PRODUK */
         .card { 
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-radius: 20px; 
-            padding: 24px; 
-            border: 1px solid rgba(255, 255, 255, 0.05); 
-            margin-bottom: 25px;
-            width: 100%;
-            position: relative;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            overflow: hidden;
+            background: var(--glass-bg); backdrop-filter: blur(12px);
+            border-radius: 20px; padding: 24px; border: 1px solid rgba(255, 255, 255, 0.05); 
+            margin-bottom: 25px; width: 100%; position: relative;
+            transition: all 0.4s ease; overflow: hidden;
         }
-
-        /* Efek lampu garis di pinggir kartu */
         .card::before {
             content: ""; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
-            background: var(--neon-blue);
-            box-shadow: 0 0 15px var(--neon-blue);
-            transition: all 0.4s ease;
+            background: var(--neon-blue); box-shadow: 0 0 15px var(--neon-blue);
         }
-        .card.card-purple::before { background: var(--neon-purple); box-shadow: 0 0 15px var(--neon-purple); }
-        .card.card-pink::before { background: var(--neon-pink); box-shadow: 0 0 15px var(--neon-pink); }
+        .card-purple::before { background: var(--neon-purple); box-shadow: 0 0 15px var(--neon-purple); }
 
-        .card:hover { transform: translateY(-5px); border-color: rgba(255, 255, 255, 0.15); }
+        .card-title { font-size: 22px; font-weight: 700; margin-bottom: 5px; }
+        .card-desc { color: var(--text-muted); font-size: 14px; line-height: 1.6; margin-bottom: 20px; }
 
-        .card-header { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
-        .icon-box {
-            width: 50px; height: 50px; border-radius: 14px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 24px; background: rgba(0,0,0,0.5);
-        }
-        .icon-box img { width: 30px; height: 30px; object-fit: contain; }
-        
-        .card-title { font-size: 22px; font-weight: 700; margin: 0; letter-spacing: 0.5px;}
-        .card-price { color: #fff; font-weight: 900; font-size: 20px; margin-top: 5px; }
-        .card-price small { font-size: 12px; font-weight: 300; color: var(--text-muted); }
-
-        .card-desc { color: var(--text-muted); font-size: 14px; line-height: 1.6; margin-bottom: 20px; font-weight: 300; }
-
-        .feature-list { list-style: none; padding: 0; margin: 0 0 20px 0; }
-        .feature-list li {
-            display: flex; align-items: center; gap: 10px;
-            font-size: 13px; color: #cbd5e1; margin-bottom: 8px; font-weight: 300;
-        }
-        .feature-list li svg { width: 16px; height: 16px; color: #4ade80; }
-
-        /* Tombol Action */
+        /* TOMBOL AKSI */
         .btn-action {
             display: block; width: 100%; padding: 14px;
-            background: transparent;
-            border: 1px solid var(--neon-blue);
+            background: transparent; border: 1px solid var(--neon-blue);
             color: var(--neon-blue); border-radius: 12px;
-            font-weight: 700; text-align: center; text-decoration: none;
-            transition: 0.3s; letter-spacing: 1px;
-            position: relative; overflow: hidden; z-index: 1;
+            font-weight: 700; cursor: pointer; font-family: 'Outfit', sans-serif;
         }
-        .btn-action::after {
-            content: ""; position: absolute; bottom: 0; left: 0; width: 100%; height: 100%;
-            background: var(--neon-blue); z-index: -1;
-            transform: scaleY(0); transform-origin: bottom; transition: transform 0.3s;
-        }
-        .btn-action:hover::after { transform: scaleY(1); }
-        .btn-action:hover { color: #000; box-shadow: 0 0 20px var(--neon-blue); }
-
         .card-purple .btn-action { border-color: var(--neon-purple); color: var(--neon-purple); }
-        .card-purple .btn-action::after { background: var(--neon-purple); }
-        .card-purple .btn-action:hover { color: #fff; box-shadow: 0 0 20px var(--neon-purple); }
 
-        /* Support by Soraya Natasha */
+        /* SUPPORT BY */
         .support-box {
-            margin-top: 50px; text-align: center;
-            padding: 20px; border-radius: 20px;
-            background: rgba(236, 72, 153, 0.05);
-            border: 1px solid rgba(236, 72, 153, 0.2);
+            margin-top: 50px; text-align: center; padding: 20px; border-radius: 20px;
+            background: rgba(236, 72, 153, 0.05); border: 1px solid rgba(236, 72, 153, 0.2);
         }
-        .support-text { font-size: 12px; color: var(--text-muted); font-weight: 300; text-transform: uppercase; letter-spacing: 2px;}
-        .support-name { 
-            display: block; font-size: 20px; font-weight: 900; margin-top: 5px;
-            color: var(--neon-pink); text-shadow: 0 0 15px rgba(236, 72, 153, 0.6);
-            letter-spacing: 3px;
+        .support-name { display: block; font-size: 18px; font-weight: 900; color: var(--neon-pink); letter-spacing: 2px; margin-top: 5px;}
+
+        /* MODAL LIST HARGA */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px);
+            z-index: 999; display: none; opacity: 0; transition: 0.3s;
+        }
+        .modal-overlay.active { display: block; opacity: 1; }
+
+        .custom-modal {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9);
+            width: 90%; max-width: 400px; background: #0d111c;
+            border: 1px solid var(--neon-blue); border-radius: 20px; padding: 25px; 
+            z-index: 1000; display: none; opacity: 0; transition: 0.3s;
+        }
+        .custom-modal.active { display: block; opacity: 1; transform: translate(-50%, -50%) scale(1); }
+
+        .price-list { list-style: none; margin-top: 15px; }
+        .price-item {
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px;
+            margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.1);
+        }
+        .price-item:hover { border-color: var(--neon-blue); background: rgba(0, 242, 254, 0.05); }
+        .price-item span { font-weight: 600; }
+        .price-item strong { color: var(--neon-blue); font-size: 18px; }
+
+        .btn-order-wa {
+            width: 100%; padding: 15px; background: var(--neon-blue);
+            color: #000; border: none; border-radius: 12px; font-weight: 800;
+            margin-top: 15px; cursor: pointer; font-family: 'Outfit', sans-serif;
         }
 
-        /* =========================================
-           ANIMASI SCROLL (FADE IN & FADE OUT)
-           ========================================= */
-        .reveal {
-            opacity: 0;
-            transform: translateY(50px) scale(0.95);
-            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
-        }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
+        /* REVEAL ANIMASI */
+        .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s all ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
     </style>
 </head>
 <body>
 
     <div class="container">
-        
-        <!-- Header Section -->
         <div class="header reveal">
             <h1>PEDIABOY</h1>
             <p>Exclusive Script & Premium VPN</p>
         </div>
 
-        <!-- Tombol IG -->
-        <a href="https://www.instagram.com/elthoriqqqq_?igsh=MTE1MXgzZ3hzNG5hdQ%3D%3D&utm_source=qr" class="btn-ig reveal" target="_blank">
-            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm3.98-10.822a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-            Follow Our Instagram
-        </a>
+        <a href="https://www.instagram.com/elthoriqqqq_?igsh=MTE1MXgzZ3hzNG5hdQ%3D%3D&utm_source=qr" class="btn-ig reveal" target="_blank">Follow Our Instagram</a>
 
-        <!-- SCRIPT BOT JPM SECTION -->
         <div class="section-title reveal">🔥 Exclusive Script</div>
-
         <div class="card card-purple reveal">
-            <div class="card-header">
-                <div class="icon-box">🤖</div>
-                <div>
-                    <h3 class="card-title">Bot JPM Pro</h3>
-                    <div class="card-price">Tanya Admin</div>
-                </div>
-            </div>
-            <p class="card-desc">Sistem push promosi tercanggih. Dirancang khusus untuk mendominasi grup WhatsApp tanpa delay.</p>
-            
-            <svg style="display:none;" id="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            
-            <ul class="feature-list">
-                <li><svg><use href="#check-icon"></use></svg> Full Akses Fitur JPM & Broadcast</li>
-                <li><svg><use href="#check-icon"></use></svg> Auto Rekap Proses & Done</li>
-                <li><svg><use href="#check-icon"></use></svg> Bypass Anti-Link System</li>
-            </ul>
-            <a href="https://wa.me/pediaboy?text=Halo+Admin,+saya+tertarik+dengan+Script+Bot+JPM" class="btn-action">Hubungi Admin</a>
+            <h3 class="card-title">Bot JPM Pro</h3>
+            <p class="card-desc">Sistem push promosi tercanggih. Auto Rekap Proses & Done.</p>
+            <button class="btn-action" onclick="openModal('JPM')">Lihat Daftar Harga</button>
         </div>
 
-
-        <!-- VPN PREMIUM SECTION -->
         <div class="section-title reveal">🛡️ Premium Access</div>
-
-        <!-- ExpressVPN -->
         <div class="card reveal">
-            <div class="card-header">
-                <div class="icon-box">
-                    <img src="https://www.expressvpn.com/apple-touch-icon.png" alt="ExpressVPN">
-                </div>
-                <div>
-                    <h3 class="card-title">ExpressVPN</h3>
-                    <div class="card-price">Rp 45.000 <small>/ Bulan</small></div>
-                </div>
-            </div>
-            <p class="card-desc">Rajanya kecepatan. Sangat andal untuk kebutuhan gaming kompetitif dan menonton video kualitas 4K.</p>
-            <a href="https://wa.me/pediaboy?text=Halo+Admin,+saya+mau+order+ExpressVPN" class="btn-action">Order ExpressVPN</a>
+            <h3 class="card-title">Surfshark VPN</h3>
+            <p class="card-desc">Server super banyak & koneksi wusss ⚡ Cocok buat anak GB / Joki MMR.</p>
+            <button class="btn-action" onclick="openModal('Surfshark')">Lihat Daftar Harga</button>
         </div>
 
-        <!-- NordVPN -->
-        <div class="card reveal">
-            <div class="card-header">
-                <div class="icon-box">
-                    <img src="https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/nordvpn.png" alt="NordVPN">
-                </div>
-                <div>
-                    <h3 class="card-title">NordVPN</h3>
-                    <div class="card-price">Rp 30.000 <small>/ Bulan</small></div>
-                </div>
-            </div>
-            <p class="card-desc">Keamanan militer. Server terbanyak di dunia untuk mengamankan identitas digital Anda.</p>
-            <a href="https://wa.me/pediaboy?text=Halo+Admin,+saya+mau+order+NordVPN" class="btn-action">Order NordVPN</a>
-        </div>
-
-        <!-- Surfshark -->
-        <div class="card reveal">
-            <div class="card-header">
-                <div class="icon-box">
-                    <img src="https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/surfshark.png" alt="Surfshark">
-                </div>
-                <div>
-                    <h3 class="card-title">Surfshark</h3>
-                    <div class="card-price">Rp 25.000 <small>/ Bulan</small></div>
-                </div>
-            </div>
-            <p class="card-desc">Koneksi stabil dan aman untuk akses tak terbatas. Cocok untuk bypass server luar negeri.</p>
-            <a href="https://wa.me/pediaboy?text=Halo+Admin,+saya+mau+order+Surfshark" class="btn-action">Order Surfshark</a>
-        </div>
-
-        <!-- Support By Section -->
         <div class="support-box reveal">
-            <span class="support-text">System Supported By</span>
+            <p style="font-size: 10px; letter-spacing: 2px; color: var(--text-muted);">SUPPORTED BY</p>
             <span class="support-name">SORAYA NATASHA</span>
         </div>
-
     </div>
 
-    <!-- Script Javascript untuk Animasi Scroll -->
+    <!-- MODAL POPUP -->
+    <div class="modal-overlay" id="overlay" onclick="closeModal()"></div>
+    <div class="custom-modal" id="modal">
+        <h2 id="modalTitle" style="text-align: center; margin-bottom: 5px;">Daftar Harga</h2>
+        <p id="modalSub" style="text-align: center; font-size: 13px; color: var(--text-muted); margin-bottom: 20px;"></p>
+        
+        <div id="priceContent" class="price-list">
+            <!-- Isi Harga Muncul Di Sini -->
+        </div>
+
+        <button class="btn-order-wa" onclick="goToWA()">Chat Admin Sekarang</button>
+    </div>
+
     <script>
+        // Animasi Scroll
         function reveal() {
             var reveals = document.querySelectorAll(".reveal");
             for (var i = 0; i < reveals.length; i++) {
                 var windowHeight = window.innerHeight;
                 var elementTop = reveals[i].getBoundingClientRect().top;
-                
-                // Jarak elemen muncul dari bawah
-                var elementVisible = 50; 
-
-                // Jika elemen masuk ke layar, tambahkan class 'active' (muncul)
-                if (elementTop < windowHeight - elementVisible) {
-                    reveals[i].classList.add("active");
-                } 
-                // Jika elemen keluar layar, hapus class 'active' (hilang lagi)
-                else {
-                    reveals[i].classList.remove("active");
-                }
+                if (elementTop < windowHeight - 50) { reveals[i].classList.add("active"); }
+                else { reveals[i].classList.remove("active"); }
             }
         }
+        window.addEventListener("scroll", reveal); reveal();
 
-        // Jalankan saat di-scroll
-        window.addEventListener("scroll", reveal);
-        // Jalankan sekali saat web pertama kali dibuka
-        reveal();
+        let selectedProduct = "";
+
+        function openModal(type) {
+            selectedProduct = type;
+            const content = document.getElementById('priceContent');
+            const title = document.getElementById('modalTitle');
+            const sub = document.getElementById('modalSub');
+            content.innerHTML = "";
+
+            if(type === 'Surfshark') {
+                title.innerText = "Surfshark Premium";
+                sub.innerText = "Full Garansi & Support 24/7";
+                const prices = [
+                    {dur: "1 MINGGU", prc: "3K"},
+                    {dur: "2 BULAN", prc: "7K"},
+                    {dur: "3 BULAN", prc: "15K"}
+                ];
+                prices.forEach(p => {
+                    content.innerHTML += `<div class="price-item"><span>${p.dur}</span><strong>${p.prc}</strong></div>`;
+                });
+            } else {
+                title.innerText = "Bot JPM Pro";
+                sub.innerText = "Sewa / Beli Script Lifetime";
+                content.innerHTML = `<div class="price-item" style="justify-content:center;"><strong>Tanya Admin via Chat</strong></div>`;
+            }
+
+            document.getElementById('overlay').classList.add('active');
+            document.getElementById('modal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('overlay').classList.remove('active');
+            document.getElementById('modal').classList.remove('active');
+        }
+
+        function goToWA() {
+            const text = `Halo Admin Pediaboy!\n\nSaya ingin order *${selectedProduct}*.\n\nMohon dibantu proses ya!`;
+            window.open(`https://wa.me/pediaboy?text=${encodeURIComponent(text)}`, "_blank");
+        }
     </script>
-
 </body>
 </html>
