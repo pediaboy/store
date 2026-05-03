@@ -152,10 +152,33 @@
         </div>
 
         <div class="section-title reveal">🛡️ Premium Access</div>
+        
+        <!-- IPVanish -->
+        <div class="card reveal">
+            <h3 class="card-title">IPVanish VPN</h3>
+            <p class="card-desc">Privasi tinggi dengan kecepatan optimal. Paket Sharing Hemat.</p>
+            <button class="btn-action" onclick="openModal('IPVanish')">Lihat Daftar Harga</button>
+        </div>
+
+        <!-- Surfshark -->
         <div class="card reveal">
             <h3 class="card-title">Surfshark VPN</h3>
             <p class="card-desc">Server super banyak & koneksi wusss ⚡ Cocok buat anak GB / Joki MMR.</p>
             <button class="btn-action" onclick="openModal('Surfshark')">Lihat Daftar Harga</button>
+        </div>
+
+        <!-- NordVPN -->
+        <div class="card reveal">
+            <h3 class="card-title">NordVPN</h3>
+            <p class="card-desc">Keamanan militer dengan ribuan server global. Stabil & Aman.</p>
+            <button class="btn-action" onclick="openModal('NordVPN')">Lihat Daftar Harga</button>
+        </div>
+
+        <!-- ExpressVPN -->
+        <div class="card reveal">
+            <h3 class="card-title">ExpressVPN</h3>
+            <p class="card-desc">Rajanya kecepatan VPN. Paling stabil untuk gaming & streaming.</p>
+            <button class="btn-action" onclick="openModal('ExpressVPN')">Lihat Daftar Harga</button>
         </div>
 
         <div class="support-box reveal">
@@ -206,6 +229,34 @@
                     {dur: "1 MINGGU", prc: "3K"},
                     {dur: "2 BULAN", prc: "7K"},
                     {dur: "3 BULAN", prc: "15K"}
+                ];
+                prices.forEach(p => {
+                    content.innerHTML += `<div class="price-item"><span>${p.dur}</span><strong>${p.prc}</strong></div>`;
+                });
+            } else if(type === 'IPVanish') {
+                title.innerText = "IPVanish Premium";
+                sub.innerText = "Paket Sharing Bergaransi";
+                const prices = [
+                    {dur: "1 MINGGU", prc: "5K"},
+                    {dur: "1 BULAN", prc: "13K"}
+                ];
+                prices.forEach(p => {
+                    content.innerHTML += `<div class="price-item"><span>${p.dur}</span><strong>${p.prc}</strong></div>`;
+                });
+            } else if(type === 'NordVPN') {
+                title.innerText = "NordVPN Premium";
+                sub.innerText = "Keamanan Global Terbaik";
+                const prices = [
+                    {dur: "1 MINGGU", prc: "10K"}
+                ];
+                prices.forEach(p => {
+                    content.innerHTML += `<div class="price-item"><span>${p.dur}</span><strong>${p.prc}</strong></div>`;
+                });
+            } else if(type === 'ExpressVPN') {
+                title.innerText = "ExpressVPN Premium";
+                sub.innerText = "Koneksi Tercepat & Paling Stabil";
+                const prices = [
+                    {dur: "1 MINGGU", prc: "5K"}
                 ];
                 prices.forEach(p => {
                     content.innerHTML += `<div class="price-item"><span>${p.dur}</span><strong>${p.prc}</strong></div>`;
