@@ -99,7 +99,18 @@
         }
         .support-name { display: block; font-size: 18px; font-weight: 900; color: var(--neon-pink); letter-spacing: 2px; margin-top: 5px;}
 
-        /* SISTEM MODAL DENGAN SLIDE ANIMASI */
+        /* REVEAL ANIMASI (SCROLL FADE IN/OUT) */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px) scale(0.95);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* MODAL SYSTEM */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.9); backdrop-filter: blur(15px);
@@ -109,7 +120,7 @@
 
         .custom-modal {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 90%; max-width: 420px; height: auto; min-height: 350px;
+            width: 90%; max-width: 420px; height: auto;
             background: #0d111c; border: 1px solid rgba(0, 242, 254, 0.3);
             border-radius: 24px; overflow: hidden; z-index: 1000;
             display: none; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
@@ -121,14 +132,9 @@
             to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
         }
 
-        /* Container untuk transisi Slide antar langkah */
-        .modal-slider {
-            display: flex; width: 200%; height: 100%;
-            transition: transform 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
-        }
+        .modal-slider { display: flex; width: 200%; transition: transform 0.5s ease; }
         .step-view { width: 50%; padding: 30px; flex-shrink: 0; }
 
-        /* Step 1: Form Nama */
         .input-group { margin-top: 20px; }
         .input-group label { display: block; font-size: 13px; color: var(--text-muted); margin-bottom: 8px; }
         .input-group input {
@@ -140,24 +146,16 @@
             border: none; border-radius: 12px; font-weight: 800; margin-top: 20px; cursor: pointer;
         }
 
-        /* Step 2: List Harga */
         .price-list { margin-top: 15px; }
         .price-item {
             display: flex; justify-content: space-between; padding: 14px;
             background: rgba(255,255,255,0.03); border-radius: 12px;
             margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.05);
-            animation: itemFade 0.5s forwards; opacity: 0;
         }
-        @keyframes itemFade { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: translateX(0); } }
-
         .btn-order-wa {
             width: 100%; padding: 15px; background: #10b981; color: #fff;
             border: none; border-radius: 12px; font-weight: 800; margin-top: 15px; cursor: pointer;
         }
-
-        /* REVEAL SCROLL */
-        .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s all ease; }
-        .reveal.active { opacity: 1; transform: translateY(0); }
     </style>
 </head>
 <body>
@@ -215,71 +213,63 @@
     <!-- MODAL DENGAN SLIDER -->
     <div class="custom-modal" id="modal">
         <div class="modal-slider" id="modalSlider">
-            
-            <!-- STEP 1: INPUT NAMA -->
             <div class="step-view">
                 <h2 id="step1Title">Informasi Pelanggan</h2>
-                <p style="font-size: 13px; color: var(--text-muted); margin-top: 5px;">Silakan masukkan nama Anda</p>
                 <div class="input-group">
                     <label>Nama / Username WhatsApp</label>
                     <input type="text" id="userName" placeholder="Contoh: Thoriq">
                 </div>
                 <button class="btn-next" onclick="showPrices()">Lihat Harga Sekarang →</button>
             </div>
-
-            <!-- STEP 2: DAFTAR HARGA -->
             <div class="step-view">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
                     <h2 id="modalTitle">Daftar Harga</h2>
-                    <button onclick="goBack()" style="background:none; border:none; color:var(--neon-blue); font-size:12px; cursor:pointer;">← Kembali</button>
+                    <button onclick="goBack()" style="background:none; border:none; color:var(--neon-blue); cursor:pointer;">← Back</button>
                 </div>
-                <p id="modalSub" style="font-size: 13px; color: var(--text-muted); margin-top: 5px;"></p>
-                
-                <div id="priceContent" class="price-list">
-                    <!-- Harga di-generate JS -->
-                </div>
-
+                <div id="priceContent" class="price-list"></div>
                 <button class="btn-order-wa" onclick="goToWA()">Chat Admin & Order</button>
             </div>
-
         </div>
     </div>
 
     <script>
-        // Reveal Scroll
-        function reveal() {
-            var reveals = document.querySelectorAll(".reveal");
-            for (var i = 0; i < reveals.length; i++) {
-                var windowHeight = window.innerHeight;
-                var elementTop = reveals[i].getBoundingClientRect().top;
-                if (elementTop < windowHeight - 50) reveals[i].classList.add("active");
+        // FUNGSI UTAMA ANIMASI SCROLL (DETEKSI ATAS & BAWAH)
+        function handleScroll() {
+            const reveals = document.querySelectorAll(".reveal");
+            for (let i = 0; i < reveals.length; i++) {
+                const windowHeight = window.innerHeight;
+                const elementTop = reveals[i].getBoundingClientRect().top;
+                const elementVisible = 100;
+
+                // Muncul saat masuk ke layar (Scroll Bawah)
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                } 
+                // Hilang saat keluar layar ke atas (Scroll Atas)
+                else {
+                    reveals[i].classList.remove("active");
+                }
             }
         }
-        window.addEventListener("scroll", reveal); reveal();
+
+        // Jalankan saat scroll dan saat pertama kali buka
+        window.addEventListener("scroll", handleScroll);
+        handleScroll();
 
         let selectedProduct = "";
-
-        // Tahap awal: Simpan produk & buka modal di Step 1
         function initOrder(type) {
             selectedProduct = type;
             document.getElementById('step1Title').innerText = "Order " + type;
-            document.getElementById('userName').value = "";
             document.getElementById('modalSlider').style.transform = "translateX(0)";
-            
             document.getElementById('overlay').classList.add('active');
             document.getElementById('modal').classList.add('active');
         }
 
-        // Transisi ke Step 2 (Daftar Harga)
         function showPrices() {
             const name = document.getElementById('userName').value;
-            if(!name) { alert("Mohon isi nama Anda terlebih dahulu!"); return; }
-
+            if(!name) { alert("Mohon isi nama Anda!"); return; }
             const content = document.getElementById('priceContent');
-            const sub = document.getElementById('modalSub');
             content.innerHTML = "";
-            sub.innerText = "Harga Promo untuk: " + name;
-
             const pricing = {
                 'Surfshark': [["1 MINGGU", "3K"], ["2 BULAN", "7K"], ["3 BULAN", "15K"]],
                 'IPVanish': [["1 MINGGU", "5K"], ["1 BULAN", "13K"]],
@@ -287,17 +277,10 @@
                 'ExpressVPN': [["1 MINGGU", "5K"]],
                 'JPM': [["Lifetime", "Tanya Admin"]]
             };
-
             const data = pricing[selectedProduct] || [];
-            data.forEach((p, index) => {
-                const div = document.createElement('div');
-                div.className = 'price-item';
-                div.style.animationDelay = (index * 0.1) + 's';
-                div.innerHTML = `<span>${p[0]}</span><strong>${p[1]}</strong>`;
-                content.appendChild(div);
+            data.forEach(p => {
+                content.innerHTML += `<div class="price-item"><span>${p[0]}</span><strong>${p[1]}</strong></div>`;
             });
-
-            // Animasi Slide ke Kiri
             document.getElementById('modalSlider').style.transform = "translateX(-50%)";
         }
 
@@ -306,11 +289,9 @@
             document.getElementById('overlay').classList.remove('active');
             document.getElementById('modal').classList.remove('active');
         }
-
         function goToWA() {
             const name = document.getElementById('userName').value;
-            const text = `Halo Admin Pediaboy!\n\nNama: *${name}*\nProduk: *${selectedProduct}*\n\nSaya ingin order, mohon dibantu ya!`;
-            window.open(`https://wa.me/pediaboy?text=${encodeURIComponent(text)}`, "_blank");
+            window.open(`https://wa.me/pediaboy?text=Halo+Admin+Pediaboy!%0ANama:+*${name}*%0AProduk:+*${selectedProduct}*%0ASaya+ingin+order!`, "_blank");
         }
     </script>
 </body>
