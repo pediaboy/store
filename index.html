@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pediaboy Premium - Exclusive Store</title>
+    <title>Pediaboy Premium - Official Store</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-dark: #06090f; 
             --card-bg: #0d121d;
             --neon-blue: #00f2fe;
-            --neon-purple: #8b5cf6;
             --neon-pink: #ec4899;
             --text-main: #f8fafc;
             --text-dim: #94a3b8;
@@ -30,7 +29,7 @@
             padding-top: 75px;
         }
 
-        /* 1. LOADING SCREEN TEXTURED */
+        /* LOADING SCREEN */
         #loader {
             position: fixed; inset: 0; 
             background: radial-gradient(circle at center, #0f172a 0%, #06090f 100%);
@@ -44,7 +43,7 @@
         }
         @keyframes pulse { 0%, 100% { opacity: 0.6; transform: scale(0.95); } 50% { opacity: 1; transform: scale(1); } }
 
-        /* NAVBAR - LOGO LEFT */
+        /* NAVBAR */
         .navbar {
             position: fixed; top: 0; left: 0; width: 100%; height: 70px;
             background: rgba(13, 17, 28, 0.85); backdrop-filter: blur(15px);
@@ -54,12 +53,6 @@
         .nav-logo { font-size: 22px; font-weight: 900; color: var(--neon-blue); text-shadow: 0 0 10px rgba(0, 242, 254, 0.8); }
         .nav-menu-btn { background: rgba(255,255,255,0.05); border: none; padding: 10px; border-radius: 10px; cursor: pointer; }
         .nav-menu-btn span { display: block; width: 22px; height: 2px; background: #fff; margin: 5px 0; }
-
-        /* HERO SECTION */
-        .hero { padding: 50px 20px 40px; text-align: center; }
-        .hero h2 { font-size: 36px; font-weight: 900; line-height: 1.2; margin-bottom: 20px; }
-        .hero-features { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 400px; margin: 0 auto; }
-        .h-feat { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 12px; border-radius: 12px; font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 5px; }
 
         /* SIDEBAR */
         .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 2500; display: none; backdrop-filter: blur(5px); }
@@ -76,8 +69,11 @@
         .card { background: var(--card-bg); border-radius: 18px; padding: 24px; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px; position: relative; overflow: hidden; }
         .card::before { content: ""; position: absolute; left: 0; top: 0; height: 100%; width: 4px; background: var(--neon-blue); box-shadow: 0 0 15px var(--neon-blue); }
         .card-pink::before { background: var(--neon-pink); box-shadow: 0 0 15px var(--neon-pink); }
-        .card-purple::before { background: var(--neon-purple); box-shadow: 0 0 15px var(--neon-purple); }
         .btn-action { width: 100%; padding: 14px; background: transparent; border: 1px solid rgba(0, 242, 254, 0.4); color: var(--neon-blue); border-radius: 12px; font-weight: 700; cursor: pointer; }
+
+        /* REVEAL 2-WAY */
+        .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.7s, transform 0.7s; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
 
         /* FAQ */
         .faq-card { background: var(--card-bg); border-radius: 12px; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.05); }
@@ -85,25 +81,25 @@
         .faq-a { padding: 0 15px; max-height: 0; overflow: hidden; transition: 0.3s; color: var(--text-dim); font-size: 13px; }
         .faq-card.open .faq-a { padding: 0 15px 15px; max-height: 100px; }
 
-        /* REVEAL 2-WAY */
-        .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.7s, transform 0.7s; }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-
         /* SORAYA NATASHA */
         .neon-branding { text-align: center; padding: 25px; margin-top: 40px; border: 2px solid var(--neon-pink); border-radius: 20px; background: rgba(236, 72, 153, 0.05); box-shadow: 0 0 15px rgba(236, 72, 153, 0.2); }
         .neon-branding span { color: var(--neon-pink); font-weight: 900; font-size: 22px; letter-spacing: 4px; text-shadow: 0 0 15px var(--neon-pink); }
-
-        /* FOOTER */
-        .footer { margin-top: 50px; padding: 40px 20px; border-top: 1px solid rgba(255,255,255,0.05); }
-        .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px; }
-        .footer-col h4 { color: #fff; font-size: 14px; margin-bottom: 12px; }
-        .footer-col p { font-size: 12px; color: var(--text-dim); margin-bottom: 8px; }
 
         /* MODAL */
         .modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 4000; display: none; backdrop-filter: blur(15px); }
         .modal-box { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 400px; background: #0d111c; border: 1px solid #333; border-radius: 24px; padding: 30px; z-index: 4001; display: none; }
         .modal-active { display: block !important; }
-        .price-item { display: flex; justify-content: space-between; padding: 12px; background: rgba(255,255,255,0.03); border-radius: 10px; margin-bottom: 8px; border: 1px solid rgba(255,255,255,0.05); }
+        
+        .price-item { 
+            display: flex; justify-content: space-between; padding: 12px; 
+            background: rgba(255,255,255,0.03); border-radius: 10px; 
+            margin-bottom: 8px; border: 1px solid rgba(255,255,255,0.05); 
+            cursor: pointer; transition: 0.2s;
+        }
+        .price-item:hover { background: rgba(0, 242, 254, 0.1); border-color: var(--neon-blue); }
+        .price-item.selected { background: var(--neon-blue); color: #000; border-color: #fff; }
+        .price-item.selected strong { color: #000; }
+        .price-item strong { color: var(--neon-blue); }
     </style>
 </head>
 <body>
@@ -123,52 +119,34 @@
         <a href="#" class="sidebar-item" onclick="window.open('https://wa.me/6282172222494')">Hubungi Admin</a>
     </div>
 
-    <section class="hero reveal">
-        <h2>Premium Access Store</h2>
-        <p>Solusi VPN, Bot Script, dan Akun Game kualitas terbaik.</p>
-        <div class="hero-features">
-            <div class="h-feat">🚀 High Speed</div><div class="h-feat">🛡️ Aman Terjamin</div>
-            <div class="h-feat">🎧 Support 24/7</div><div class="h-feat">⚡ 99.9% Uptime</div>
-        </div>
-    </section>
-
     <div class="container">
-        <div class="section-title reveal">🎮 Game Services</div>
-        <div class="card card-pink reveal"><h3>Create Akun MLBB</h3><p>Original 1 Server / Cabang Server Ready.</p><button class="btn-action" onclick="initOrder('MLBB')">Daftar Harga</button></div>
+        <div class="section-title reveal">🎮 Game Account</div>
+        <div class="card card-pink reveal"><h3>Create Akun MLBB</h3><p>Original 1 Server & Cabang Server Ready. Fresh Allkos.</p><button class="btn-action" onclick="initOrder('MLBB')">Lihat Harga</button></div>
 
-        <div class="section-title reveal">🔥 Exclusive Script</div>
-        <div class="card card-purple reveal"><h3>Bot JPM Pro</h3><p>WhatsApp Automation & Anti-Link System.</p><button class="btn-action" onclick="initOrder('JPM')">Daftar Harga</button></div>
+        <div class="section-title reveal">🔥 Bot Services</div>
+        <div class="card card-purple reveal"><h3>Bot JPM Pro</h3><p>Sistem Push promosi grup WhatsApp otomatis.</p><button class="btn-action" onclick="initOrder('JPM')">Lihat Harga</button></div>
 
         <div class="section-title reveal">🛡️ VPN Premium Access</div>
-        <div class="card reveal"><h3>Surfshark VPN</h3><button class="btn-action" onclick="initOrder('Surfshark')">Daftar Harga</button></div>
-        <div class="card reveal"><h3>IPVanish VPN</h3><button class="btn-action" onclick="initOrder('IPVanish')">Daftar Harga</button></div>
-        <div class="card reveal"><h3>NordVPN</h3><button class="btn-action" onclick="initOrder('NordVPN')">Daftar Harga</button></div>
-        <div class="card reveal"><h3>ExpressVPN</h3><button class="btn-action" onclick="initOrder('ExpressVPN')">Daftar Harga</button></div>
-
-        <div class="section-title reveal">❓ FAQ</div>
-        <div class="faq-card reveal"><div class="faq-q" onclick="toggleFaq(this)">Metode pembayaran? <span>▼</span></div><div class="faq-a">DANA, GOPAY, QRIS.</div></div>
+        <div class="card reveal"><h3>Surfshark VPN</h3><button class="btn-action" onclick="initOrder('Surfshark')">Lihat Harga</button></div>
+        <div class="card reveal"><h3>IPVanish VPN</h3><button class="btn-action" onclick="initOrder('IPVanish')">Lihat Harga</button></div>
+        <div class="card reveal"><h3>NordVPN</h3><button class="btn-action" onclick="initOrder('NordVPN')">Lihat Harga</button></div>
+        <div class="card reveal"><h3>ExpressVPN</h3><button class="btn-action" onclick="initOrder('ExpressVPN')">Lihat Harga</button></div>
 
         <div class="section-title reveal">📝 Syarat & Ketentuan</div>
         <div class="card reveal" style="font-size: 13px; color: var(--text-dim); line-height: 1.6;">
-            <p>• Garansi sesuai masa aktif.<br>• Dilarang untuk tindakan ilegal.<br>• Membeli = Setuju.</p>
+            <p>• Membeli berarti setuju aturan Pediaboy.<br>• Garansi sesuai durasi paket.</p>
         </div>
 
         <div class="neon-branding reveal"><span>SORAYA NATASHA</span></div>
-
-        <footer class="footer reveal">
-            <div class="footer-grid">
-                <div class="footer-col"><h4>Layanan</h4><p>Akun MLBB</p><p>VPN Premium</p></div>
-                <div class="footer-col"><h4>Bantuan</h4><p onclick="window.open('https://wa.me/6282172222494')">Hubungi Admin</p><p>Pusat Bantuan</p></div>
-            </div>
-            <p style="font-size:11px; color: var(--text-dim);">© 2022 - 2026 Pediaboy Store. All Rights Reserved.</p>
-        </footer>
     </div>
 
+    <!-- MODAL -->
     <div class="modal-bg" id="mBg" onclick="closeModal()"></div>
     <div class="modal-box" id="mBox">
-        <h2 id="mTitle" style="margin-bottom:15px;">Order</h2>
+        <h2 id="mTitle" style="margin-bottom:5px;">Order</h2>
+        <p id="mSub" style="color:var(--text-dim); font-size:12px; margin-bottom:15px;">Klik untuk memilih paket:</p>
         <div id="mPrices"></div>
-        <input type="text" id="uName" placeholder="Nama Anda..." style="width:100%; padding:14px; background:#000; border:1px solid #333; color:#fff; border-radius:12px; margin-top:15px; outline:none;">
+        <input type="text" id="uName" placeholder="Nama WhatsApp Anda..." style="width:100%; padding:14px; background:#000; border:1px solid #333; color:#fff; border-radius:12px; margin-top:10px; outline:none;">
         <button onclick="sendWA()" style="width:100%; padding:14px; background:var(--neon-blue); border:none; border-radius:12px; font-weight:800; margin-top:20px; cursor:pointer;">Order Sekarang →</button>
     </div>
 
@@ -177,22 +155,41 @@
         function toggleSidebar() { document.getElementById('sb').classList.toggle('active'); document.getElementById('sbOverlay').classList.toggle('active'); }
         function handleReveal() { const revs = document.querySelectorAll('.reveal'); revs.forEach(r => { const rect = r.getBoundingClientRect(); if(rect.top < window.innerHeight - 50 && rect.bottom > 50) r.classList.add('active'); else r.classList.remove('active'); }); }
         window.addEventListener('scroll', handleReveal); handleReveal();
-        function toggleFaq(el) { el.parentElement.classList.toggle('open'); }
-        let currentType = "";
+
+        let selectedPkg = "";
         function initOrder(type) {
-            currentType = type;
             const p = document.getElementById('mPrices'); p.innerHTML = "";
+            selectedPkg = "";
             const pricing = {
-                'MLBB': [["LV.3 (1S)", "3K"], ["LV.12 (1S)", "6K"], ["LV.3 (Cabang)", "3K/S"]],
-                'Surfshark': [["1 MINGGU", "3K"], ["2 BULAN", "7K"]],
-                'JPM': [["Sewa/Beli", "Tanya Admin"]]
+                'MLBB': [["LV.3 (1S)", "3K"], ["LV.12 (1S)", "6K"], ["LV.3 (Cabang)", "3K/S"], ["LV.12 (Cabang)", "5K/S"]],
+                'Surfshark': [["1 Minggu", "3K"], ["2 Bulan", "7K"], ["3 Bulan", "15K"]],
+                'IPVanish': [["1 Minggu Sharing", "5K"], ["1 Bulan Sharing", "13K"]],
+                'NordVPN': [["1 Minggu", "10K"]],
+                'ExpressVPN': [["1 Minggu", "5K"]],
+                'JPM': [["Sewa/Beli Script", "Tanya Admin"]]
             };
-            (pricing[type] || [["Premium", "Tanya Admin"]]).forEach(x => { p.innerHTML += `<div class="price-item"><span>${x[0]}</span><strong>${x[1]}</strong></div>`; });
+            (pricing[type] || []).forEach(x => {
+                const div = document.createElement('div');
+                div.className = 'price-item';
+                div.innerHTML = `<span>${x[0]}</span><strong>${x[1]}</strong>`;
+                div.onclick = () => {
+                    document.querySelectorAll('.price-item').forEach(el => el.classList.remove('selected'));
+                    div.classList.add('selected');
+                    selectedPkg = `${x[0]} - ${x[1]}`;
+                };
+                p.appendChild(div);
+            });
             document.getElementById('mTitle').innerText = "Order " + type;
             document.getElementById('mBg').classList.add('modal-active'); document.getElementById('mBox').classList.add('modal-active');
         }
+
         function closeModal() { document.getElementById('mBg').classList.remove('modal-active'); document.getElementById('mBox').classList.remove('modal-active'); }
-        function sendWA() { const n = document.getElementById('uName').value; if(!n) return alert("Isi nama!"); window.open(`https://wa.me/6282172222494?text=${encodeURIComponent("*ORDER PEDIABOY*\nNama: "+n+"\nProduk: "+currentType)}`, '_blank'); }
+        function sendWA() {
+            const n = document.getElementById('uName').value;
+            if(!n) return alert("Isi nama dulu!");
+            if(!selectedPkg) return alert("Pilih paket harga dulu!");
+            window.open(`https://wa.me/6282172222494?text=${encodeURIComponent("*ORDER PEDIABOY*\nNama: "+n+"\nProduk: "+selectedPkg)}`, '_blank');
+        }
     </script>
 </body>
 </html>
