@@ -127,12 +127,7 @@
             border-radius: 24px; overflow: hidden; z-index: 1000;
             display: none; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
-        .custom-modal.active { display: block; animation: modalPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-
-        @keyframes modalPop {
-            from { opacity: 0; transform: translate(-50%, -45%) scale(0.9); }
-            to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-        }
+        .custom-modal.active { display: block; opacity: 1; transform: translate(-50%, -50%) scale(1); }
 
         .modal-slider { display: flex; width: 200%; transition: transform 0.5s ease; }
         .step-view { width: 50%; padding: 25px; flex-shrink: 0; }
@@ -317,9 +312,46 @@
             document.getElementById('overlay').classList.remove('active');
             document.getElementById('modal').classList.remove('active');
         }
+        
         function goToWA() {
             const name = document.getElementById('userName').value;
-            let text = `Halo Admin Pediaboy!\n\nNama: *${name}*\nProduk: *${selectedProduct}*\n\nSaya ingin order! Pembayaran via DANA/GOPAY/QRIS.`;
+            let text = "";
+
+            if (selectedProduct === "MLBB") {
+                text = `*───［ pediaaboyy ］───*\n` +
+                       `*Chat :* Online\n\n` +
+                       `*🔥 ORDER CREATE AKUN MLBB 🔥*\n` +
+                       `*Nama Pelanggan:* ${name}\n` +
+                       `*Produk:* Create Akun MLBB (Original/Cabang)\n\n` +
+                       `*KETERANGAN ACCOUNT:*\n` +
+                       `• Fresh baru buat LV.3\n` +
+                       `• Login Moonton Only\n` +
+                       `• Allkos tinggal Bind/CE\n\n` +
+                       `*Payment:*\n` +
+                       `• DANA\n` +
+                       `• GOPAY\n` +
+                       `• QRISS ALL PAYMENT\n\n` +
+                       `*Powered by pediaboy*`;
+            } else if (selectedProduct === "Surfshark") {
+                text = `*───［ pediaaboyy ］───*\n` +
+                       `*Chat :* Online\n\n` +
+                       `*🔥 READY PROMO VPN PREMIUM SURFSHARK 🔥*\n` +
+                       `*Nama Pelanggan:* ${name}\n\n` +
+                       `*LIST HARGA:*\n` +
+                       `• 1 MINGGU : 3K\n` +
+                       `• 2 BULAN : 7K\n` +
+                       `• 3 BULAN : 15K\n\n` +
+                       `✅ *Kelebihan:* Server wusss & FULL GARANSI!\n\n` +
+                       `*Powered by pediaboy*`;
+            } else {
+                text = `*───［ pediaaboyy ］───*\n` +
+                       `*Chat :* Online\n\n` +
+                       `*Nama Pelanggan:* ${name}\n` +
+                       `*Produk:* ${selectedProduct}\n\n` +
+                       `Saya ingin order produk di atas, mohon segera diproses ya admin!\n\n` +
+                       `*Powered by pediaboy*`;
+            }
+
             window.open(`https://wa.me/pediaboy?text=${encodeURIComponent(text)}`, "_blank");
         }
     </script>
