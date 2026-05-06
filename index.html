@@ -87,7 +87,7 @@
         .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.7s, transform 0.7s; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        /* 8. SORAYA NATASHA & ToS */
+        /* 8. PEDIABOY BRANDING & ToS */
         .neon-branding { text-align: center; padding: 25px; margin-top: 40px; border: 2px solid var(--neon-pink); border-radius: 20px; background: rgba(236, 72, 153, 0.05); }
         .neon-branding span { color: var(--neon-pink); font-weight: 900; font-size: 22px; letter-spacing: 4px; text-shadow: 0 0 15px var(--neon-pink); }
 
@@ -155,7 +155,8 @@
             <p>• Garansi berlaku sesuai masa aktif.<br>• Membeli berarti setuju aturan Pediaboy Store.</p>
         </div>
 
-        <div class="neon-branding reveal"><span>SORAYA NATASHA</span></div>
+        <!-- DIGANTI MENJADI PEDIABOY.ID -->
+        <div class="neon-branding reveal"><span>PEDIABOY.ID</span></div>
 
         <footer class="footer reveal">
             <div class="footer-grid">
@@ -172,6 +173,9 @@
         <div id="mPrices"></div>
         <input type="text" id="uName" placeholder="Nama Anda..." style="width:100%; padding:14px; background:#000; border:1px solid #333; color:#fff; border-radius:12px; margin-top:15px; outline:none;">
         <button onclick="sendWA()" style="width:100%; padding:14px; background:var(--neon-blue); border:none; border-radius:12px; font-weight:800; margin-top:20px; cursor:pointer;">Order Sekarang →</button>
+        
+        <!-- Tombol Uji Coba Digiflazz (Hanya untuk testing) -->
+        <button onclick="testDigiflazz()" style="width:100%; padding:14px; background:transparent; border:1px solid #ec4899; color:#ec4899; border-radius:12px; font-weight:800; margin-top:10px; cursor:pointer;">Test API Digiflazz</button>
     </div>
 
     <script>
@@ -203,10 +207,43 @@
             document.getElementById('mBg').classList.add('modal-active'); document.getElementById('mBox').classList.add('modal-active');
         }
         function closeModal() { document.getElementById('mBg').classList.remove('modal-active'); document.getElementById('mBox').classList.remove('modal-active'); }
+        
         function sendWA() { 
             const n = document.getElementById('uName').value; 
             if(!n || !selectedPkg) return alert("Isi nama dan pilih paket!"); 
             window.open(`https://wa.me/6282172222494?text=${encodeURIComponent("*ORDER PEDIABOY*\nNama: "+n+"\nPaket: "+selectedPkg)}`, '_blank'); 
+        }
+
+        // ==========================================
+        // SCRIPT INTEGRASI DIGIFLAZZ (CONTOH/DEMO)
+        // ==========================================
+        async function testDigiflazz() {
+            const payload = {
+                "username": "tuwumiWXAdqg",
+                "buyer_sku_code": "test",
+                "customer_no": "087800001233",
+                "ref_id": "some1d",
+                "sign": "a47659b5af3b52fb57d4b8a3c069b11b"
+            };
+
+            try {
+                alert("Mengirim request ke Digiflazz... Cek Console (F12) untuk melihat hasilnya.");
+                const response = await fetch("https://api.digiflazz.com/v1/transaction", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(payload)
+                });
+                
+                const data = await response.json();
+                console.log("Respon Digiflazz:", data);
+                alert("Request selesai! Status: " + (data.data ? data.data.status : "Gagal/CORS Error"));
+                
+            } catch (error) {
+                console.error("Terjadi Error (Biasanya karena CORS):", error);
+                alert("Gagal memanggil API Digiflazz. Ini normal karena API Digiflazz memblokir request langsung dari browser (CORS). Kamu butuh Vercel API (Backend) untuk meneruskan request ini.");
+            }
         }
     </script>
 </body>
