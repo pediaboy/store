@@ -37,13 +37,13 @@
 
         /* Auth Overlay (Login/Register) */
         #auth-overlay {
-            position: fixed; inset: 0; /* Mengganti top/left/width agar lebih stabil di HP */
+            position: fixed; inset: 0; 
             background: rgba(5, 5, 8, 0.98); backdrop-filter: blur(8px);
             display: flex; justify-content: center; align-items: center; z-index: 99999;
         }
 
         .auth-box {
-            position: relative; z-index: 100000; pointer-events: auto; /* Memastikan bisa disentuh */
+            position: relative; z-index: 100000; pointer-events: auto; 
             background: var(--card-bg); padding: 35px; border-radius: 16px;
             border: 1px solid rgba(0, 243, 255, 0.3); box-shadow: var(--neon-glow);
             width: 90%; max-width: 340px; text-align: center;
@@ -169,18 +169,18 @@
 
             <p id="auth-error-msg" style="color: #ff4444; font-size: 13px; margin-bottom: 15px; display: none; font-weight: bold;"></p>
 
-            <div id="form-login" class="auth-form active">
-                <input type="text" id="login-user" placeholder="Username" required>
+            <form id="form-login" class="auth-form active" onsubmit="event.preventDefault(); prosesLogin();">
+                <input type="text" id="login-user" placeholder="Username" required autocomplete="off">
                 <input type="password" id="login-pass" placeholder="Password" required>
-                <button type="button" class="btn-submit click-anim" onclick="prosesLogin()">MASUK DASHBOARD</button>
-            </div>
+                <button type="submit" class="btn-submit click-anim">MASUK DASHBOARD</button>
+            </form>
 
-            <div id="form-register" class="auth-form">
-                <input type="text" id="reg-user" placeholder="Buat Username" required>
+            <form id="form-register" class="auth-form" onsubmit="event.preventDefault(); prosesDaftar();">
+                <input type="text" id="reg-user" placeholder="Buat Username" required autocomplete="off">
                 <input type="password" id="reg-pass" placeholder="Buat Password" required>
-                <button type="button" class="btn-submit click-anim" onclick="prosesDaftar()">DAFTAR SEKARANG</button>
+                <button type="submit" class="btn-submit click-anim">DAFTAR SEKARANG</button>
                 <p id="reg-msg" style="color: #00ffaa; font-size: 13px; margin-top: 15px; display: none; font-weight: bold;">Sukses! Silakan Login.</p>
-            </div>
+            </form>
         </div>
     </div>
 
@@ -296,28 +296,17 @@
     </div>
 
     <script>
-        // --- 1. SISTEM DATABASE ANTI-ERROR (FALLBACK) ---
-        // Jika HP memblokir localStorage, kita pakai memori sementara (TempDB) agar tidak nge-bug/crash.
-        const TempDB = {};
+        // --- 1. JAVASCRIPT DATABASE SEDERHANA ---
+        let memoryDB = {}; // Memori murni untuk berjaga-jaga jika localStorage diblokir
         
-        function simpanData(key, val) {
-            try { localStorage.setItem(key, val); } catch(e) { TempDB[key] = val; }
+        function simpanData(user, pass) {
+            memoryDB['user_' + user] = pass;
+            try { localStorage.setItem('user_' + user, pass); } catch(e) {}
         }
-        function ambilData(key) {
-            try { return localStorage.getItem(key) || TempDB[key]; } catch(e) { return TempDB[key]; }
-        }
-        
-        let activeSession = "";
-        function simpanSesi(user) {
-            activeSession = user;
-            try { sessionStorage.setItem('activeUser', user); } catch(e) {}
-        }
-        function ambilSesi() {
-            try { return sessionStorage.getItem('activeUser') || activeSession; } catch(e) { return activeSession; }
-        }
-        function hapusSesi() {
-            activeSession = "";
-            try { sessionStorage.removeItem('activeUser'); } catch(e) {}
+        function ambilData(user) {
+            let pass = memoryDB['user_' + user];
+            try { pass = pass || localStorage.getItem('user_' + user); } catch(e) {}
+            return pass;
         }
 
         // --- 2. LOGIC LOGIN & DAFTAR ---
@@ -331,4 +320,11 @@
         function switchTab(tab) {
             document.getElementById('tab-login').classList.remove('active');
             document.getElementById('tab-register').classList.remove('active');
-   
+            document.getElementById('form-login').classList.remove('active');
+            document.getElementById('form-register').classList.remove('active');
+            
+            document.getElementById('tab-' + tab).classList.add('active');
+            document.getElementById('form-' + tab).classList.add('active');
+            
+            document.getElementById('reg-msg').style.display = 'none';
+            errorMsg.style.display = 'none
