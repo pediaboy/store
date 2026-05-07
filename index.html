@@ -7,7 +7,6 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
 
-        /* --- THEME VARIABLES --- */
         :root {
             --bg-color: #0b0b13;
             --card-bg: #151520;
@@ -17,7 +16,6 @@
             --neon-glow: 0 0 15px rgba(0, 243, 255, 0.4);
             --border-color: rgba(255, 255, 255, 0.1);
             --tab-bg: #1c1c28;
-            --overlay-bg: rgba(5, 5, 8, 0.95);
         }
 
         body.light-mode {
@@ -29,233 +27,179 @@
             --neon-glow: 0 4px 15px rgba(0, 102, 204, 0.2);
             --border-color: rgba(0, 0, 0, 0.1);
             --tab-bg: #e2e8f0;
-            --overlay-bg: rgba(255, 255, 255, 0.95);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; transition: background-color 0.3s, color 0.3s; }
+        /* Anti-Macet Fix */
+        * { 
+            margin: 0; padding: 0; box-sizing: border-box; 
+            font-family: 'Inter', sans-serif; 
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation; /* Menghilangkan delay klik di HP */
+        }
 
         body { 
             background-color: var(--bg-color); color: var(--text-main); 
-            font-size: 14px; min-height: 100vh; width: 100vw; overflow-x: hidden; 
+            font-size: 14px; min-height: 100vh; width: 100%; overflow-x: hidden; 
         }
 
-        /* --- ANIMATIONS --- */
-        .fade-element { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
-        .fade-element.visible { opacity: 1; transform: translateY(0); }
-        .click-anim { transition: transform 0.1s ease, opacity 0.2s; }
-        .click-anim:active { opacity: 0.6 !important; }
-
-        /* --- AUTH SYSTEM --- */
+        /* --- AUTH SYSTEM (PRIORITAS UTAMA) --- */
         #auth-overlay {
-            position: fixed; inset: 0; background: var(--overlay-bg); backdrop-filter: blur(8px);
-            display: flex; justify-content: center; align-items: center; z-index: 99999;
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: #050508; /* Warna solid agar tidak berat */
+            display: flex; justify-content: center; align-items: center; 
+            z-index: 999999; /* Lapisan tertinggi di semesta */
         }
+
         .auth-box {
-            background: var(--card-bg); padding: 35px; border-radius: 16px;
-            border: 1px solid var(--border-color); box-shadow: var(--neon-glow);
-            width: 90%; max-width: 340px; text-align: center; position: relative; z-index: 100000; pointer-events: auto;
+            background: var(--card-bg); padding: 30px; border-radius: 16px;
+            border: 2px solid var(--neon-color); box-shadow: var(--neon-glow);
+            width: 85%; max-width: 340px; text-align: center;
+            pointer-events: auto; /* Memastikan bisa diklik */
         }
-        .auth-tabs { display: flex; margin-bottom: 25px; border-bottom: 1px solid var(--border-color); }
+
+        .auth-tabs { display: flex; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); }
         .auth-tabs button {
             flex: 1; background: none; border: none; color: var(--text-muted);
             padding: 12px; cursor: pointer; font-weight: bold; font-size: 1rem;
         }
         .auth-tabs button.active { color: var(--neon-color); border-bottom: 3px solid var(--neon-color); }
-        .auth-form { display: none; animation: fadeInForm 0.3s ease; }
+
+        .auth-form { display: none; }
         .auth-form.active { display: block; }
-        @keyframes fadeInForm { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
         .auth-form input {
-            width: 100%; padding: 14px; margin-bottom: 15px; background: var(--bg-color); 
-            border: 1px solid var(--border-color); color: var(--text-main); border-radius: 8px; outline: none; font-size: 1rem;
+            width: 100%; padding: 14px; margin-bottom: 15px; background: rgba(0,0,0,0.3); 
+            border: 1px solid var(--border-color); color: #fff; border-radius: 8px; outline: none; font-size: 1rem;
         }
-        .auth-form input:focus { border-color: var(--neon-color); }
+        
         .btn-submit {
-            width: 100%; padding: 14px; background: var(--neon-color); color: #fff;
+            width: 100%; padding: 14px; background: var(--neon-color); color: #000;
             border: none; border-radius: 8px; font-weight: 800; cursor: pointer; font-size: 1rem;
         }
-        body:not(.light-mode) .btn-submit { color: #000; }
 
-        /* --- NAVBAR & SIDEBAR --- */
+        /* --- NAVBAR & UI --- */
         nav {
             padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;
             border-bottom: 1px solid var(--border-color); position: sticky; top: 0; 
             background: var(--bg-color); z-index: 1000;
         }
-        .logo { font-weight: 800; color: var(--text-main); font-size: 1.3rem; }
-        .nav-actions { display: flex; align-items: center; gap: 15px; }
-        .theme-toggle, .menu-toggle { background: none; border: none; color: var(--text-main); font-size: 1.5rem; cursor: pointer; }
+        .logo { font-weight: 800; font-size: 1.2rem; }
+        .nav-actions { display: flex; gap: 15px; }
         
         .sidebar {
-            position: fixed; top: 0; right: -100%; width: 260px; height: 100%;
-            background: var(--card-bg); box-shadow: -5px 0 20px rgba(0,0,0,0.5);
-            z-index: 2000; transition: 0.4s ease; padding: 20px; display: flex; flex-direction: column;
-            border-left: 1px solid var(--border-color);
+            position: fixed; top: 0; right: -280px; width: 280px; height: 100%;
+            background: var(--card-bg); z-index: 2000; transition: 0.3s; padding: 20px;
+            box-shadow: -5px 0 20px rgba(0,0,0,0.5);
         }
         .sidebar.open { right: 0; }
-        .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; }
-        .sidebar-header h2 { color: var(--neon-color); font-size: 1.2rem; }
-        .close-sidebar { background: none; border: none; color: var(--text-main); font-size: 2rem; cursor: pointer; }
-        .sidebar a {
-            display: block; padding: 12px 0; color: var(--text-main); text-decoration: none;
-            font-size: 1rem; border-bottom: 1px solid var(--border-color); font-weight: 600;
-        }
-        .sidebar a:hover { color: var(--neon-color); padding-left: 10px; }
-        .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1999; }
+        .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 1500; }
         .sidebar-overlay.open { display: block; }
 
-        /* --- HORIZONTAL TABS (Sesuai Referensi) --- */
-        .tabs-container {
-            display: flex; overflow-x: auto; gap: 10px; padding: 15px 20px;
-            scrollbar-width: none; border-bottom: 1px solid var(--border-color);
-        }
-        .tabs-container::-webkit-scrollbar { display: none; }
+        /* Tabs Horizontal */
+        .tabs-container { display: flex; overflow-x: auto; gap: 10px; padding: 15px 20px; scrollbar-width: none; }
         .cat-tab {
             background: var(--tab-bg); color: var(--text-muted); border: 1px solid var(--border-color);
-            padding: 10px 20px; border-radius: 20px; font-size: 0.9rem; font-weight: 600;
-            white-space: nowrap; cursor: pointer; display: flex; align-items: center; gap: 8px;
+            padding: 10px 18px; border-radius: 20px; white-space: nowrap; font-weight: 600; cursor: pointer;
         }
-        .cat-tab.active { background: var(--bg-color); color: var(--neon-color); border: 1px solid var(--neon-color); box-shadow: 0 0 10px rgba(0, 243, 255, 0.2) inset; }
+        .cat-tab.active { color: var(--neon-color); border-color: var(--neon-color); }
 
-        /* --- CONTENT & CARDS --- */
-        .container { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
-        .header-title { margin-bottom: 30px; text-align: left; }
-        .header-title h1 { font-size: 2rem; font-weight: 700; margin-bottom: 5px; }
-
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .product-item { display: block; } /* For filtering */
+        /* Grid Produk */
+        .container { max-width: 1000px; margin: 20px auto; padding: 0 20px; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
         .product-item.hidden { display: none; }
-
         .card { 
-            background: var(--card-bg); padding: 25px; border-radius: 12px; 
-            border: 1px solid var(--border-color); position: relative;
-            cursor: pointer; text-align: left; transition: transform 0.2s, border-color 0.3s;
+            background: var(--card-bg); padding: 25px; border-radius: 12px; border: 1px solid var(--border-color);
+            cursor: pointer; text-align: left;
         }
-        .card:hover { border-color: var(--neon-color); transform: translateY(-3px); }
-        .price-badge { 
-            display: inline-block; padding: 5px 12px; background: rgba(0, 243, 255, 0.1); 
-            color: var(--neon-color); border: 1px solid var(--neon-color); 
-            border-radius: 6px; font-size: 0.85rem; font-weight: 700; margin-bottom: 15px;
-        }
-        .card h3 { font-size: 1.3rem; margin-bottom: 10px; font-weight: 700; }
-        .card p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
+        .price-badge { display: inline-block; padding: 4px 10px; background: rgba(0, 243, 255, 0.1); color: var(--neon-color); border: 1px solid var(--neon-color); border-radius: 6px; margin-bottom: 10px; font-weight: bold; }
 
-        /* --- MODALS --- */
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 10000; justify-content: center; align-items: center; padding: 20px; }
-        .modal-content { 
-            background: var(--card-bg); padding: 25px; border-radius: 16px; width: 100%; max-width: 400px; 
-            border: 1px solid var(--neon-color); position: relative; animation: modalPop 0.3s ease; text-align: left;
-        }
-        @keyframes modalPop { 0% { transform: scale(0.9); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-        
-        .checkbox-container { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 20px; background: var(--bg-color); padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); }
-        .checkbox-container input { margin-top: 3px; accent-color: var(--neon-color); width: 16px; height: 16px; }
-        .checkbox-container label { font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; }
-        .btn-modal { width:100%; padding:14px; background:var(--neon-color); color:#fff; border:none; font-weight:800; border-radius:8px; font-size: 1rem; text-align: center;}
-        body:not(.light-mode) .btn-modal { color: #000; }
-        .btn-cancel { margin-top:10px; background:none; border:none; color:var(--text-muted); width: 100%; padding: 10px; font-weight:bold; }
+        /* Modals */
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 10000; justify-content: center; align-items: center; padding: 20px; }
+        .modal-content { background: var(--card-bg); padding: 25px; border-radius: 16px; width: 100%; max-width: 380px; border: 1px solid var(--neon-color); }
+        .checkbox-container { display: flex; gap: 10px; margin-bottom: 20px; text-align: left; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px; }
     </style>
 </head>
 <body>
 
     <div id="auth-overlay">
         <div class="auth-box">
-            <h2 style="color: var(--neon-color); margin-bottom: 20px; font-size: 1.8rem; font-weight: 800;">PEDIABOY</h2>
-            
+            <h2 style="color: var(--neon-color); margin-bottom: 20px;">PEDIABOY PORTAL</h2>
             <div class="auth-tabs">
-                <button type="button" id="tab-login" class="active click-anim" onclick="switchTab('login')">Login</button>
-                <button type="button" id="tab-register" class="click-anim" onclick="switchTab('register')">Daftar</button>
+                <button type="button" id="tab-login" class="active" onclick="switchTab('login')">Login</button>
+                <button type="button" id="tab-register" onclick="switchTab('register')">Daftar</button>
             </div>
-
-            <p id="auth-error-msg" style="color: #ff4444; font-size: 13px; margin-bottom: 15px; display: none; font-weight: bold;"></p>
-
-            <form id="form-login" class="auth-form active" onsubmit="event.preventDefault(); prosesLogin();">
-                <input type="text" id="login-user" placeholder="Username" required autocomplete="off">
-                <input type="password" id="login-pass" placeholder="Password" required>
-                <button type="submit" class="btn-submit click-anim">MASUK</button>
-            </form>
-
-            <form id="form-register" class="auth-form" onsubmit="event.preventDefault(); prosesDaftar();">
-                <input type="text" id="reg-user" placeholder="Buat Username" required autocomplete="off">
-                <input type="password" id="reg-pass" placeholder="Buat Password" required>
-                <button type="submit" class="btn-submit click-anim">DAFTAR</button>
-                <p id="reg-msg" style="color: #00ffaa; font-size: 13px; margin-top: 15px; display: none; font-weight: bold;">Sukses! Silakan Login.</p>
-            </form>
+            <p id="auth-error-msg" style="color: #ff4444; font-size: 12px; margin-bottom: 10px; display: none;"></p>
+            <div id="form-login" class="auth-form active">
+                <input type="text" id="login-user" placeholder="Username" autocomplete="off">
+                <input type="password" id="login-pass" placeholder="Password">
+                <button type="button" class="btn-submit" onclick="prosesLogin()">MASUK</button>
+            </div>
+            <div id="form-register" class="auth-form">
+                <input type="text" id="reg-user" placeholder="Buat Username" autocomplete="off">
+                <input type="password" id="reg-pass" placeholder="Buat Password">
+                <button type="button" class="btn-submit" onclick="prosesDaftar()">DAFTAR</button>
+                <p id="reg-msg" style="color: #00ffaa; font-size: 12px; margin-top: 10px; display: none;">Sukses! Silakan Login.</p>
+            </div>
         </div>
     </div>
 
-    <nav class="fade-element">
-        <div class="logo">PEDIABOY.</div>
+    <nav>
+        <div class="logo">PEDIA<span>BOY.</span></div>
         <div class="nav-actions">
-            <button class="theme-toggle click-anim" onclick="toggleTheme()" id="theme-icon">🌙</button>
-            <button class="menu-toggle click-anim" onclick="toggleSidebar()">☰</button>
+            <button onclick="toggleTheme()" style="background:none; border:none; font-size:1.5rem; cursor:pointer;" id="theme-btn">🌙</button>
+            <button onclick="toggleSidebar()" style="background:none; border:none; color:var(--text-main); font-size:1.5rem; cursor:pointer;">☰</button>
         </div>
     </nav>
 
     <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
     <div class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <h2 id="display-username">Hi, Guest</h2>
-            <button class="close-sidebar click-anim" onclick="toggleSidebar()">&times;</button>
-        </div>
-        <a href="#" onclick="filterTab('all'); toggleSidebar()">🏠 Home</a>
-        <a href="#" onclick="toggleSidebar()">💰 Harga Layanan</a>
-        <a href="#" onclick="toggleSidebar()">❓ FAQ</a>
-        <a href="#" onclick="toggleSidebar()">📜 Ketentuan Layanan</a>
-        <a href="https://wa.me/6282172222494" target="_blank">💬 Hubungi Kami (WA)</a>
-        <a href="https://instagram.com/elthoriqqqq_" target="_blank">📸 Instagram</a>
-        <a href="#" onclick="logout()" style="color: #ff4444; margin-top: auto;">🚪 Logout</a>
+        <h2 id="display-username" style="color:var(--neon-color); margin-bottom:20px;">Guest</h2>
+        <a href="#" style="display:block; padding:15px 0; color:#fff; text-decoration:none; border-bottom:1px solid #333;" onclick="toggleSidebar()">🏠 Home</a>
+        <a href="https://wa.me/6282172222494" style="display:block; padding:15px 0; color:#fff; text-decoration:none; border-bottom:1px solid #333;">💬 Hubungi Kami</a>
+        <a href="#" style="display:block; padding:15px 0; color:#ff4444; text-decoration:none;" onclick="logout()">🚪 Logout</a>
     </div>
 
-    <div class="tabs-container fade-element">
-        <div class="cat-tab active click-anim" onclick="filterTab('all', this)">⚡ Semua</div>
-        <div class="cat-tab click-anim" onclick="filterTab('web', this)">💻 Jasa Web</div>
-        <div class="cat-tab click-anim" onclick="filterTab('vpn', this)">🛡️ VPN Premium</div>
+    <div class="tabs-container">
+        <div class="cat-tab active" onclick="filterTab('all', this)">Semua</div>
+        <div class="cat-tab" onclick="filterTab('web', this)">Jasa Web</div>
+        <div class="cat-tab" onclick="filterTab('vpn', this)">VPN Premium</div>
     </div>
 
     <div class="container">
-        <header class="header-title fade-element">
-            <h1>Spesifikasi Layanan</h1>
-            <p style="color: var(--text-muted);">Detail lengkap mengenai ekosistem dan produk premium kami.</p>
-        </header>
-
-        <div class="services-grid" id="product-list">
-            <div class="product-item web fade-element">
-                <div class="card click-anim" onclick="openDetail('Web Design Premium', 'Rp 500.000+', 'Pembuatan website profesional. Desain responsif, modern, dan integrasi fitur sesuai request.', 'Garansi revisi minor & perbaikan bug.')">
-                    <div class="price-badge">Start Rp 500k</div>
-                    <h3>Jasa Pembuatan Web</h3>
-                    <p>Landing page, Toko Online, & Portofolio desain modern. Performa cepat dan stabil.</p>
+        <div class="services-grid">
+            <div class="product-item web">
+                <div class="card" onclick="openDetail('Web Premium', 'Rp 500k+', 'Website elegan, modern, & responsif.', 'Garansi 1 bulan.')">
+                    <span class="price-badge">Rp 500.000+</span>
+                    <h3>Jasa Website</h3>
+                    <p>Landing page, Toko Online, & Portofolio desain neon modern.</p>
                 </div>
             </div>
-
-            <div class="product-item vpn fade-element">
-                <div class="card click-anim" onclick="openDetail('NordVPN Premium', 'Rp 35.000', 'Akun NordVPN Premium 1 bulan. Tersedia opsi Shared atau Private. Server puluhan negara.', 'Garansi full ganti akun jika error.')">
-                    <div class="price-badge">Rp 35.000</div>
+            <div class="product-item vpn">
+                <div class="card" onclick="openDetail('NordVPN', 'Rp 35k', 'Premium 1 bulan.', 'Full Garansi.')">
+                    <span class="price-badge">Rp 35.000</span>
                     <h3>NordVPN</h3>
-                    <p>Enkripsi militer, akses server global, proteksi ekstra saat browsing.</p>
+                    <p>Koneksi aman dengan server global tercepat.</p>
                 </div>
             </div>
-
-            <div class="product-item vpn fade-element">
-                <div class="card click-anim" onclick="openDetail('ExpressVPN Premium', 'Rp 45.000', 'VPN tercepat untuk streaming dan gaming tanpa log data.', 'Garansi 1 bulan penuh via WhatsApp.')">
-                    <div class="price-badge">Rp 45.000</div>
+            <div class="product-item vpn">
+                <div class="card" onclick="openDetail('ExpressVPN', 'Rp 45k', 'Ultra fast streaming.', 'Full Garansi.')">
+                    <span class="price-badge">Rp 45.000</span>
                     <h3>ExpressVPN</h3>
-                    <p>Koneksi ultra-cepat, bypass restriksi geografis dengan elegan dan efisien.</p>
+                    <p>Bypass blokir internet dengan kecepatan tinggi.</p>
                 </div>
             </div>
-
-            <div class="product-item vpn fade-element">
-                <div class="card click-anim" onclick="openDetail('IP Vanish Premium', 'Rp 35.000', 'VPN tangguh untuk privasi tingkat tinggi dan menyembunyikan identitas online sepenuhnya.', 'Garansi resmi 1 bulan penuh.')">
-                    <div class="price-badge">Rp 35.000</div>
+            <div class="product-item vpn">
+                <div class="card" onclick="openDetail('IP Vanish', 'Rp 35k', 'Privacy protection.', 'Full Garansi.')">
+                    <span class="price-badge">Rp 35.000</span>
                     <h3>IP Vanish</h3>
-                    <p>Lindungi privasi online Anda dengan protokol keamanan tingkat tinggi.</p>
+                    <p>Sembunyikan identitas online kamu sepenuhnya.</p>
                 </div>
             </div>
-
-            <div class="product-item vpn fade-element">
-                <div class="card click-anim" onclick="openDetail('Surfshark VPN', 'Rp 30.000', 'Satu akun untuk unlimited devices. Dilengkapi fitur CleanWeb (Ad-blocker).', 'Garansi resmi 1 bulan penuh.')">
-                    <div class="price-badge">Rp 30.000</div>
+            <div class="product-item vpn">
+                <div class="card" onclick="openDetail('Surfshark', 'Rp 30k', 'Unlimited devices.', 'Full Garansi.')">
+                    <span class="price-badge">Rp 30.000</span>
                     <h3>Surfshark</h3>
-                    <p>Unlimited device, bypass pemblokiran dengan fitur bypasser khusus.</p>
+                    <p>Akses tanpa batas untuk semua perangkat kamu.</p>
                 </div>
             </div>
         </div>
@@ -263,188 +207,113 @@
 
     <div id="detailModal" class="modal">
         <div class="modal-content">
-            <h3 id="detailTitle" style="color:var(--neon-color); margin-bottom: 20px; font-size: 1.4rem;"></h3>
-            
-            <div style="margin-bottom: 20px;">
-                <p style="font-size: 0.85rem; color: var(--text-muted);">Harga Layanan:</p>
-                <p id="detailPrice" style="color: var(--text-main); font-weight: bold; font-size: 1.5rem; margin-bottom: 15px;"></p>
-                <p style="font-size: 0.85rem; color: var(--text-muted);">Rincian:</p>
-                <p id="detailDesc" style="color: var(--text-main); font-size: 0.9rem; line-height: 1.5; margin-bottom: 15px;"></p>
-                <p style="font-size: 0.85rem; color: var(--text-muted);">Garansi:</p>
-                <p id="detailGaransi" style="color: #00ffaa; font-size: 0.9rem; font-weight: 600;"></p>
-            </div>
-
+            <h2 id="detailTitle" style="color:var(--neon-color); margin-bottom:15px;"></h2>
+            <p id="detailPrice" style="font-weight:bold; font-size:1.2rem; margin-bottom:10px;"></p>
+            <p id="detailDesc" style="color:var(--text-muted); margin-bottom:15px;"></p>
             <div class="checkbox-container">
-                <input type="checkbox" id="tncCheck" class="click-anim">
-                <label for="tncCheck">Saya setuju dengan ketentuan Layanan Pediaboy.</label>
+                <input type="checkbox" id="tncCheck">
+                <label for="tncCheck" style="font-size:0.8rem;">Saya setuju dengan S&K Pediaboy.</label>
             </div>
-
-            <button type="button" onclick="proceedToPayment()" class="btn-modal click-anim">LANJUT PEMBAYARAN</button>
-            <button type="button" onclick="closeDetailModal()" class="btn-cancel click-anim">Batal</button>
+            <button onclick="proceedToPayment()" class="btn-submit">BAYAR SEKARANG</button>
+            <button onclick="closeModal()" style="background:none; border:none; color:var(--text-muted); margin-top:15px; cursor:pointer; width:100%;">Batal</button>
         </div>
     </div>
 
     <div id="orderModal" class="modal">
-        <div class="modal-content" style="text-align: center;">
-            <h3 style="color:var(--neon-color); margin-bottom: 15px;">Pembayaran</h3>
-            <div style="background: var(--bg-color); padding: 10px; border-radius: 8px; margin-bottom: 15px; border: 1px solid var(--border-color);">
-                <p id="orderSummary" style="font-weight: bold; font-size: 1rem;"></p>
-            </div>
-            
-            <div style="background: #fff; padding: 15px; border-radius: 12px; margin-bottom: 20px;">
-                <img src="https://via.placeholder.com/200x200.png?text=SCAN+QRIS+DISINI" alt="QRIS" style="width: 100%; border-radius: 8px;">
-            </div>
-            
-            <button type="button" onclick="sendWa()" class="btn-modal click-anim">KONFIRMASI WA</button>
-            <button type="button" onclick="closeOrderModal()" class="btn-cancel click-anim">Batal</button>
+        <div class="modal-content" style="text-align:center;">
+            <h2 style="color:var(--neon-color); margin-bottom:10px;">Scan QRIS</h2>
+            <img src="https://via.placeholder.com/200x200.png?text=QRIS+KAMU" style="width:100%; border-radius:10px; margin-bottom:15px;">
+            <button onclick="sendWa()" class="btn-submit">KONFIRMASI WHATSAPP</button>
         </div>
     </div>
 
     <script>
-        // --- THEME TOGGLE (DARK/LIGHT MODE) ---
-        function toggleTheme() {
-            const body = document.body;
-            const icon = document.getElementById('theme-icon');
-            body.classList.toggle('light-mode');
-            
-            if (body.classList.contains('light-mode')) {
-                icon.innerText = '☀️';
-                localStorage.setItem('theme', 'light');
+        // --- LOGIC AUTH ---
+        let memoryDB = {};
+        function simpan(u, p) { memoryDB[u] = p; try { localStorage.setItem('u_'+u, p); } catch(e) {} }
+        function ambil(u) { return memoryDB[u] || localStorage.getItem('u_'+u); }
+
+        function switchTab(t) {
+            document.getElementById('tab-login').className = (t==='login'?'active':'');
+            document.getElementById('tab-register').className = (t==='register'?'active':'');
+            document.getElementById('form-login').className = 'auth-form ' + (t==='login'?'active':'');
+            document.getElementById('form-register').className = 'auth-form ' + (t==='register'?'active':'');
+            document.getElementById('auth-error-msg').style.display = 'none';
+        }
+
+        function prosesDaftar() {
+            const u = document.getElementById('reg-user').value.trim();
+            const p = document.getElementById('reg-pass').value.trim();
+            if(!u || !p) return alert('Isi semua data!');
+            if(ambil(u)) return alert('Username sudah ada!');
+            simpan(u, p);
+            document.getElementById('reg-msg').style.display = 'block';
+            setTimeout(() => switchTab('login'), 1000);
+        }
+
+        function prosesLogin() {
+            const u = document.getElementById('login-user').value.trim();
+            const p = document.getElementById('login-pass').value.trim();
+            if(ambil(u) === p && u !== "") {
+                document.getElementById('auth-overlay').style.display = 'none';
+                document.getElementById('display-username').innerText = u;
+                sessionStorage.setItem('user', u);
             } else {
-                icon.innerText = '🌙';
-                localStorage.setItem('theme', 'dark');
+                alert('Login Gagal!');
             }
         }
-        // Load Theme on start
-        if(localStorage.getItem('theme') === 'light') toggleTheme();
 
-        // --- SIDEBAR TOGGLE ---
+        window.onload = () => {
+            const ss = sessionStorage.getItem('user');
+            if(ss) {
+                document.getElementById('auth-overlay').style.display = 'none';
+                document.getElementById('display-username').innerText = ss;
+            }
+        }
+
+        // --- UI LOGIC ---
         function toggleSidebar() {
             document.getElementById('sidebar').classList.toggle('open');
             document.getElementById('sidebar-overlay').classList.toggle('open');
         }
 
-        // --- TAB FILTERING (HORIZONTAL) ---
-        function filterTab(category, btnElement) {
-            // Ubah class active di tombol
-            if(btnElement) {
-                document.querySelectorAll('.cat-tab').forEach(btn => btn.classList.remove('active'));
-                btnElement.classList.add('active');
-            }
-            
-            // Filter grid
-            const items = document.querySelectorAll('.product-item');
-            items.forEach(item => {
-                if(category === 'all') {
-                    item.classList.remove('hidden');
-                } else {
-                    if(item.classList.contains(category)) {
-                        item.classList.remove('hidden');
-                    } else {
-                        item.classList.add('hidden');
-                    }
-                }
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+            document.getElementById('theme-btn').innerText = document.body.classList.contains('light-mode') ? '☀️' : '🌙';
+        }
+
+        function filterTab(cat, btn) {
+            document.querySelectorAll('.cat-tab').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.querySelectorAll('.product-item').forEach(item => {
+                item.classList.toggle('hidden', cat !== 'all' && !item.classList.contains(cat));
             });
         }
 
-        // --- AUTH & DATABASE SEDERHANA ---
-        let memoryDB = {}; 
-        function simpanData(user, pass) { memoryDB['u_'+user]=pass; try{localStorage.setItem('u_'+user,pass)}catch(e){} }
-        function ambilData(user) { let p=memoryDB['u_'+user]; try{p=p||localStorage.getItem('u_'+user)}catch(e){} return p; }
-
-        const errorMsg = document.getElementById('auth-error-msg');
-        function showError(msg) { errorMsg.innerText = msg; errorMsg.style.display = 'block'; }
-
-        function switchTab(tab) {
-            document.getElementById('tab-login').classList.remove('active');
-            document.getElementById('tab-register').classList.remove('active');
-            document.getElementById('form-login').classList.remove('active'
-            document.getElementById('form-register').classList.remove('active');
-            document.getElementById('tab-' + tab).classList.add('active');
-            document.getElementById('form-' + tab).classList.add('active');
-            document.getElementById('reg-msg').style.display = 'none';
-            errorMsg.style.display = 'none';
-        }
-
-        function prosesDaftar() {
-            const user = document.getElementById('reg-user').value.trim();
-            const pass = document.getElementById('reg-pass').value.trim();
-            if (user === "" || pass === "") return showError("Isi data dengan lengkap!");
-            if (ambilData(user)) return showError("Username sudah terdaftar!");
-
-            simpanData(user, pass);
-            errorMsg.style.display = 'none';
-            document.getElementById('reg-msg').style.display = 'block';
-            document.getElementById('reg-user').value = "";
-            document.getElementById('reg-pass').value = "";
-            setTimeout(() => switchTab('login'), 1500);
-        }
-
-        function prosesLogin() {
-            const user = document.getElementById('login-user').value.trim();
-            const pass = document.getElementById('login-pass').value.trim();
-            if (user === "" || pass === "") return showError("Isi Username dan Password!");
-
-            if (ambilData(user) === pass) {
-                document.getElementById('auth-overlay').style.display = 'none';
-                document.getElementById('display-username').innerText = "Hi, " + user;
-                try { sessionStorage.setItem('activeUser', user); } catch(e) {}
-                
-                // Show elements
-                setTimeout(() => { document.querySelectorAll('.fade-element').forEach(el => el.classList.add('visible')); }, 100);
-            } else {
-                showError("Username atau Password salah!");
-            }
-        }
-
-        window.onload = function() {
-            let userSesi = "";
-            try { userSesi = sessionStorage.getItem('activeUser'); } catch(e) {}
-            if (userSesi) {
-                document.getElementById('auth-overlay').style.display = 'none';
-                document.getElementById('display-username').innerText = "Hi, " + userSesi;
-                setTimeout(() => { document.querySelectorAll('.fade-element').forEach(el => el.classList.add('visible')); }, 100);
-            }
-        }
-
-        function logout() { try { sessionStorage.removeItem('activeUser'); } catch(e){} location.reload(); }
-
-        // --- SCROLL ANIMATION ---
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.fade-element').forEach((el) => observer.observe(el));
-
-        // --- ORDER FLOW ---
-        let currentItem = "", currentPrice = "";
-
-        function openDetail(item, price, desc, garansi) {
-            currentItem = item; currentPrice = price;
-            document.getElementById('detailTitle').innerText = item;
-            document.getElementById('detailPrice').innerText = price;
-            document.getElementById('detailDesc').innerText = desc;
-            document.getElementById('detailGaransi').innerText = garansi;
-            document.getElementById('tncCheck').checked = false; 
+        let curItem = "", curPrice = "";
+        function openDetail(t, p, d, g) {
+            curItem = t; curPrice = p;
+            document.getElementById('detailTitle').innerText = t;
+            document.getElementById('detailPrice').innerText = p;
+            document.getElementById('detailDesc').innerText = d;
             document.getElementById('detailModal').style.display = 'flex';
         }
 
-        function closeDetailModal() { document.getElementById('detailModal').style.display = 'none'; }
-        
+        function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display='none'); }
+
         function proceedToPayment() {
-            if (!document.getElementById('tncCheck').checked) return alert("Centang persetujuan dulu ya!");
-            closeDetailModal();
-            document.getElementById('orderSummary').innerText = currentItem + " | " + currentPrice;
+            if(!document.getElementById('tncCheck').checked) return alert('Centang S&K dulu!');
+            closeModal();
             document.getElementById('orderModal').style.display = 'flex';
         }
 
-        function closeOrderModal() { document.getElementById('orderModal').style.display = 'none'; }
-
         function sendWa() {
-            let activeUser = "Guest";
-            try { activeUser = sessionStorage.getItem('activeUser') || "Guest"; } catch(e) {}
-            const msg = `Halo Pediaboy, saya *${activeUser}*.\n\nSaya sudah menyetujui Ketentuan dan ingin order:\n*Layanan:* ${currentItem}\n*Harga:* ${currentPrice}\n\nSaya telah transfer pembayaran via QRIS.`;
+            const u = sessionStorage.getItem('user') || "Guest";
+            const msg = `Halo Pediaboy, saya ${u}. Saya order ${curItem} (${curPrice}). Saya sudah transfer via QRIS.`;
             window.location.href = `https://wa.me/6282172222494?text=${encodeURIComponent(msg)}`;
         }
+
+        function logout() { sessionStorage.clear(); location.reload(); }
     </script>
 </body>
-</html>                                                       
+</html>
