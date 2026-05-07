@@ -91,9 +91,14 @@
 
         footer { text-align: center; padding: 40px; color: var(--text-muted); font-size: 0.75rem; }
 
-        /* Modal */
+        /* Modals */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; justify-content: center; align-items: center; }
-        .modal-content { background: var(--card-bg); padding: 25px; border-radius: 12px; width: 90%; max-width: 350px; text-align: center; border: 1px solid var(--neon-color); }
+        .modal-content { background: var(--card-bg); padding: 25px; border-radius: 12px; width: 90%; max-width: 380px; text-align: center; border: 1px solid var(--neon-color); }
+        
+        /* Custom Checkbox Container */
+        .checkbox-container { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 20px; text-align: left; background: #1a1a24; padding: 15px; border-radius: 8px; border: 1px solid #333; }
+        .checkbox-container input { margin-top: 3px; cursor: pointer; }
+        .checkbox-container label { font-size: 0.8rem; color: var(--text-muted); cursor: pointer; line-height: 1.4; }
     </style>
 </head>
 <body>
@@ -101,18 +106,15 @@
     <div id="auth-overlay">
         <div class="auth-box">
             <h2 style="color: var(--neon-color); margin-bottom: 20px;">Pediaboy Portal</h2>
-            
             <div class="auth-tabs">
                 <button id="tab-login" class="active" onclick="switchTab('login')">Login</button>
                 <button id="tab-register" onclick="switchTab('register')">Daftar</button>
             </div>
-
             <div id="form-login" class="auth-form active">
                 <input type="text" id="login-user" placeholder="Username" required>
                 <input type="password" id="login-pass" placeholder="Password" required>
                 <button class="btn-submit" onclick="prosesLogin()">Masuk</button>
             </div>
-
             <div id="form-register" class="auth-form">
                 <input type="text" id="reg-user" placeholder="Buat Username" required>
                 <input type="password" id="reg-pass" placeholder="Buat Password" required>
@@ -144,19 +146,19 @@
         </header>
 
         <div class="services-grid">
-            <div class="card" onclick="openOrder('Web Design Premium', 'Rp 500.000+')">
+            <div class="card" onclick="openDetail('Web Design Premium', 'Rp 500.000+', 'Pembuatan website profesional, landing page, atau toko online. Desain dark mode neon modern, responsif untuk semua perangkat, dan fitur siap pakai.', 'Garansi revisi minor 1 minggu & perbaikan bug 1 bulan penuh.')">
                 <span class="price-badge">Start Rp 500k</span><h3>Jasa Website</h3>
                 <p>Landing page, Toko Online, & Portofolio desain modern neon.</p>
             </div>
-            <div class="card" onclick="openOrder('NordVPN Premium', 'Rp 35.000')">
+            <div class="card" onclick="openDetail('NordVPN Premium', 'Rp 35.000', 'Akun NordVPN Premium durasi 1 bulan. Tersedia pilihan Shared atau Private. Mendukung server dari puluhan negara untuk koneksi aman.', 'Garansi pergantian akun penuh jika error selama durasi aktif.')">
                 <span class="price-badge">Rp 35.000</span><h3>NordVPN</h3>
                 <p>Akun premium durasi 1 bulan / shared / private.</p>
             </div>
-            <div class="card" onclick="openOrder('ExpressVPN Premium', 'Rp 45.000')">
+            <div class="card" onclick="openDetail('ExpressVPN Premium', 'Rp 45.000', 'VPN premium super cepat tanpa log data. Sangat direkomendasikan untuk gaming lancar dan menembus blokir streaming luar negeri.', 'Garansi 1 bulan penuh, klaim ganti akun mudah via WhatsApp.')">
                 <span class="price-badge">Rp 45.000</span><h3>ExpressVPN</h3>
                 <p>Koneksi tercepat untuk gaming & streaming bypass.</p>
             </div>
-            <div class="card" onclick="openOrder('Surfshark VPN', 'Rp 30.000')">
+            <div class="card" onclick="openDetail('Surfshark VPN', 'Rp 30.000', 'Satu akun Surfshark untuk unlimited devices. Dilengkapi fitur CleanWeb untuk blokir iklan dan pelacak berbahaya di browser.', 'Garansi resmi 1 bulan penuh tanpa syarat ribet.')">
                 <span class="price-badge">Rp 30.000</span><h3>Surfshark</h3>
                 <p>Unlimited devices, fitur cleanweb & ad-blocker.</p>
             </div>
@@ -185,79 +187,85 @@
 
     <footer>&copy; 2026 Pediaboy Digital. Powered by @elthoriqqqq_</footer>
 
+    <div id="detailModal" class="modal">
+        <div class="modal-content">
+            <h3 id="detailTitle" style="color:var(--neon-color); margin-bottom: 15px; font-size: 1.2rem;"></h3>
+            
+            <div style="text-align: left; margin-bottom: 20px;">
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 5px;">Harga Layanan:</p>
+                <p id="detailPrice" style="color: var(--text-main); font-weight: bold; font-size: 1.3rem; margin-bottom: 15px;"></p>
+                
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 5px;">Rincian:</p>
+                <p id="detailDesc" style="color: var(--text-main); font-size: 0.9rem; line-height: 1.5; margin-bottom: 15px;"></p>
+                
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 5px;">Garansi:</p>
+                <p id="detailGaransi" style="color: #00ff00; font-size: 0.9rem;"></p>
+            </div>
+
+            <div class="checkbox-container">
+                <input type="checkbox" id="tncCheck">
+                <label for="tncCheck">Saya telah membaca dan menyetujui seluruh detail layanan serta Syarat & Ketentuan Pediaboy Digital.</label>
+            </div>
+
+            <button onclick="proceedToPayment()" style="width:100%; padding:12px; background:var(--neon-color); color:#000; border:none; font-weight:bold; cursor:pointer; border-radius:5px; transition: 0.3s;">Lanjutkan Pembayaran</button>
+            <button onclick="closeDetailModal()" style="margin-top:10px; background:none; border:none; color:var(--text-muted); cursor:pointer;">Batal</button>
+        </div>
+    </div>
+
     <div id="orderModal" class="modal">
         <div class="modal-content">
-            <h3 id="orderTitle" style="color:var(--neon-color)">Detail Order</h3>
-            <p id="orderPrice" style="margin: 10px 0; font-weight: bold;"></p>
+            <h3 style="color:var(--neon-color); margin-bottom: 10px;">Selesaikan Pembayaran</h3>
+            <p id="orderSummary" style="margin: 10px 0; font-weight: bold; font-size: 1.1rem; color: #fff;"></p>
+            <p style="font-size: 0.8rem; color: var(--text-muted);">Silakan scan QRIS di bawah untuk membayar.</p>
+            
             <div style="background: #fff; padding: 10px; border-radius: 8px; margin: 15px 0;">
                 <img src="https://via.placeholder.com/200x200.png?text=SCAN+QRIS+DISINI" alt="QRIS" style="width: 100%;">
             </div>
-            <button onclick="sendWa()" style="width:100%; padding:10px; background:var(--neon-color); color:#000; border:none; font-weight:bold; cursor:pointer; border-radius:5px;">Konfirmasi Pembayaran</button>
-            <button onclick="closeModal()" style="margin-top:10px; background:none; border:none; color:var(--text-muted); cursor:pointer;">Batal</button>
+            
+            <button onclick="sendWa()" style="width:100%; padding:12px; background:var(--neon-color); color:#000; border:none; font-weight:bold; cursor:pointer; border-radius:5px;">Konfirmasi via WhatsApp</button>
+            <button onclick="closeOrderModal()" style="margin-top:10px; background:none; border:none; color:var(--text-muted); cursor:pointer;">Batal</button>
         </div>
     </div>
 
     <script>
         // --- SISTEM DATABASE SIMULASI (LOCAL STORAGE) ---
-        
-        // Fungsi pindah tab Login / Daftar
         function switchTab(tab) {
             document.getElementById('tab-login').classList.remove('active');
             document.getElementById('tab-register').classList.remove('active');
             document.getElementById('form-login').classList.remove('active');
             document.getElementById('form-register').classList.remove('active');
-
             document.getElementById('tab-' + tab).classList.add('active');
             document.getElementById('form-' + tab).classList.add('active');
             document.getElementById('reg-msg').style.display = 'none';
         }
 
-        // Proses Mendaftar
         function prosesDaftar() {
             const user = document.getElementById('reg-user').value.trim();
             const pass = document.getElementById('reg-pass').value.trim();
+            if (user === "" || pass === "") return alert("Username dan Password tidak boleh kosong!");
+            if (localStorage.getItem('user_' + user)) return alert("Username ini sudah dipakai, pilih yang lain!");
 
-            if (user === "" || pass === "") {
-                alert("Username dan Password tidak boleh kosong!");
-                return;
-            }
-
-            // Cek apakah username sudah ada di database browser
-            if (localStorage.getItem('user_' + user)) {
-                alert("Username ini sudah dipakai, pilih yang lain!");
-                return;
-            }
-
-            // Simpan ke "Database" (LocalStorage)
             localStorage.setItem('user_' + user, pass);
-            
             document.getElementById('reg-msg').style.display = 'block';
             document.getElementById('reg-user').value = "";
             document.getElementById('reg-pass').value = "";
-            
-            // Otomatis pindah ke tab login setelah 1.5 detik
             setTimeout(() => switchTab('login'), 1500);
         }
 
-        // Proses Login
         function prosesLogin() {
             const user = document.getElementById('login-user').value.trim();
             const pass = document.getElementById('login-pass').value.trim();
-
             const savedPass = localStorage.getItem('user_' + user);
 
             if (savedPass && savedPass === pass) {
-                // Login Berhasil
                 document.getElementById('auth-overlay').style.display = 'none';
                 document.getElementById('display-username').innerText = "Hi, " + user;
-                // Simpan sesi login aktif
                 sessionStorage.setItem('activeUser', user);
             } else {
                 alert("Username atau Password salah/belum terdaftar!");
             }
         }
 
-        // Cek Sesi Login saat halaman dimuat (agar tidak perlu login terus)
         window.onload = function() {
             const activeUser = sessionStorage.getItem('activeUser');
             if (activeUser) {
@@ -266,36 +274,70 @@
             }
         }
 
-        // Logout
         function logout() {
             sessionStorage.removeItem('activeUser');
             location.reload();
         }
 
-        // --- FITUR UI LAINNYA ---
+        // --- FITUR MENU ---
         function toggleMenu() {
             const dp = document.getElementById('menuDropdown');
             dp.style.display = dp.style.display === 'block' ? 'none' : 'block';
         }
+
+        // --- ALUR PEMESANAN ---
+        let currentItem = "";
+        let currentPrice = "";
+
+        // 1. Buka Modal Detail Dulu
+        function openDetail(item, price, desc, garansi) {
+            currentItem = item;
+            currentPrice = price;
+            
+            document.getElementById('detailTitle').innerText = item;
+            document.getElementById('detailPrice').innerText = price;
+            document.getElementById('detailDesc').innerText = desc;
+            document.getElementById('detailGaransi').innerText = garansi;
+            document.getElementById('tncCheck').checked = false; // Reset centang
+            
+            document.getElementById('detailModal').style.display = 'flex';
+        }
+
+        function closeDetailModal() {
+            document.getElementById('detailModal').style.display = 'none';
+        }
+
+        // 2. Validasi Centang & Pindah ke Modal QRIS
+        function proceedToPayment() {
+            const isChecked = document.getElementById('tncCheck').checked;
+            if (!isChecked) {
+                alert("Tolong centang persetujuan Syarat & Ketentuan sebelum melanjutkan.");
+                return;
+            }
+            // Tutup detail, buka order QRIS
+            closeDetailModal();
+            document.getElementById('orderSummary').innerText = currentItem + " - " + currentPrice;
+            document.getElementById('orderModal').style.display = 'flex';
+        }
+
+        function closeOrderModal() { 
+            document.getElementById('orderModal').style.display = 'none'; 
+        }
+
+        // 3. Eksekusi ke WA
+        function sendWa() {
+            const activeUser = sessionStorage.getItem('activeUser') || "Guest";
+            const msg = `Halo Pediaboy, saya *${activeUser}*.\n\nSaya sudah menyetujui SnK dan ingin order:\n*Layanan:* ${currentItem}\n*Harga:* ${currentPrice}\n\nSaya telah melakukan transfer pembayaran via QRIS.`;
+            window.location.href = `https://wa.me/6282172222494?text=${encodeURIComponent(msg)}`;
+        }
+
+        // Tutup modal / menu jika klik area luar
         window.onclick = function(e) {
             if (!e.target.matches('.kebab-menu') && !e.target.matches('.kebab-menu span')) {
                 document.getElementById('menuDropdown').style.display = 'none';
             }
-        }
-
-        let currentItem = "";
-        function openOrder(item, price) {
-            currentItem = item;
-            document.getElementById('orderTitle').innerText = item;
-            document.getElementById('orderPrice').innerText = "Total: " + price;
-            document.getElementById('orderModal').style.display = 'flex';
-        }
-        function closeModal() { document.getElementById('orderModal').style.display = 'none'; }
-
-        function sendWa() {
-            const activeUser = sessionStorage.getItem('activeUser') || "Guest";
-            const msg = `Halo Pediaboy, saya *${activeUser}*. Saya order *${currentItem}*. Saya sudah transfer via QRIS.`;
-            window.location.href = `https://wa.me/6282172222494?text=${encodeURIComponent(msg)}`;
+            if (e.target == document.getElementById('detailModal')) closeDetailModal();
+            if (e.target == document.getElementById('orderModal')) closeOrderModal();
         }
     </script>
 </body>
