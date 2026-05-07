@@ -35,11 +35,7 @@
             transition: opacity 0.8s ease-out, transform 0.8s ease-out;
             will-change: opacity, transform;
         }
-        .fade-element.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
+        .fade-element.visible { opacity: 1; transform: translateY(0); }
         .click-anim { transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease, border-color 0.3s ease; }
         .click-anim:active { transform: scale(0.95) !important; }
 
@@ -56,7 +52,7 @@
             width: 320px; text-align: center; backdrop-filter: blur(15px);
         }
 
-        .auth-tabs { display: flex; margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .auth-tabs { display: flex; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
         .auth-tabs button {
             flex: 1; background: none; border: none; color: var(--text-muted);
             padding: 10px; cursor: pointer; font-weight: bold; transition: 0.3s;
@@ -79,7 +75,7 @@
             box-shadow: 0 4px 15px rgba(0,243,255,0.3);
         }
 
-        /* Navbar & Menu Mewah */
+        /* Navbar & Menu */
         nav {
             padding: 15px 30px; display: flex; justify-content: space-between; align-items: center;
             border-bottom: 1px solid rgba(255,255,255,0.05); position: sticky; top: 0; 
@@ -109,9 +105,8 @@
         .dropdown a { display: block; padding: 14px 20px; text-decoration: none; color: var(--text-main); font-size: 0.85rem; border-bottom: 1px solid rgba(255,255,255,0.05); transition: 0.2s; }
         .dropdown a:hover { background: rgba(0, 243, 255, 0.1); color: var(--neon-color); padding-left: 25px; }
 
-        /* Content & Premium Pricelist */
+        /* Content & Pricelist */
         .container { max-width: 1000px; margin: 40px auto; padding: 0 20px; }
-        
         .header-title { text-align: center; margin-bottom: 50px; }
         .header-title h1 { font-size: 2rem; font-weight: 700; margin-bottom: 10px; background: linear-gradient(to right, #fff, var(--neon-color)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
@@ -173,20 +168,25 @@
     <div id="auth-overlay">
         <div class="auth-box">
             <h2 style="color: #fff; margin-bottom: 25px; font-size: 1.5rem;">PEDIA<span style="color: var(--neon-color); text-shadow: var(--neon-glow);">BOY.</span></h2>
+            
             <div class="auth-tabs">
-                <button id="tab-login" class="active click-anim" onclick="switchTab('login')">Login</button>
-                <button id="tab-register" class="click-anim" onclick="switchTab('register')">Daftar</button>
+                <button type="button" id="tab-login" class="active click-anim" onclick="switchTab('login')">Login</button>
+                <button type="button" id="tab-register" class="click-anim" onclick="switchTab('register')">Daftar</button>
             </div>
+
+            <p id="auth-error-msg" style="color: #ff4444; font-size: 12px; margin-bottom: 15px; display: none; font-weight: bold;"></p>
+
             <div id="form-login" class="auth-form active">
-                <input type="text" id="login-user" placeholder="Username" required>
-                <input type="password" id="login-pass" placeholder="Password" required>
-                <button class="btn-submit click-anim" onclick="prosesLogin()">Masuk Dashboard</button>
+                <input type="text" id="login-user" placeholder="Username" required onkeypress="checkEnter(event, 'login')">
+                <input type="password" id="login-pass" placeholder="Password" required onkeypress="checkEnter(event, 'login')">
+                <button type="button" class="btn-submit click-anim" onclick="prosesLogin()">Masuk Dashboard</button>
             </div>
+
             <div id="form-register" class="auth-form">
-                <input type="text" id="reg-user" placeholder="Buat Username" required>
-                <input type="password" id="reg-pass" placeholder="Buat Password" required>
-                <button class="btn-submit click-anim" onclick="prosesDaftar()">Daftar Sekarang</button>
-                <p id="reg-msg" style="color: #00ff00; font-size: 12px; margin-top: 15px; display: none;">Pendaftaran Berhasil! Silakan Login.</p>
+                <input type="text" id="reg-user" placeholder="Buat Username" required onkeypress="checkEnter(event, 'register')">
+                <input type="password" id="reg-pass" placeholder="Buat Password" required onkeypress="checkEnter(event, 'register')">
+                <button type="button" class="btn-submit click-anim" onclick="prosesDaftar()">Daftar Sekarang</button>
+                <p id="reg-msg" style="color: #00ffaa; font-size: 12px; margin-top: 15px; display: none; font-weight: bold;">Pendaftaran Berhasil! Silakan Login.</p>
             </div>
         </div>
     </div>
@@ -280,8 +280,8 @@
                 <label for="tncCheck">Saya telah membaca dan menyetujui seluruh detail layanan serta Syarat & Ketentuan Pediaboy Digital.</label>
             </div>
 
-            <button onclick="proceedToPayment()" class="btn-modal click-anim">Lanjutkan Pembayaran</button>
-            <button onclick="closeDetailModal()" class="btn-cancel click-anim">Batal</button>
+            <button type="button" onclick="proceedToPayment()" class="btn-modal click-anim">Lanjutkan Pembayaran</button>
+            <button type="button" onclick="closeDetailModal()" class="btn-cancel click-anim">Batal</button>
         </div>
     </div>
 
@@ -297,38 +297,32 @@
                 <img src="https://via.placeholder.com/200x200.png?text=SCAN+QRIS+DISINI" alt="QRIS" style="width: 100%; border-radius: 8px;">
             </div>
             
-            <button onclick="sendWa()" class="btn-modal click-anim">Konfirmasi via WhatsApp</button>
-            <button onclick="closeOrderModal()" class="btn-cancel click-anim">Batal</button>
+            <button type="button" onclick="sendWa()" class="btn-modal click-anim">Konfirmasi via WhatsApp</button>
+            <button type="button" onclick="closeOrderModal()" class="btn-cancel click-anim">Batal</button>
         </div>
     </div>
 
     <script>
-        // --- SCROLL ANIMATION (FADE IN/OUT) ---
+        // --- SCROLL ANIMATION ---
         const observerOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                } else {
-                    // Hapus class jika ingin elemen fade-out saat di-scroll ke luar layar
-                    entry.target.classList.remove('visible'); 
-                }
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+                else entry.target.classList.remove('visible'); 
             });
         }, observerOptions);
-
         document.querySelectorAll('.fade-element').forEach((el) => observer.observe(el));
 
-        // --- SISTEM DATABASE SIMULASI (LOCAL STORAGE) ---
+        // --- SISTEM AUTHENTICATION ---
+        const errorMsg = document.getElementById('auth-error-msg');
+
+        function showError(msg) {
+            errorMsg.innerText = msg;
+            errorMsg.style.display = 'block';
+        }
+
         function switchTab(tab) {
             document.getElementById('tab-login').classList.remove('active');
             document.getElementById('tab-register').classList.remove('active');
             document.getElementById('form-login').classList.remove('active');
-            document.getElementById('form-register').classList.remove('active');
-            document.getElementById('tab-' + tab).classList.add('active');
-            document.getElementById('form-' + tab).classList.add('active');
-            document.getElementById('reg-msg').style.display = 'none';
-        }
-
-        function prosesDaftar() {
-            const user = document.getElementById('reg-user').value.trim();
-           
+            document.getElementById('for
