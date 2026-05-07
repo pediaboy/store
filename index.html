@@ -34,7 +34,7 @@
             margin: 0; padding: 0; box-sizing: border-box; 
             font-family: 'Inter', sans-serif; 
             -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation; /* Menghilangkan delay klik di HP */
+            touch-action: manipulation;
         }
 
         body { 
@@ -42,19 +42,23 @@
             font-size: 14px; min-height: 100vh; width: 100%; overflow-x: hidden; 
         }
 
+        /* --- EFEK ANIMASI SCROLL --- */
+        .fade-element { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .fade-element.visible { opacity: 1; transform: translateY(0); }
+
         /* --- AUTH SYSTEM (PRIORITAS UTAMA) --- */
         #auth-overlay {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background: #050508; /* Warna solid agar tidak berat */
+            background: #050508; 
             display: flex; justify-content: center; align-items: center; 
-            z-index: 999999; /* Lapisan tertinggi di semesta */
+            z-index: 999999;
         }
 
         .auth-box {
             background: var(--card-bg); padding: 30px; border-radius: 16px;
             border: 2px solid var(--neon-color); box-shadow: var(--neon-glow);
             width: 85%; max-width: 340px; text-align: center;
-            pointer-events: auto; /* Memastikan bisa diklik */
+            pointer-events: auto;
         }
 
         .auth-tabs { display: flex; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); }
@@ -109,9 +113,22 @@
         .product-item.hidden { display: none; }
         .card { 
             background: var(--card-bg); padding: 25px; border-radius: 12px; border: 1px solid var(--border-color);
-            cursor: pointer; text-align: left;
+            cursor: pointer; text-align: left; transition: transform 0.2s, border-color 0.3s;
         }
+        .card:hover { border-color: var(--neon-color); transform: translateY(-3px); }
         .price-badge { display: inline-block; padding: 4px 10px; background: rgba(0, 243, 255, 0.1); color: var(--neon-color); border: 1px solid var(--neon-color); border-radius: 6px; margin-bottom: 10px; font-weight: bold; }
+
+        /* SnK & FAQ */
+        .info-section { margin-top: 50px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media (max-width: 700px) { .info-section { grid-template-columns: 1fr; } }
+        .info-box { background: rgba(17, 17, 24, 0.5); padding: 25px; border-radius: 16px; border: 1px solid var(--border-color); }
+        .info-box h4 { color: var(--neon-color); margin-bottom: 20px; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 10px; }
+        .info-box h4::before { content: ''; width: 10px; height: 10px; background: var(--neon-color); border-radius: 50%; box-shadow: var(--neon-glow); }
+        .info-box ul { list-style: none; }
+        .info-box li { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px; padding-left: 20px; position: relative; line-height: 1.5; }
+        .info-box li::before { content: '→'; position: absolute; left: 0; color: var(--neon-color); font-weight: bold; }
+
+        footer { text-align: center; padding: 40px 20px; color: var(--text-muted); font-size: 0.8rem; border-top: 1px solid var(--border-color); margin-top: 40px; }
 
         /* Modals */
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 10000; justify-content: center; align-items: center; padding: 20px; }
@@ -143,7 +160,7 @@
         </div>
     </div>
 
-    <nav>
+    <nav class="fade-element">
         <div class="logo">PEDIA<span>BOY.</span></div>
         <div class="nav-actions">
             <button onclick="toggleTheme()" style="background:none; border:none; font-size:1.5rem; cursor:pointer;" id="theme-btn">🌙</button>
@@ -154,12 +171,12 @@
     <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
     <div class="sidebar" id="sidebar">
         <h2 id="display-username" style="color:var(--neon-color); margin-bottom:20px;">Guest</h2>
-        <a href="#" style="display:block; padding:15px 0; color:#fff; text-decoration:none; border-bottom:1px solid #333;" onclick="toggleSidebar()">🏠 Home</a>
-        <a href="https://wa.me/6282172222494" style="display:block; padding:15px 0; color:#fff; text-decoration:none; border-bottom:1px solid #333;">💬 Hubungi Kami</a>
+        <a href="#" style="display:block; padding:15px 0; color:var(--text-main); text-decoration:none; border-bottom:1px solid var(--border-color);" onclick="toggleSidebar()">🏠 Home</a>
+        <a href="https://wa.me/6282172222494" style="display:block; padding:15px 0; color:var(--text-main); text-decoration:none; border-bottom:1px solid var(--border-color);">💬 Hubungi Kami</a>
         <a href="#" style="display:block; padding:15px 0; color:#ff4444; text-decoration:none;" onclick="logout()">🚪 Logout</a>
     </div>
 
-    <div class="tabs-container">
+    <div class="tabs-container fade-element">
         <div class="cat-tab active" onclick="filterTab('all', this)">Semua</div>
         <div class="cat-tab" onclick="filterTab('web', this)">Jasa Web</div>
         <div class="cat-tab" onclick="filterTab('vpn', this)">VPN Premium</div>
@@ -167,35 +184,35 @@
 
     <div class="container">
         <div class="services-grid">
-            <div class="product-item web">
+            <div class="product-item web fade-element">
                 <div class="card" onclick="openDetail('Web Premium', 'Rp 500k+', 'Website elegan, modern, & responsif.', 'Garansi 1 bulan.')">
                     <span class="price-badge">Rp 500.000+</span>
                     <h3>Jasa Website</h3>
                     <p>Landing page, Toko Online, & Portofolio desain neon modern.</p>
                 </div>
             </div>
-            <div class="product-item vpn">
+            <div class="product-item vpn fade-element">
                 <div class="card" onclick="openDetail('NordVPN', 'Rp 35k', 'Premium 1 bulan.', 'Full Garansi.')">
                     <span class="price-badge">Rp 35.000</span>
                     <h3>NordVPN</h3>
                     <p>Koneksi aman dengan server global tercepat.</p>
                 </div>
             </div>
-            <div class="product-item vpn">
+            <div class="product-item vpn fade-element">
                 <div class="card" onclick="openDetail('ExpressVPN', 'Rp 45k', 'Ultra fast streaming.', 'Full Garansi.')">
                     <span class="price-badge">Rp 45.000</span>
                     <h3>ExpressVPN</h3>
                     <p>Bypass blokir internet dengan kecepatan tinggi.</p>
                 </div>
             </div>
-            <div class="product-item vpn">
+            <div class="product-item vpn fade-element">
                 <div class="card" onclick="openDetail('IP Vanish', 'Rp 35k', 'Privacy protection.', 'Full Garansi.')">
                     <span class="price-badge">Rp 35.000</span>
                     <h3>IP Vanish</h3>
                     <p>Sembunyikan identitas online kamu sepenuhnya.</p>
                 </div>
             </div>
-            <div class="product-item vpn">
+            <div class="product-item vpn fade-element">
                 <div class="card" onclick="openDetail('Surfshark', 'Rp 30k', 'Unlimited devices.', 'Full Garansi.')">
                     <span class="price-badge">Rp 30.000</span>
                     <h3>Surfshark</h3>
@@ -203,19 +220,43 @@
                 </div>
             </div>
         </div>
+
+        <div class="info-section">
+            <div class="info-box fade-element">
+                <h4>Syarat & Ketentuan (SnK)</h4>
+                <ul>
+                    <li>Pembayaran dilakukan di awal (Full Payment).</li>
+                    <li>Proses akun VPN 5-15 menit setelah transfer.</li>
+                    <li>Garansi berlaku sesuai durasi yang dibeli.</li>
+                    <li>Dilarang mengubah email/password akun shared.</li>
+                </ul>
+            </div>
+            <div class="info-box fade-element">
+                <h4>FAQ (Tanya Jawab)</h4>
+                <ul>
+                    <li><b>Q:</b> Apakah ini legal? <br><b>A:</b> Ya, semua layanan premium & resmi.</li>
+                    <li><b>Q:</b> Bagaimana jika akun error?<br><b>A:</b> Langsung lapor ke WA untuk klaim garansi.</li>
+                    <li><b>Q:</b> Support pembayaran apa saja?<br><b>A:</b> Menggunakan QRIS (All Payment).</li>
+                </ul>
+            </div>
+        </div>
     </div>
+
+    <footer class="fade-element">
+        &copy; 2026 Pediaboy Digital. Powered by @elthoriqqqq_
+    </footer>
 
     <div id="detailModal" class="modal">
         <div class="modal-content">
             <h2 id="detailTitle" style="color:var(--neon-color); margin-bottom:15px;"></h2>
-            <p id="detailPrice" style="font-weight:bold; font-size:1.2rem; margin-bottom:10px;"></p>
+            <p id="detailPrice" style="font-weight:bold; font-size:1.2rem; margin-bottom:10px; color:var(--text-main);"></p>
             <p id="detailDesc" style="color:var(--text-muted); margin-bottom:15px;"></p>
             <div class="checkbox-container">
                 <input type="checkbox" id="tncCheck">
                 <label for="tncCheck" style="font-size:0.8rem;">Saya setuju dengan S&K Pediaboy.</label>
             </div>
             <button onclick="proceedToPayment()" class="btn-submit">BAYAR SEKARANG</button>
-            <button onclick="closeModal()" style="background:none; border:none; color:var(--text-muted); margin-top:15px; cursor:pointer; width:100%;">Batal</button>
+            <button onclick="closeModal()" style="background:none; border:none; color:var(--text-muted); margin-top:15px; cursor:pointer; width:100%; font-weight:bold;">Batal</button>
         </div>
     </div>
 
@@ -224,6 +265,7 @@
             <h2 style="color:var(--neon-color); margin-bottom:10px;">Scan QRIS</h2>
             <img src="https://via.placeholder.com/200x200.png?text=QRIS+KAMU" style="width:100%; border-radius:10px; margin-bottom:15px;">
             <button onclick="sendWa()" class="btn-submit">KONFIRMASI WHATSAPP</button>
+            <button onclick="closeModal()" style="background:none; border:none; color:var(--text-muted); margin-top:15px; cursor:pointer; width:100%; font-weight:bold;">Batal</button>
         </div>
     </div>
 
@@ -258,6 +300,10 @@
                 document.getElementById('auth-overlay').style.display = 'none';
                 document.getElementById('display-username').innerText = u;
                 sessionStorage.setItem('user', u);
+                // Trigger scroll animation check
+                setTimeout(() => {
+                    document.querySelectorAll('.fade-element').forEach(el => el.classList.add('visible'));
+                }, 100);
             } else {
                 alert('Login Gagal!');
             }
@@ -314,6 +360,22 @@
         }
 
         function logout() { sessionStorage.clear(); location.reload(); }
+
+        // --- EFEK SCROLL ANIMASI ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                } else {
+                    entry.target.classList.remove('visible'); 
+                }
+            });
+        }, { threshold: 0.1 });
+
+        // Mulai memantau elemen setelah delay kecil agar tidak bentrok dengan loading awal
+        setTimeout(() => {
+            document.querySelectorAll('.fade-element').forEach((el) => observer.observe(el));
+        }, 100);
     </script>
 </body>
 </html>
