@@ -328,3 +328,118 @@
             
             document.getElementById('reg-msg').style.display = 'none';
             errorMsg.style.display = 'none
+}
+
+        function prosesDaftar() {
+            const user = document.getElementById('reg-user').value.trim();
+            const pass = document.getElementById('reg-pass').value.trim();
+            
+            if (ambilData(user)) {
+                showError("Username sudah dipakai!");
+                return;
+            }
+
+            errorMsg.style.display = 'none';
+            simpanData(user, pass);
+            
+            document.getElementById('reg-msg').style.display = 'block';
+            document.getElementById('reg-user').value = "";
+            document.getElementById('reg-pass').value = "";
+            setTimeout(() => switchTab('login'), 1500);
+        }
+
+        function prosesLogin() {
+            const user = document.getElementById('login-user').value.trim();
+            const pass = document.getElementById('login-pass').value.trim();
+            const savedPass = ambilData(user);
+
+            if (savedPass && savedPass === pass) {
+                document.getElementById('auth-overlay').style.display = 'none';
+                document.getElementById('display-username').innerText = user;
+                try { sessionStorage.setItem('activeUser', user); } catch(e) {}
+                errorMsg.style.display = 'none';
+                
+                // Trigger animasi scroll
+                setTimeout(() => {
+                    document.querySelectorAll('.fade-element').forEach(el => el.classList.add('visible'));
+                }, 100);
+            } else {
+                showError("Username atau Password salah!");
+            }
+        }
+
+        window.onload = function() {
+            let userSesi = "";
+            try { userSesi = sessionStorage.getItem('activeUser'); } catch(e) {}
+            
+            if (userSesi) {
+                document.getElementById('auth-overlay').style.display = 'none';
+                document.getElementById('display-username').innerText = userSesi;
+                setTimeout(() => {
+                    document.querySelectorAll('.fade-element').forEach(el => el.classList.add('visible'));
+                }, 100);
+            }
+        }
+
+        function logout() {
+            try { sessionStorage.removeItem('activeUser'); } catch(e) {}
+            location.reload();
+        }
+
+        // --- 3. FITUR LAINNYA (MENU, MODAL, SCROLL) ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+                else entry.target.classList.remove('visible'); 
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-element').forEach((el) => observer.observe(el));
+
+        function toggleMenu(e) {
+            e.stopPropagation();
+            document.getElementById('menuDropdown').classList.toggle('show');
+        }
+
+        let currentItem = "";
+        let currentPrice = "";
+
+        function openDetail(item, price, desc, garansi) {
+            currentItem = item;
+            currentPrice = price;
+            document.getElementById('detailTitle').innerText = item;
+            document.getElementById('detailPrice').innerText = price;
+            document.getElementById('detailDesc').innerText = desc;
+            document.getElementById('detailGaransi').innerText = garansi;
+            document.getElementById('tncCheck').checked = false; 
+            document.getElementById('detailModal').style.display = 'flex';
+        }
+
+        function closeDetailModal() { document.getElementById('detailModal').style.display = 'none'; }
+
+        function proceedToPayment() {
+            if (!document.getElementById('tncCheck').checked) {
+                alert("Centang persetujuan Syarat & Ketentuan dulu ya!");
+                return;
+            }
+            closeDetailModal();
+            document.getElementById('orderSummary').innerText = currentItem + " | " + currentPrice;
+            document.getElementById('orderModal').style.display = 'flex';
+        }
+
+        function closeOrderModal() { document.getElementById('orderModal').style.display = 'none'; }
+
+        function sendWa() {
+            let activeUser = "Guest";
+            try { activeUser = sessionStorage.getItem('activeUser') || "Guest"; } catch(e) {}
+            const msg = `Halo Pediaboy, saya *${activeUser}*.\n\nSaya sudah menyetujui SnK dan ingin order:\n*Layanan:* ${currentItem}\n*Harga:* ${currentPrice}\n\nSaya telah melakukan transfer pembayaran via QRIS.`;
+            window.location.href = `https://wa.me/6282172222494?text=${encodeURIComponent(msg)}`;
+        }
+
+        window.onclick = function(e) {
+            if (!e.target.closest('.kebab-menu')) document.getElementById('menuDropdown').classList.remove('show');
+            if (e.target == document.getElementById('detailModal')) closeDetailModal();
+            if (e.target == document.getElementById('orderModal')) closeOrderModal();
+        }
+    </script>
+</body>
+</html>
