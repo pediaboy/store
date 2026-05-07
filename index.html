@@ -8,164 +8,235 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
 
         :root {
-            --bg-color: #08080c;
-            --card-bg: #111118;
+            --bg-color: #050508;
+            --card-bg: rgba(17, 17, 24, 0.6);
             --text-main: #e0e0e0;
             --text-muted: #88889b;
             --neon-color: #00f3ff;
-            --neon-glow: 0 0 8px rgba(0, 243, 255, 0.4);
+            --neon-glow: 0 0 12px rgba(0, 243, 255, 0.5);
+            --gradient-border: linear-gradient(135deg, rgba(0, 243, 255, 0.5) 0%, rgba(0,0,0,0) 100%);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
 
-        body { background-color: var(--bg-color); color: var(--text-main); font-size: 14px; min-height: 100vh; overflow-x: hidden; }
+        body { 
+            background-color: var(--bg-color); 
+            color: var(--text-main); 
+            font-size: 14px; 
+            min-height: 100vh; 
+            overflow-x: hidden; 
+            background-image: radial-gradient(circle at 50% 0%, rgba(0, 243, 255, 0.05) 0%, transparent 50%);
+        }
+
+        /* --- Scroll & Click Animations --- */
+        .fade-element {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            will-change: opacity, transform;
+        }
+        .fade-element.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .click-anim { transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease, border-color 0.3s ease; }
+        .click-anim:active { transform: scale(0.95) !important; }
 
         /* Auth Overlay (Login/Register) */
         #auth-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg-color); display: flex; justify-content: center; align-items: center;
-            z-index: 9999;
+            background: rgba(5, 5, 8, 0.95); backdrop-filter: blur(10px);
+            display: flex; justify-content: center; align-items: center; z-index: 9999;
         }
 
         .auth-box {
-            background: var(--card-bg); padding: 30px; border-radius: 12px;
-            border: 1px solid var(--neon-color); box-shadow: var(--neon-glow);
-            width: 320px; text-align: center;
+            background: var(--card-bg); padding: 35px; border-radius: 16px;
+            border: 1px solid rgba(0, 243, 255, 0.2); box-shadow: var(--neon-glow);
+            width: 320px; text-align: center; backdrop-filter: blur(15px);
         }
 
-        .auth-tabs { display: flex; margin-bottom: 20px; border-bottom: 1px solid #333; }
+        .auth-tabs { display: flex; margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.1); }
         .auth-tabs button {
             flex: 1; background: none; border: none; color: var(--text-muted);
             padding: 10px; cursor: pointer; font-weight: bold; transition: 0.3s;
         }
-        .auth-tabs button.active { color: var(--neon-color); border-bottom: 2px solid var(--neon-color); }
+        .auth-tabs button.active { color: var(--neon-color); border-bottom: 2px solid var(--neon-color); text-shadow: var(--neon-glow); }
 
-        .auth-form { display: none; }
+        .auth-form { display: none; animation: fadeInForm 0.4s ease; }
         .auth-form.active { display: block; }
-        .auth-form input {
-            width: 100%; padding: 10px; margin-bottom: 15px;
-            background: #1a1a24; border: 1px solid #333; color: #fff; border-radius: 6px; outline: none;
-        }
-        .auth-form input:focus { border-color: var(--neon-color); }
-        .auth-form button.btn-submit {
-            width: 100%; padding: 10px; background: var(--neon-color); color: var(--bg-color);
-            border: none; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.3s;
-        }
-        .auth-form button.btn-submit:hover { box-shadow: var(--neon-glow); }
+        @keyframes fadeInForm { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Navbar & Menu */
-        nav {
-            padding: 15px 25px; display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 1px solid #1a1a24; position: sticky; top: 0; background: rgba(8, 8, 12, 0.9); backdrop-filter: blur(10px); z-index: 100;
+        .auth-form input {
+            width: 100%; padding: 12px; margin-bottom: 15px;
+            background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); color: #fff; 
+            border-radius: 8px; outline: none; transition: 0.3s;
         }
-        .logo { font-weight: 700; color: var(--neon-color); text-shadow: var(--neon-glow); font-size: 1.1rem; }
+        .auth-form input:focus { border-color: var(--neon-color); box-shadow: 0 0 5px rgba(0,243,255,0.2); }
+        .auth-form button.btn-submit {
+            width: 100%; padding: 12px; background: var(--neon-color); color: #000;
+            border: none; border-radius: 8px; font-weight: bold; cursor: pointer; 
+            box-shadow: 0 4px 15px rgba(0,243,255,0.3);
+        }
+
+        /* Navbar & Menu Mewah */
+        nav {
+            padding: 15px 30px; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.05); position: sticky; top: 0; 
+            background: rgba(5, 5, 8, 0.7); backdrop-filter: blur(15px); z-index: 100;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
+        .logo { font-weight: 800; color: #fff; font-size: 1.2rem; letter-spacing: 1px; }
+        .logo span { color: var(--neon-color); text-shadow: var(--neon-glow); }
         
-        .user-info { display: flex; align-items: center; gap: 15px; }
-        #display-username { color: var(--text-muted); font-size: 0.85rem; }
+        .user-info { display: flex; align-items: center; gap: 20px; }
+        .user-badge { 
+            background: rgba(0, 243, 255, 0.1); border: 1px solid rgba(0, 243, 255, 0.3);
+            padding: 5px 12px; border-radius: 20px; color: var(--neon-color); font-size: 0.8rem; font-weight: 600;
+        }
         
         .kebab-menu { cursor: pointer; position: relative; padding: 5px; }
-        .kebab-menu span { display: block; width: 4px; height: 4px; background: var(--text-main); border-radius: 50%; margin: 3px; }
+        .kebab-menu span { display: block; width: 5px; height: 5px; background: var(--text-main); border-radius: 50%; margin: 4px; transition: 0.3s; }
+        .kebab-menu:hover span { background: var(--neon-color); box-shadow: var(--neon-glow); }
+        
         .dropdown {
-            display: none; position: absolute; right: 0; top: 35px;
-            background: var(--card-bg); border: 1px solid #333; width: 180px; border-radius: 8px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            visibility: hidden; opacity: 0; transform: translateY(-15px) scale(0.95);
+            position: absolute; right: 0; top: 45px; background: rgba(17, 17, 24, 0.9); backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 243, 255, 0.2); width: 200px; border-radius: 12px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.8); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: block;
         }
-        .dropdown a { display: block; padding: 12px 15px; text-decoration: none; color: var(--text-main); font-size: 0.85rem; border-bottom: 1px solid #222; }
-        .dropdown a:hover { background: #1a1a24; color: var(--neon-color); }
+        .dropdown.show { visibility: visible; opacity: 1; transform: translateY(0) scale(1); }
+        .dropdown a { display: block; padding: 14px 20px; text-decoration: none; color: var(--text-main); font-size: 0.85rem; border-bottom: 1px solid rgba(255,255,255,0.05); transition: 0.2s; }
+        .dropdown a:hover { background: rgba(0, 243, 255, 0.1); color: var(--neon-color); padding-left: 25px; }
 
-        /* Content */
-        .container { max-width: 900px; margin: 30px auto; padding: 0 20px; }
-        .price-badge { display: inline-block; padding: 3px 8px; background: rgba(0, 243, 255, 0.1); color: var(--neon-color); border: 1px solid var(--neon-color); border-radius: 4px; font-size: 0.75rem; margin-bottom: 10px; }
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
-        .card { background: var(--card-bg); padding: 20px; border-radius: 12px; border: 1px solid #222; transition: 0.3s; cursor: pointer; }
-        .card:hover { border-color: var(--neon-color); transform: scale(1.02); }
-        .card h3 { font-size: 1rem; margin-bottom: 8px; }
-        .card p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 15px; line-height: 1.4; }
+        /* Content & Premium Pricelist */
+        .container { max-width: 1000px; margin: 40px auto; padding: 0 20px; }
+        
+        .header-title { text-align: center; margin-bottom: 50px; }
+        .header-title h1 { font-size: 2rem; font-weight: 700; margin-bottom: 10px; background: linear-gradient(to right, #fff, var(--neon-color)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 25px; }
+        
+        .card { 
+            background: var(--card-bg); padding: 25px; border-radius: 16px; 
+            border: 1px solid rgba(255,255,255,0.05); position: relative; overflow: hidden;
+            backdrop-filter: blur(10px); cursor: pointer; text-align: left;
+        }
+        .card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: var(--gradient-border); opacity: 0; transition: 0.3s;
+        }
+        .card:hover { border-color: rgba(0, 243, 255, 0.3); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0, 243, 255, 0.1); }
+        .card:hover::before { opacity: 1; }
+        
+        .price-badge { 
+            display: inline-block; padding: 6px 12px; background: rgba(0, 243, 255, 0.1); 
+            color: var(--neon-color); border: 1px solid rgba(0, 243, 255, 0.2); 
+            border-radius: 8px; font-size: 0.9rem; font-weight: 700; margin-bottom: 15px;
+            box-shadow: 0 0 10px rgba(0, 243, 255, 0.1) inset;
+        }
+        .card h3 { font-size: 1.2rem; margin-bottom: 10px; font-weight: 600; color: #fff; }
+        .card p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
 
         /* SnK & FAQ */
-        .info-section { margin-top: 50px; display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
-        @media (max-width: 600px) { .info-section { grid-template-columns: 1fr; } }
-        .info-box h4 { color: var(--neon-color); margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase; }
+        .info-section { margin-top: 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        @media (max-width: 700px) { .info-section { grid-template-columns: 1fr; } }
+        .info-box { background: rgba(17, 17, 24, 0.4); padding: 25px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.03); }
+        .info-box h4 { color: var(--neon-color); margin-bottom: 20px; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 10px; }
+        .info-box h4::before { content: ''; width: 10px; height: 10px; background: var(--neon-color); border-radius: 50%; box-shadow: var(--neon-glow); }
         .info-box ul { list-style: none; }
-        .info-box li { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 8px; padding-left: 15px; position: relative; }
-        .info-box li::before { content: '>'; position: absolute; left: 0; color: var(--neon-color); }
+        .info-box li { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px; padding-left: 20px; position: relative; line-height: 1.5; }
+        .info-box li::before { content: '→'; position: absolute; left: 0; color: var(--neon-color); font-weight: bold; }
 
-        footer { text-align: center; padding: 40px; color: var(--text-muted); font-size: 0.75rem; }
+        footer { text-align: center; padding: 50px 20px; color: var(--text-muted); font-size: 0.8rem; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 50px; }
 
         /* Modals */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; justify-content: center; align-items: center; }
-        .modal-content { background: var(--card-bg); padding: 25px; border-radius: 12px; width: 90%; max-width: 380px; text-align: center; border: 1px solid var(--neon-color); }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 1000; justify-content: center; align-items: center; }
+        .modal-content { 
+            background: var(--card-bg); padding: 30px; border-radius: 16px; width: 90%; max-width: 400px; 
+            text-align: center; border: 1px solid rgba(0, 243, 255, 0.3); box-shadow: 0 10px 40px rgba(0, 243, 255, 0.2);
+            animation: modalPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes modalPop { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
         
-        /* Custom Checkbox Container */
-        .checkbox-container { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 20px; text-align: left; background: #1a1a24; padding: 15px; border-radius: 8px; border: 1px solid #333; }
-        .checkbox-container input { margin-top: 3px; cursor: pointer; }
-        .checkbox-container label { font-size: 0.8rem; color: var(--text-muted); cursor: pointer; line-height: 1.4; }
+        .checkbox-container { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 25px; text-align: left; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05); }
+        .checkbox-container input { margin-top: 4px; cursor: pointer; accent-color: var(--neon-color); transform: scale(1.2); }
+        .checkbox-container label { font-size: 0.85rem; color: var(--text-muted); cursor: pointer; line-height: 1.5; }
+        
+        .btn-modal { width:100%; padding:14px; background:var(--neon-color); color:#000; border:none; font-weight:bold; cursor:pointer; border-radius:8px; font-size: 1rem; }
+        .btn-cancel { margin-top:15px; background:none; border:none; color:var(--text-muted); cursor:pointer; font-size: 0.9rem; transition: 0.3s; }
+        .btn-cancel:hover { color: #fff; }
     </style>
 </head>
 <body>
 
     <div id="auth-overlay">
         <div class="auth-box">
-            <h2 style="color: var(--neon-color); margin-bottom: 20px;">Pediaboy Portal</h2>
+            <h2 style="color: #fff; margin-bottom: 25px; font-size: 1.5rem;">PEDIA<span style="color: var(--neon-color); text-shadow: var(--neon-glow);">BOY.</span></h2>
             <div class="auth-tabs">
-                <button id="tab-login" class="active" onclick="switchTab('login')">Login</button>
-                <button id="tab-register" onclick="switchTab('register')">Daftar</button>
+                <button id="tab-login" class="active click-anim" onclick="switchTab('login')">Login</button>
+                <button id="tab-register" class="click-anim" onclick="switchTab('register')">Daftar</button>
             </div>
             <div id="form-login" class="auth-form active">
                 <input type="text" id="login-user" placeholder="Username" required>
                 <input type="password" id="login-pass" placeholder="Password" required>
-                <button class="btn-submit" onclick="prosesLogin()">Masuk</button>
+                <button class="btn-submit click-anim" onclick="prosesLogin()">Masuk Dashboard</button>
             </div>
             <div id="form-register" class="auth-form">
                 <input type="text" id="reg-user" placeholder="Buat Username" required>
                 <input type="password" id="reg-pass" placeholder="Buat Password" required>
-                <button class="btn-submit" onclick="prosesDaftar()">Daftar Sekarang</button>
-                <p id="reg-msg" style="color: #00ff00; font-size: 11px; margin-top: 10px; display: none;">Pendaftaran Berhasil! Silakan Login.</p>
+                <button class="btn-submit click-anim" onclick="prosesDaftar()">Daftar Sekarang</button>
+                <p id="reg-msg" style="color: #00ff00; font-size: 12px; margin-top: 15px; display: none;">Pendaftaran Berhasil! Silakan Login.</p>
             </div>
         </div>
     </div>
 
-    <nav>
-        <div class="logo">PEDIABOY.</div>
+    <nav class="fade-element">
+        <div class="logo">PEDIA<span>BOY.</span></div>
         <div class="user-info">
-            <span id="display-username">Hi, Guest</span>
-            <div class="kebab-menu" onclick="toggleMenu()">
+            <div class="user-badge" id="display-username">Hi, Guest</div>
+            <div class="kebab-menu click-anim" onclick="toggleMenu(event)">
                 <span></span><span></span><span></span>
                 <div id="menuDropdown" class="dropdown">
-                    <a href="https://wa.me/6282172222494" target="_blank">Hubungi Kami (WA)</a>
-                    <a href="https://instagram.com/elthoriqqqq_" target="_blank">Instagram @elthoriqqqq_</a>
-                    <a href="#" onclick="logout()">Logout</a>
+                    <a href="https://wa.me/6282172222494" target="_blank" class="click-anim">💬 Hubungi Kami (WA)</a>
+                    <a href="https://instagram.com/elthoriqqqq_" target="_blank" class="click-anim">📸 Instagram @elthoriqqqq_</a>
+                    <a href="#" onclick="logout()" class="click-anim" style="color: #ff4444;">🚪 Logout</a>
                 </div>
             </div>
         </div>
     </nav>
 
     <div class="container">
-        <header style="margin-bottom: 30px;">
-            <h1 style="font-size: 1.5rem;">Digital Services Dashboard</h1>
-            <p style="color: var(--text-muted); font-size: 0.85rem;">Solusi web & VPN premium terpercaya.</p>
+        <header class="header-title fade-element">
+            <h1>Premium Digital Services</h1>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Solusi Web Design & VPN Premium Terpercaya.</p>
         </header>
 
         <div class="services-grid">
-            <div class="card" onclick="openDetail('Web Design Premium', 'Rp 500.000+', 'Pembuatan website profesional, landing page, atau toko online. Desain dark mode neon modern, responsif untuk semua perangkat, dan fitur siap pakai.', 'Garansi revisi minor 1 minggu & perbaikan bug 1 bulan penuh.')">
-                <span class="price-badge">Start Rp 500k</span><h3>Jasa Website</h3>
+            <div class="card fade-element click-anim" onclick="openDetail('Web Design Premium', 'Rp 500.000+', 'Pembuatan website profesional, landing page, atau toko online. Desain dark mode neon modern, responsif untuk semua perangkat, dan fitur siap pakai.', 'Garansi revisi minor 1 minggu & perbaikan bug 1 bulan penuh.')">
+                <div class="price-badge">Start Rp 500k</div>
+                <h3>Jasa Website</h3>
                 <p>Landing page, Toko Online, & Portofolio desain modern neon.</p>
             </div>
-            <div class="card" onclick="openDetail('NordVPN Premium', 'Rp 35.000', 'Akun NordVPN Premium durasi 1 bulan. Tersedia pilihan Shared atau Private. Mendukung server dari puluhan negara untuk koneksi aman.', 'Garansi pergantian akun penuh jika error selama durasi aktif.')">
-                <span class="price-badge">Rp 35.000</span><h3>NordVPN</h3>
+            <div class="card fade-element click-anim" onclick="openDetail('NordVPN Premium', 'Rp 35.000', 'Akun NordVPN Premium durasi 1 bulan. Tersedia pilihan Shared atau Private. Mendukung server dari puluhan negara untuk koneksi aman.', 'Garansi pergantian akun penuh jika error selama durasi aktif.')">
+                <div class="price-badge">Rp 35.000</div>
+                <h3>NordVPN</h3>
                 <p>Akun premium durasi 1 bulan / shared / private.</p>
             </div>
-            <div class="card" onclick="openDetail('ExpressVPN Premium', 'Rp 45.000', 'VPN premium super cepat tanpa log data. Sangat direkomendasikan untuk gaming lancar dan menembus blokir streaming luar negeri.', 'Garansi 1 bulan penuh, klaim ganti akun mudah via WhatsApp.')">
-                <span class="price-badge">Rp 45.000</span><h3>ExpressVPN</h3>
+            <div class="card fade-element click-anim" onclick="openDetail('ExpressVPN Premium', 'Rp 45.000', 'VPN premium super cepat tanpa log data. Sangat direkomendasikan untuk gaming lancar dan menembus blokir streaming luar negeri.', 'Garansi 1 bulan penuh, klaim ganti akun mudah via WhatsApp.')">
+                <div class="price-badge">Rp 45.000</div>
+                <h3>ExpressVPN</h3>
                 <p>Koneksi tercepat untuk gaming & streaming bypass.</p>
             </div>
-            <div class="card" onclick="openDetail('Surfshark VPN', 'Rp 30.000', 'Satu akun Surfshark untuk unlimited devices. Dilengkapi fitur CleanWeb untuk blokir iklan dan pelacak berbahaya di browser.', 'Garansi resmi 1 bulan penuh tanpa syarat ribet.')">
-                <span class="price-badge">Rp 30.000</span><h3>Surfshark</h3>
+            <div class="card fade-element click-anim" onclick="openDetail('Surfshark VPN', 'Rp 30.000', 'Satu akun Surfshark untuk unlimited devices. Dilengkapi fitur CleanWeb untuk blokir iklan dan pelacak berbahaya di browser.', 'Garansi resmi 1 bulan penuh tanpa syarat ribet.')">
+                <div class="price-badge">Rp 30.000</div>
+                <h3>Surfshark</h3>
                 <p>Unlimited devices, fitur cleanweb & ad-blocker.</p>
             </div>
         </div>
 
         <div class="info-section">
-            <div class="info-box">
+            <div class="info-box fade-element">
                 <h4>Syarat & Ketentuan (SnK)</h4>
                 <ul>
                     <li>Pembayaran dilakukan di awal (Full Payment).</li>
@@ -174,7 +245,7 @@
                     <li>Dilarang mengubah email/password akun shared.</li>
                 </ul>
             </div>
-            <div class="info-box">
+            <div class="info-box fade-element">
                 <h4>FAQ (Tanya Jawab)</h4>
                 <ul>
                     <li><b>Q:</b> Apakah ini legal? <br><b>A:</b> Ya, semua layanan premium & resmi.</li>
@@ -185,49 +256,68 @@
         </div>
     </div>
 
-    <footer>&copy; 2026 Pediaboy Digital. Powered by @elthoriqqqq_</footer>
+    <footer class="fade-element">
+        &copy; 2026 Pediaboy Digital. Powered by @elthoriqqqq_
+    </footer>
 
     <div id="detailModal" class="modal">
         <div class="modal-content">
-            <h3 id="detailTitle" style="color:var(--neon-color); margin-bottom: 15px; font-size: 1.2rem;"></h3>
+            <h3 id="detailTitle" style="color:#fff; margin-bottom: 20px; font-size: 1.4rem; font-weight: 700;"></h3>
             
-            <div style="text-align: left; margin-bottom: 20px;">
+            <div style="text-align: left; margin-bottom: 25px; background: rgba(0,0,0,0.3); padding: 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
                 <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 5px;">Harga Layanan:</p>
-                <p id="detailPrice" style="color: var(--text-main); font-weight: bold; font-size: 1.3rem; margin-bottom: 15px;"></p>
+                <p id="detailPrice" style="color: var(--neon-color); font-weight: 800; font-size: 1.5rem; margin-bottom: 15px; text-shadow: var(--neon-glow);"></p>
                 
                 <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 5px;">Rincian:</p>
-                <p id="detailDesc" style="color: var(--text-main); font-size: 0.9rem; line-height: 1.5; margin-bottom: 15px;"></p>
+                <p id="detailDesc" style="color: #fff; font-size: 0.9rem; line-height: 1.6; margin-bottom: 15px;"></p>
                 
                 <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 5px;">Garansi:</p>
-                <p id="detailGaransi" style="color: #00ff00; font-size: 0.9rem;"></p>
+                <p id="detailGaransi" style="color: #00ffaa; font-size: 0.9rem; font-weight: 600;"></p>
             </div>
 
             <div class="checkbox-container">
-                <input type="checkbox" id="tncCheck">
+                <input type="checkbox" id="tncCheck" class="click-anim">
                 <label for="tncCheck">Saya telah membaca dan menyetujui seluruh detail layanan serta Syarat & Ketentuan Pediaboy Digital.</label>
             </div>
 
-            <button onclick="proceedToPayment()" style="width:100%; padding:12px; background:var(--neon-color); color:#000; border:none; font-weight:bold; cursor:pointer; border-radius:5px; transition: 0.3s;">Lanjutkan Pembayaran</button>
-            <button onclick="closeDetailModal()" style="margin-top:10px; background:none; border:none; color:var(--text-muted); cursor:pointer;">Batal</button>
+            <button onclick="proceedToPayment()" class="btn-modal click-anim">Lanjutkan Pembayaran</button>
+            <button onclick="closeDetailModal()" class="btn-cancel click-anim">Batal</button>
         </div>
     </div>
 
     <div id="orderModal" class="modal">
         <div class="modal-content">
-            <h3 style="color:var(--neon-color); margin-bottom: 10px;">Selesaikan Pembayaran</h3>
-            <p id="orderSummary" style="margin: 10px 0; font-weight: bold; font-size: 1.1rem; color: #fff;"></p>
-            <p style="font-size: 0.8rem; color: var(--text-muted);">Silakan scan QRIS di bawah untuk membayar.</p>
+            <h3 style="color:var(--neon-color); margin-bottom: 15px; font-size: 1.3rem;">Selesaikan Pembayaran</h3>
+            <div style="background: rgba(0, 243, 255, 0.1); border: 1px solid rgba(0, 243, 255, 0.3); padding: 10px; border-radius: 8px; margin-bottom: 15px;">
+                <p id="orderSummary" style="font-weight: bold; font-size: 1.1rem; color: #fff;"></p>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">Silakan scan QRIS di bawah untuk membayar.</p>
             
-            <div style="background: #fff; padding: 10px; border-radius: 8px; margin: 15px 0;">
-                <img src="https://via.placeholder.com/200x200.png?text=SCAN+QRIS+DISINI" alt="QRIS" style="width: 100%;">
+            <div style="background: #fff; padding: 15px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 0 20px rgba(255,255,255,0.1);">
+                <img src="https://via.placeholder.com/200x200.png?text=SCAN+QRIS+DISINI" alt="QRIS" style="width: 100%; border-radius: 8px;">
             </div>
             
-            <button onclick="sendWa()" style="width:100%; padding:12px; background:var(--neon-color); color:#000; border:none; font-weight:bold; cursor:pointer; border-radius:5px;">Konfirmasi via WhatsApp</button>
-            <button onclick="closeOrderModal()" style="margin-top:10px; background:none; border:none; color:var(--text-muted); cursor:pointer;">Batal</button>
+            <button onclick="sendWa()" class="btn-modal click-anim">Konfirmasi via WhatsApp</button>
+            <button onclick="closeOrderModal()" class="btn-cancel click-anim">Batal</button>
         </div>
     </div>
 
     <script>
+        // --- SCROLL ANIMATION (FADE IN/OUT) ---
+        const observerOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                } else {
+                    // Hapus class jika ingin elemen fade-out saat di-scroll ke luar layar
+                    entry.target.classList.remove('visible'); 
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-element').forEach((el) => observer.observe(el));
+
         // --- SISTEM DATABASE SIMULASI (LOCAL STORAGE) ---
         function switchTab(tab) {
             document.getElementById('tab-login').classList.remove('active');
@@ -241,104 +331,4 @@
 
         function prosesDaftar() {
             const user = document.getElementById('reg-user').value.trim();
-            const pass = document.getElementById('reg-pass').value.trim();
-            if (user === "" || pass === "") return alert("Username dan Password tidak boleh kosong!");
-            if (localStorage.getItem('user_' + user)) return alert("Username ini sudah dipakai, pilih yang lain!");
-
-            localStorage.setItem('user_' + user, pass);
-            document.getElementById('reg-msg').style.display = 'block';
-            document.getElementById('reg-user').value = "";
-            document.getElementById('reg-pass').value = "";
-            setTimeout(() => switchTab('login'), 1500);
-        }
-
-        function prosesLogin() {
-            const user = document.getElementById('login-user').value.trim();
-            const pass = document.getElementById('login-pass').value.trim();
-            const savedPass = localStorage.getItem('user_' + user);
-
-            if (savedPass && savedPass === pass) {
-                document.getElementById('auth-overlay').style.display = 'none';
-                document.getElementById('display-username').innerText = "Hi, " + user;
-                sessionStorage.setItem('activeUser', user);
-            } else {
-                alert("Username atau Password salah/belum terdaftar!");
-            }
-        }
-
-        window.onload = function() {
-            const activeUser = sessionStorage.getItem('activeUser');
-            if (activeUser) {
-                document.getElementById('auth-overlay').style.display = 'none';
-                document.getElementById('display-username').innerText = "Hi, " + activeUser;
-            }
-        }
-
-        function logout() {
-            sessionStorage.removeItem('activeUser');
-            location.reload();
-        }
-
-        // --- FITUR MENU ---
-        function toggleMenu() {
-            const dp = document.getElementById('menuDropdown');
-            dp.style.display = dp.style.display === 'block' ? 'none' : 'block';
-        }
-
-        // --- ALUR PEMESANAN ---
-        let currentItem = "";
-        let currentPrice = "";
-
-        // 1. Buka Modal Detail Dulu
-        function openDetail(item, price, desc, garansi) {
-            currentItem = item;
-            currentPrice = price;
-            
-            document.getElementById('detailTitle').innerText = item;
-            document.getElementById('detailPrice').innerText = price;
-            document.getElementById('detailDesc').innerText = desc;
-            document.getElementById('detailGaransi').innerText = garansi;
-            document.getElementById('tncCheck').checked = false; // Reset centang
-            
-            document.getElementById('detailModal').style.display = 'flex';
-        }
-
-        function closeDetailModal() {
-            document.getElementById('detailModal').style.display = 'none';
-        }
-
-        // 2. Validasi Centang & Pindah ke Modal QRIS
-        function proceedToPayment() {
-            const isChecked = document.getElementById('tncCheck').checked;
-            if (!isChecked) {
-                alert("Tolong centang persetujuan Syarat & Ketentuan sebelum melanjutkan.");
-                return;
-            }
-            // Tutup detail, buka order QRIS
-            closeDetailModal();
-            document.getElementById('orderSummary').innerText = currentItem + " - " + currentPrice;
-            document.getElementById('orderModal').style.display = 'flex';
-        }
-
-        function closeOrderModal() { 
-            document.getElementById('orderModal').style.display = 'none'; 
-        }
-
-        // 3. Eksekusi ke WA
-        function sendWa() {
-            const activeUser = sessionStorage.getItem('activeUser') || "Guest";
-            const msg = `Halo Pediaboy, saya *${activeUser}*.\n\nSaya sudah menyetujui SnK dan ingin order:\n*Layanan:* ${currentItem}\n*Harga:* ${currentPrice}\n\nSaya telah melakukan transfer pembayaran via QRIS.`;
-            window.location.href = `https://wa.me/6282172222494?text=${encodeURIComponent(msg)}`;
-        }
-
-        // Tutup modal / menu jika klik area luar
-        window.onclick = function(e) {
-            if (!e.target.matches('.kebab-menu') && !e.target.matches('.kebab-menu span')) {
-                document.getElementById('menuDropdown').style.display = 'none';
-            }
-            if (e.target == document.getElementById('detailModal')) closeDetailModal();
-            if (e.target == document.getElementById('orderModal')) closeOrderModal();
-        }
-    </script>
-</body>
-</html>
+           
