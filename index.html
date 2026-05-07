@@ -7,161 +7,159 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
 
+        /* --- THEME VARIABLES --- */
         :root {
-            --bg-color: #050508;
-            --card-bg: rgba(17, 17, 24, 0.7);
+            --bg-color: #0b0b13;
+            --card-bg: #151520;
             --text-main: #e0e0e0;
             --text-muted: #88889b;
             --neon-color: #00f3ff;
-            --neon-glow: 0 0 15px rgba(0, 243, 255, 0.6);
-            --gradient-border: linear-gradient(135deg, rgba(0, 243, 255, 0.5) 0%, rgba(0,0,0,0) 100%);
+            --neon-glow: 0 0 15px rgba(0, 243, 255, 0.4);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --tab-bg: #1c1c28;
+            --overlay-bg: rgba(5, 5, 8, 0.95);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body.light-mode {
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-main: #111111;
+            --text-muted: #666666;
+            --neon-color: #0066cc;
+            --neon-glow: 0 4px 15px rgba(0, 102, 204, 0.2);
+            --border-color: rgba(0, 0, 0, 0.1);
+            --tab-bg: #e2e8f0;
+            --overlay-bg: rgba(255, 255, 255, 0.95);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; transition: background-color 0.3s, color 0.3s; }
 
         body { 
-            background-color: var(--bg-color); 
-            color: var(--text-main); 
-            font-size: 14px; 
-            min-height: 100vh; 
-            width: 100%;
-            overflow-x: hidden; 
-            background-image: radial-gradient(circle at 50% 0%, rgba(0, 243, 255, 0.05) 0%, transparent 50%);
+            background-color: var(--bg-color); color: var(--text-main); 
+            font-size: 14px; min-height: 100vh; width: 100vw; overflow-x: hidden; 
         }
 
-        /* --- Animations (DIPERBAIKI ANTI-BUG SENTUH) --- */
-        .fade-element { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        /* --- ANIMATIONS --- */
+        .fade-element { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
         .fade-element.visible { opacity: 1; transform: translateY(0); }
-        .click-anim { transition: opacity 0.2s ease, box-shadow 0.3s ease; }
-        /* Hilangkan efek transform: scale() agar layar sentuh HP tidak membatalkan klik */
-        .click-anim:active { opacity: 0.5 !important; }
+        .click-anim { transition: transform 0.1s ease, opacity 0.2s; }
+        .click-anim:active { opacity: 0.6 !important; }
 
-        /* Auth Overlay (Login/Register) */
+        /* --- AUTH SYSTEM --- */
         #auth-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(5, 5, 8, 0.98); backdrop-filter: blur(8px);
+            position: fixed; inset: 0; background: var(--overlay-bg); backdrop-filter: blur(8px);
             display: flex; justify-content: center; align-items: center; z-index: 99999;
         }
-
         .auth-box {
             background: var(--card-bg); padding: 35px; border-radius: 16px;
-            border: 1px solid rgba(0, 243, 255, 0.3); box-shadow: var(--neon-glow);
-            width: 90%; max-width: 340px; text-align: center;
-            position: relative; z-index: 100000;
+            border: 1px solid var(--border-color); box-shadow: var(--neon-glow);
+            width: 90%; max-width: 340px; text-align: center; position: relative; z-index: 100000; pointer-events: auto;
         }
-
-        .auth-tabs { display: flex; margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .auth-tabs { display: flex; margin-bottom: 25px; border-bottom: 1px solid var(--border-color); }
         .auth-tabs button {
             flex: 1; background: none; border: none; color: var(--text-muted);
-            padding: 12px; cursor: pointer; font-weight: bold; font-size: 1rem; transition: 0.3s;
+            padding: 12px; cursor: pointer; font-weight: bold; font-size: 1rem;
         }
-        .auth-tabs button.active { color: var(--neon-color); border-bottom: 3px solid var(--neon-color); text-shadow: var(--neon-glow); }
-
+        .auth-tabs button.active { color: var(--neon-color); border-bottom: 3px solid var(--neon-color); }
         .auth-form { display: none; animation: fadeInForm 0.3s ease; }
         .auth-form.active { display: block; }
         @keyframes fadeInForm { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
         .auth-form input {
-            width: 100%; padding: 14px; margin-bottom: 15px;
-            background: rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.15); color: #fff; 
-            border-radius: 8px; outline: none; transition: 0.3s; font-size: 1rem;
+            width: 100%; padding: 14px; margin-bottom: 15px; background: var(--bg-color); 
+            border: 1px solid var(--border-color); color: var(--text-main); border-radius: 8px; outline: none; font-size: 1rem;
         }
-        .auth-form input:focus { border-color: var(--neon-color); box-shadow: 0 0 8px rgba(0,243,255,0.3); }
-        
+        .auth-form input:focus { border-color: var(--neon-color); }
         .btn-submit {
-            width: 100%; padding: 14px; background: var(--neon-color); color: #000;
+            width: 100%; padding: 14px; background: var(--neon-color); color: #fff;
             border: none; border-radius: 8px; font-weight: 800; cursor: pointer; font-size: 1rem;
-            box-shadow: 0 4px 15px rgba(0,243,255,0.3);
         }
+        body:not(.light-mode) .btn-submit { color: #000; }
 
-        /* Navbar & Menu */
+        /* --- NAVBAR & SIDEBAR --- */
         nav {
-            padding: 15px 25px; display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 1px solid rgba(255,255,255,0.05); position: sticky; top: 0; 
-            background: rgba(5, 5, 8, 0.85); backdrop-filter: blur(15px); z-index: 1000;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid var(--border-color); position: sticky; top: 0; 
+            background: var(--bg-color); z-index: 1000;
         }
-        .logo { font-weight: 800; color: #fff; font-size: 1.2rem; letter-spacing: 1px; }
-        .logo span { color: var(--neon-color); text-shadow: var(--neon-glow); }
+        .logo { font-weight: 800; color: var(--text-main); font-size: 1.3rem; }
+        .nav-actions { display: flex; align-items: center; gap: 15px; }
+        .theme-toggle, .menu-toggle { background: none; border: none; color: var(--text-main); font-size: 1.5rem; cursor: pointer; }
         
-        .user-info { display: flex; align-items: center; gap: 15px; }
-        .user-badge { 
-            background: rgba(0, 243, 255, 0.1); border: 1px solid rgba(0, 243, 255, 0.3);
-            padding: 6px 12px; border-radius: 20px; color: var(--neon-color); font-size: 0.8rem; font-weight: 600;
+        .sidebar {
+            position: fixed; top: 0; right: -100%; width: 260px; height: 100%;
+            background: var(--card-bg); box-shadow: -5px 0 20px rgba(0,0,0,0.5);
+            z-index: 2000; transition: 0.4s ease; padding: 20px; display: flex; flex-direction: column;
+            border-left: 1px solid var(--border-color);
         }
-        
-        .kebab-menu { cursor: pointer; padding: 10px 5px; position: relative; z-index: 1001; }
-        .kebab-menu span { display: block; width: 5px; height: 5px; background: var(--text-main); border-radius: 50%; margin: 4px 0; transition: 0.3s; }
-        .kebab-menu:hover span { background: var(--neon-color); box-shadow: var(--neon-glow); }
-        
-        .dropdown {
-            visibility: hidden; opacity: 0; transform: translateY(-10px);
-            position: absolute; right: 0; top: 50px; background: rgba(17, 17, 24, 0.95); backdrop-filter: blur(20px);
-            border: 1px solid rgba(0, 243, 255, 0.3); width: 220px; border-radius: 12px; 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.9); transition: all 0.3s ease; display: block; z-index: 2000;
+        .sidebar.open { right: 0; }
+        .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; }
+        .sidebar-header h2 { color: var(--neon-color); font-size: 1.2rem; }
+        .close-sidebar { background: none; border: none; color: var(--text-main); font-size: 2rem; cursor: pointer; }
+        .sidebar a {
+            display: block; padding: 12px 0; color: var(--text-main); text-decoration: none;
+            font-size: 1rem; border-bottom: 1px solid var(--border-color); font-weight: 600;
         }
-        .dropdown.show { visibility: visible; opacity: 1; transform: translateY(0); }
-        .dropdown a { display: block; padding: 15px 20px; text-decoration: none; color: var(--text-main); font-size: 0.9rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .dropdown a:hover { background: rgba(0, 243, 255, 0.1); color: var(--neon-color); padding-left: 25px; }
+        .sidebar a:hover { color: var(--neon-color); padding-left: 10px; }
+        .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1999; }
+        .sidebar-overlay.open { display: block; }
 
-        /* Content & Pricelist */
-        .container { max-width: 1000px; margin: 40px auto; padding: 0 20px; }
-        .header-title { text-align: center; margin-bottom: 40px; }
-        .header-title h1 { font-size: 2rem; font-weight: 700; margin-bottom: 10px; background: linear-gradient(to right, #fff, var(--neon-color)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        /* --- HORIZONTAL TABS (Sesuai Referensi) --- */
+        .tabs-container {
+            display: flex; overflow-x: auto; gap: 10px; padding: 15px 20px;
+            scrollbar-width: none; border-bottom: 1px solid var(--border-color);
+        }
+        .tabs-container::-webkit-scrollbar { display: none; }
+        .cat-tab {
+            background: var(--tab-bg); color: var(--text-muted); border: 1px solid var(--border-color);
+            padding: 10px 20px; border-radius: 20px; font-size: 0.9rem; font-weight: 600;
+            white-space: nowrap; cursor: pointer; display: flex; align-items: center; gap: 8px;
+        }
+        .cat-tab.active { background: var(--bg-color); color: var(--neon-color); border: 1px solid var(--neon-color); box-shadow: 0 0 10px rgba(0, 243, 255, 0.2) inset; }
 
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
-        
+        /* --- CONTENT & CARDS --- */
+        .container { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
+        .header-title { margin-bottom: 30px; text-align: left; }
+        .header-title h1 { font-size: 2rem; font-weight: 700; margin-bottom: 5px; }
+
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .product-item { display: block; } /* For filtering */
+        .product-item.hidden { display: none; }
+
         .card { 
-            background: var(--card-bg); padding: 25px; border-radius: 16px; 
-            border: 1px solid rgba(255,255,255,0.05); position: relative; overflow: hidden;
-            cursor: pointer; text-align: left;
+            background: var(--card-bg); padding: 25px; border-radius: 12px; 
+            border: 1px solid var(--border-color); position: relative;
+            cursor: pointer; text-align: left; transition: transform 0.2s, border-color 0.3s;
         }
-        .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gradient-border); opacity: 0; transition: 0.3s; }
-        .card:hover { border-color: rgba(0, 243, 255, 0.3); box-shadow: 0 10px 30px rgba(0, 243, 255, 0.1); }
-        .card:hover::before { opacity: 1; }
-        
+        .card:hover { border-color: var(--neon-color); transform: translateY(-3px); }
         .price-badge { 
-            display: inline-block; padding: 6px 12px; background: rgba(0, 243, 255, 0.1); 
-            color: var(--neon-color); border: 1px solid rgba(0, 243, 255, 0.3); 
-            border-radius: 8px; font-size: 0.9rem; font-weight: 700; margin-bottom: 15px;
+            display: inline-block; padding: 5px 12px; background: rgba(0, 243, 255, 0.1); 
+            color: var(--neon-color); border: 1px solid var(--neon-color); 
+            border-radius: 6px; font-size: 0.85rem; font-weight: 700; margin-bottom: 15px;
         }
-        .card h3 { font-size: 1.2rem; margin-bottom: 10px; font-weight: 600; color: #fff; }
+        .card h3 { font-size: 1.3rem; margin-bottom: 10px; font-weight: 700; }
         .card p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
 
-        /* SnK & FAQ */
-        .info-section { margin-top: 50px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        @media (max-width: 700px) { .info-section { grid-template-columns: 1fr; } }
-        .info-box { background: rgba(17, 17, 24, 0.5); padding: 25px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.03); }
-        .info-box h4 { color: var(--neon-color); margin-bottom: 20px; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 10px; }
-        .info-box h4::before { content: ''; width: 10px; height: 10px; background: var(--neon-color); border-radius: 50%; box-shadow: var(--neon-glow); }
-        .info-box ul { list-style: none; }
-        .info-box li { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px; padding-left: 20px; position: relative; line-height: 1.5; }
-        .info-box li::before { content: '→'; position: absolute; left: 0; color: var(--neon-color); font-weight: bold; }
-
-        footer { text-align: center; padding: 40px 20px; color: var(--text-muted); font-size: 0.8rem; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 40px; }
-
-        /* Modals */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); backdrop-filter: blur(5px); z-index: 10000; justify-content: center; align-items: center; padding: 20px; }
+        /* --- MODALS --- */
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 10000; justify-content: center; align-items: center; padding: 20px; }
         .modal-content { 
             background: var(--card-bg); padding: 25px; border-radius: 16px; width: 100%; max-width: 400px; 
-            text-align: center; border: 1px solid rgba(0, 243, 255, 0.4); box-shadow: 0 10px 40px rgba(0, 243, 255, 0.2);
-            animation: modalPop 0.3s ease;
+            border: 1px solid var(--neon-color); position: relative; animation: modalPop 0.3s ease; text-align: left;
         }
         @keyframes modalPop { 0% { transform: scale(0.9); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
         
-        .checkbox-container { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 25px; text-align: left; background: rgba(0,0,0,0.4); padding: 15px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); }
-        .checkbox-container input { margin-top: 4px; cursor: pointer; accent-color: var(--neon-color); width: 18px; height: 18px; }
-        .checkbox-container label { font-size: 0.85rem; color: var(--text-muted); cursor: pointer; line-height: 1.5; }
-        
-        .btn-modal { width:100%; padding:15px; background:var(--neon-color); color:#000; border:none; font-weight:800; cursor:pointer; border-radius:8px; font-size: 1rem; }
-        .btn-cancel { margin-top:15px; background:none; border:none; color:var(--text-muted); cursor:pointer; font-size: 0.9rem; padding: 10px; width: 100%; }
+        .checkbox-container { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 20px; background: var(--bg-color); padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); }
+        .checkbox-container input { margin-top: 3px; accent-color: var(--neon-color); width: 16px; height: 16px; }
+        .checkbox-container label { font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; }
+        .btn-modal { width:100%; padding:14px; background:var(--neon-color); color:#fff; border:none; font-weight:800; border-radius:8px; font-size: 1rem; text-align: center;}
+        body:not(.light-mode) .btn-modal { color: #000; }
+        .btn-cancel { margin-top:10px; background:none; border:none; color:var(--text-muted); width: 100%; padding: 10px; font-weight:bold; }
     </style>
 </head>
 <body>
 
     <div id="auth-overlay">
         <div class="auth-box">
-            <h2 style="color: #fff; margin-bottom: 25px; font-size: 1.8rem; font-weight: 800;">PEDIA<span style="color: var(--neon-color); text-shadow: var(--neon-glow);">BOY.</span></h2>
+            <h2 style="color: var(--neon-color); margin-bottom: 20px; font-size: 1.8rem; font-weight: 800;">PEDIABOY</h2>
             
             <div class="auth-tabs">
                 <button type="button" id="tab-login" class="active click-anim" onclick="switchTab('login')">Login</button>
@@ -170,184 +168,212 @@
 
             <p id="auth-error-msg" style="color: #ff4444; font-size: 13px; margin-bottom: 15px; display: none; font-weight: bold;"></p>
 
-            <div id="form-login" class="auth-form active">
-                <input type="text" id="login-user" placeholder="Username" autocomplete="off" onkeyup="cekEnter(event, 'login')">
-                <input type="password" id="login-pass" placeholder="Password" onkeyup="cekEnter(event, 'login')">
-                <button type="button" class="btn-submit click-anim" onclick="prosesLogin()">MASUK DASHBOARD</button>
-            </div>
+            <form id="form-login" class="auth-form active" onsubmit="event.preventDefault(); prosesLogin();">
+                <input type="text" id="login-user" placeholder="Username" required autocomplete="off">
+                <input type="password" id="login-pass" placeholder="Password" required>
+                <button type="submit" class="btn-submit click-anim">MASUK</button>
+            </form>
 
-            <div id="form-register" class="auth-form">
-                <input type="text" id="reg-user" placeholder="Buat Username" autocomplete="off" onkeyup="cekEnter(event, 'register')">
-                <input type="password" id="reg-pass" placeholder="Buat Password" onkeyup="cekEnter(event, 'register')">
-                <button type="button" class="btn-submit click-anim" onclick="prosesDaftar()">DAFTAR SEKARANG</button>
+            <form id="form-register" class="auth-form" onsubmit="event.preventDefault(); prosesDaftar();">
+                <input type="text" id="reg-user" placeholder="Buat Username" required autocomplete="off">
+                <input type="password" id="reg-pass" placeholder="Buat Password" required>
+                <button type="submit" class="btn-submit click-anim">DAFTAR</button>
                 <p id="reg-msg" style="color: #00ffaa; font-size: 13px; margin-top: 15px; display: none; font-weight: bold;">Sukses! Silakan Login.</p>
-            </div>
+            </form>
         </div>
     </div>
 
     <nav class="fade-element">
-        <div class="logo">PEDIA<span>BOY.</span></div>
-        <div class="user-info">
-            <div class="user-badge" id="display-username">Hi, Guest</div>
-            <div class="kebab-menu click-anim" onclick="toggleMenu(event)">
-                <span></span><span></span><span></span>
-                <div id="menuDropdown" class="dropdown">
-                    <a href="https://wa.me/6282172222494" target="_blank" class="click-anim">💬 Hubungi Kami (WA)</a>
-                    <a href="https://instagram.com/elthoriqqqq_" target="_blank" class="click-anim">📸 Instagram @elthoriqqqq_</a>
-                    <a href="#" onclick="logout()" class="click-anim" style="color: #ff4444;">🚪 Logout</a>
-                </div>
-            </div>
+        <div class="logo">PEDIABOY.</div>
+        <div class="nav-actions">
+            <button class="theme-toggle click-anim" onclick="toggleTheme()" id="theme-icon">🌙</button>
+            <button class="menu-toggle click-anim" onclick="toggleSidebar()">☰</button>
         </div>
     </nav>
 
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2 id="display-username">Hi, Guest</h2>
+            <button class="close-sidebar click-anim" onclick="toggleSidebar()">&times;</button>
+        </div>
+        <a href="#" onclick="filterTab('all'); toggleSidebar()">🏠 Home</a>
+        <a href="#" onclick="toggleSidebar()">💰 Harga Layanan</a>
+        <a href="#" onclick="toggleSidebar()">❓ FAQ</a>
+        <a href="#" onclick="toggleSidebar()">📜 Ketentuan Layanan</a>
+        <a href="https://wa.me/6282172222494" target="_blank">💬 Hubungi Kami (WA)</a>
+        <a href="https://instagram.com/elthoriqqqq_" target="_blank">📸 Instagram</a>
+        <a href="#" onclick="logout()" style="color: #ff4444; margin-top: auto;">🚪 Logout</a>
+    </div>
+
+    <div class="tabs-container fade-element">
+        <div class="cat-tab active click-anim" onclick="filterTab('all', this)">⚡ Semua</div>
+        <div class="cat-tab click-anim" onclick="filterTab('web', this)">💻 Jasa Web</div>
+        <div class="cat-tab click-anim" onclick="filterTab('vpn', this)">🛡️ VPN Premium</div>
+    </div>
+
     <div class="container">
         <header class="header-title fade-element">
-            <h1>Premium Digital Services</h1>
-            <p style="color: var(--text-muted); font-size: 0.95rem;">Solusi Web Design & VPN Premium Terpercaya.</p>
+            <h1>Spesifikasi Layanan</h1>
+            <p style="color: var(--text-muted);">Detail lengkap mengenai ekosistem dan produk premium kami.</p>
         </header>
 
-        <div class="services-grid">
-            <div class="card fade-element click-anim" onclick="openDetail('Web Design Premium', 'Rp 500.000+', 'Pembuatan website profesional, landing page, atau toko online. Desain dark mode neon modern, responsif untuk semua perangkat.', 'Garansi revisi minor 1 minggu & perbaikan bug 1 bulan penuh.')">
-                <div class="price-badge">Start Rp 500k</div>
-                <h3>Jasa Website</h3>
-                <p>Landing page, Toko Online, & Portofolio desain modern neon.</p>
+        <div class="services-grid" id="product-list">
+            <div class="product-item web fade-element">
+                <div class="card click-anim" onclick="openDetail('Web Design Premium', 'Rp 500.000+', 'Pembuatan website profesional. Desain responsif, modern, dan integrasi fitur sesuai request.', 'Garansi revisi minor & perbaikan bug.')">
+                    <div class="price-badge">Start Rp 500k</div>
+                    <h3>Jasa Pembuatan Web</h3>
+                    <p>Landing page, Toko Online, & Portofolio desain modern. Performa cepat dan stabil.</p>
+                </div>
             </div>
-            <div class="card fade-element click-anim" onclick="openDetail('NordVPN Premium', 'Rp 35.000', 'Akun NordVPN Premium durasi 1 bulan. Tersedia pilihan Shared atau Private. Mendukung server dari puluhan negara untuk koneksi aman.', 'Garansi pergantian akun penuh jika error selama durasi aktif.')">
-                <div class="price-badge">Rp 35.000</div>
-                <h3>NordVPN</h3>
-                <p>Akun premium durasi 1 bulan / shared / private.</p>
-            </div>
-            <div class="card fade-element click-anim" onclick="openDetail('ExpressVPN Premium', 'Rp 45.000', 'VPN premium super cepat tanpa log data. Sangat direkomendasikan untuk gaming lancar dan menembus blokir streaming luar negeri.', 'Garansi 1 bulan penuh, klaim ganti akun mudah via WhatsApp.')">
-                <div class="price-badge">Rp 45.000</div>
-                <h3>ExpressVPN</h3>
-                <p>Koneksi tercepat untuk gaming & streaming bypass.</p>
-            </div>
-            <div class="card fade-element click-anim" onclick="openDetail('Surfshark VPN', 'Rp 30.000', 'Satu akun Surfshark untuk unlimited devices. Dilengkapi fitur CleanWeb untuk blokir iklan dan pelacak berbahaya di browser.', 'Garansi resmi 1 bulan penuh tanpa syarat ribet.')">
-                <div class="price-badge">Rp 30.000</div>
-                <h3>Surfshark</h3>
-                <p>Unlimited devices, fitur cleanweb & ad-blocker.</p>
-            </div>
-        </div>
 
-        <div class="info-section">
-            <div class="info-box fade-element">
-                <h4>Syarat & Ketentuan (SnK)</h4>
-                <ul>
-                    <li>Pembayaran dilakukan di awal (Full Payment).</li>
-                    <li>Proses akun VPN 5-15 menit setelah transfer.</li>
-                    <li>Garansi berlaku sesuai durasi yang dibeli.</li>
-                    <li>Dilarang mengubah email/password akun shared.</li>
-                </ul>
+            <div class="product-item vpn fade-element">
+                <div class="card click-anim" onclick="openDetail('NordVPN Premium', 'Rp 35.000', 'Akun NordVPN Premium 1 bulan. Tersedia opsi Shared atau Private. Server puluhan negara.', 'Garansi full ganti akun jika error.')">
+                    <div class="price-badge">Rp 35.000</div>
+                    <h3>NordVPN</h3>
+                    <p>Enkripsi militer, akses server global, proteksi ekstra saat browsing.</p>
+                </div>
             </div>
-            <div class="info-box fade-element">
-                <h4>FAQ (Tanya Jawab)</h4>
-                <ul>
-                    <li><b>Q:</b> Apakah ini legal? <br><b>A:</b> Ya, semua layanan resmi.</li>
-                    <li><b>Q:</b> Bagaimana jika akun error?<br><b>A:</b> Langsung lapor ke WA untuk klaim garansi.</li>
-                    <li><b>Q:</b> Support pembayaran apa saja?<br><b>A:</b> Menggunakan QRIS (All Payment).</li>
-                </ul>
+
+            <div class="product-item vpn fade-element">
+                <div class="card click-anim" onclick="openDetail('ExpressVPN Premium', 'Rp 45.000', 'VPN tercepat untuk streaming dan gaming tanpa log data.', 'Garansi 1 bulan penuh via WhatsApp.')">
+                    <div class="price-badge">Rp 45.000</div>
+                    <h3>ExpressVPN</h3>
+                    <p>Koneksi ultra-cepat, bypass restriksi geografis dengan elegan dan efisien.</p>
+                </div>
+            </div>
+
+            <div class="product-item vpn fade-element">
+                <div class="card click-anim" onclick="openDetail('IP Vanish Premium', 'Rp 35.000', 'VPN tangguh untuk privasi tingkat tinggi dan menyembunyikan identitas online sepenuhnya.', 'Garansi resmi 1 bulan penuh.')">
+                    <div class="price-badge">Rp 35.000</div>
+                    <h3>IP Vanish</h3>
+                    <p>Lindungi privasi online Anda dengan protokol keamanan tingkat tinggi.</p>
+                </div>
+            </div>
+
+            <div class="product-item vpn fade-element">
+                <div class="card click-anim" onclick="openDetail('Surfshark VPN', 'Rp 30.000', 'Satu akun untuk unlimited devices. Dilengkapi fitur CleanWeb (Ad-blocker).', 'Garansi resmi 1 bulan penuh.')">
+                    <div class="price-badge">Rp 30.000</div>
+                    <h3>Surfshark</h3>
+                    <p>Unlimited device, bypass pemblokiran dengan fitur bypasser khusus.</p>
+                </div>
             </div>
         </div>
     </div>
 
-    <footer class="fade-element">
-        &copy; 2026 Pediaboy Digital. Powered by @elthoriqqqq_
-    </footer>
-
     <div id="detailModal" class="modal">
         <div class="modal-content">
-            <h3 id="detailTitle" style="color:#fff; margin-bottom: 20px; font-size: 1.4rem; font-weight: 700;"></h3>
+            <h3 id="detailTitle" style="color:var(--neon-color); margin-bottom: 20px; font-size: 1.4rem;"></h3>
             
-            <div style="text-align: left; margin-bottom: 20px; background: rgba(0,0,0,0.5); padding: 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 5px;">Harga Layanan:</p>
-                <p id="detailPrice" style="color: var(--neon-color); font-weight: 800; font-size: 1.5rem; margin-bottom: 15px; text-shadow: var(--neon-glow);"></p>
-                
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 5px;">Rincian:</p>
-                <p id="detailDesc" style="color: #fff; font-size: 0.9rem; line-height: 1.6; margin-bottom: 15px;"></p>
-                
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 5px;">Garansi:</p>
+            <div style="margin-bottom: 20px;">
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Harga Layanan:</p>
+                <p id="detailPrice" style="color: var(--text-main); font-weight: bold; font-size: 1.5rem; margin-bottom: 15px;"></p>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Rincian:</p>
+                <p id="detailDesc" style="color: var(--text-main); font-size: 0.9rem; line-height: 1.5; margin-bottom: 15px;"></p>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Garansi:</p>
                 <p id="detailGaransi" style="color: #00ffaa; font-size: 0.9rem; font-weight: 600;"></p>
             </div>
 
             <div class="checkbox-container">
                 <input type="checkbox" id="tncCheck" class="click-anim">
-                <label for="tncCheck">Saya telah membaca dan menyetujui seluruh detail layanan serta Syarat & Ketentuan Pediaboy Digital.</label>
+                <label for="tncCheck">Saya setuju dengan ketentuan Layanan Pediaboy.</label>
             </div>
 
-            <button type="button" onclick="proceedToPayment()" class="btn-modal click-anim">LANJUTKAN PEMBAYARAN</button>
-            <button type="button" onclick="closeDetailModal()" class="btn-cancel click-anim">BATAL</button>
+            <button type="button" onclick="proceedToPayment()" class="btn-modal click-anim">LANJUT PEMBAYARAN</button>
+            <button type="button" onclick="closeDetailModal()" class="btn-cancel click-anim">Batal</button>
         </div>
     </div>
 
     <div id="orderModal" class="modal">
-        <div class="modal-content">
-            <h3 style="color:var(--neon-color); margin-bottom: 15px; font-size: 1.3rem;">Selesaikan Pembayaran</h3>
-            <div style="background: rgba(0, 243, 255, 0.1); border: 1px solid rgba(0, 243, 255, 0.3); padding: 12px; border-radius: 8px; margin-bottom: 15px;">
-                <p id="orderSummary" style="font-weight: bold; font-size: 1.1rem; color: #fff;"></p>
+        <div class="modal-content" style="text-align: center;">
+            <h3 style="color:var(--neon-color); margin-bottom: 15px;">Pembayaran</h3>
+            <div style="background: var(--bg-color); padding: 10px; border-radius: 8px; margin-bottom: 15px; border: 1px solid var(--border-color);">
+                <p id="orderSummary" style="font-weight: bold; font-size: 1rem;"></p>
             </div>
-            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">Silakan scan QRIS di bawah untuk membayar.</p>
             
             <div style="background: #fff; padding: 15px; border-radius: 12px; margin-bottom: 20px;">
                 <img src="https://via.placeholder.com/200x200.png?text=SCAN+QRIS+DISINI" alt="QRIS" style="width: 100%; border-radius: 8px;">
             </div>
             
-            <button type="button" onclick="sendWa()" class="btn-modal click-anim">KONFIRMASI VIA WHATSAPP</button>
-            <button type="button" onclick="closeOrderModal()" class="btn-cancel click-anim">BATAL</button>
+            <button type="button" onclick="sendWa()" class="btn-modal click-anim">KONFIRMASI WA</button>
+            <button type="button" onclick="closeOrderModal()" class="btn-cancel click-anim">Batal</button>
         </div>
     </div>
 
     <script>
-        // --- 1. JAVASCRIPT DATABASE SEDERHANA ---
+        // --- THEME TOGGLE (DARK/LIGHT MODE) ---
+        function toggleTheme() {
+            const body = document.body;
+            const icon = document.getElementById('theme-icon');
+            body.classList.toggle('light-mode');
+            
+            if (body.classList.contains('light-mode')) {
+                icon.innerText = '☀️';
+                localStorage.setItem('theme', 'light');
+            } else {
+                icon.innerText = '🌙';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+        // Load Theme on start
+        if(localStorage.getItem('theme') === 'light') toggleTheme();
+
+        // --- SIDEBAR TOGGLE ---
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('sidebar-overlay').classList.toggle('open');
+        }
+
+        // --- TAB FILTERING (HORIZONTAL) ---
+        function filterTab(category, btnElement) {
+            // Ubah class active di tombol
+            if(btnElement) {
+                document.querySelectorAll('.cat-tab').forEach(btn => btn.classList.remove('active'));
+                btnElement.classList.add('active');
+            }
+            
+            // Filter grid
+            const items = document.querySelectorAll('.product-item');
+            items.forEach(item => {
+                if(category === 'all') {
+                    item.classList.remove('hidden');
+                } else {
+                    if(item.classList.contains(category)) {
+                        item.classList.remove('hidden');
+                    } else {
+                        item.classList.add('hidden');
+                    }
+                }
+            });
+        }
+
+        // --- AUTH & DATABASE SEDERHANA ---
         let memoryDB = {}; 
-        
-        function simpanData(user, pass) {
-            memoryDB['user_' + user] = pass;
-            try { localStorage.setItem('user_' + user, pass); } catch(e) {}
-        }
-        function ambilData(user) {
-            let pass = memoryDB['user_' + user];
-            try { pass = pass || localStorage.getItem('user_' + user); } catch(e) {}
-            return pass;
-        }
+        function simpanData(user, pass) { memoryDB['u_'+user]=pass; try{localStorage.setItem('u_'+user,pass)}catch(e){} }
+        function ambilData(user) { let p=memoryDB['u_'+user]; try{p=p||localStorage.getItem('u_'+user)}catch(e){} return p; }
 
-        // --- 2. LOGIC LOGIN & DAFTAR ---
         const errorMsg = document.getElementById('auth-error-msg');
-
-        function showError(msg) {
-            errorMsg.innerText = msg;
-            errorMsg.style.display = 'block';
-        }
+        function showError(msg) { errorMsg.innerText = msg; errorMsg.style.display = 'block'; }
 
         function switchTab(tab) {
             document.getElementById('tab-login').classList.remove('active');
             document.getElementById('tab-register').classList.remove('active');
-            document.getElementById('form-login').classList.remove('active');
+            document.getElementById('form-login').classList.remove('active'
             document.getElementById('form-register').classList.remove('active');
-            
             document.getElementById('tab-' + tab).classList.add('active');
             document.getElementById('form-' + tab).classList.add('active');
-            
             document.getElementById('reg-msg').style.display = 'none';
             errorMsg.style.display = 'none';
-        }
-
-        function cekEnter(e, tipe) {
-            if (e.key === 'Enter' || e.keyCode === 13) {
-                if (tipe === 'login') prosesLogin();
-                if (tipe === 'register') prosesDaftar();
-            }
         }
 
         function prosesDaftar() {
             const user = document.getElementById('reg-user').value.trim();
             const pass = document.getElementById('reg-pass').value.trim();
-            
-            if (user === "" || pass === "") return showError("Username dan Password wajib diisi!");
-            if (ambilData(user)) return showError("Username sudah dipakai!");
+            if (user === "" || pass === "") return showError("Isi data dengan lengkap!");
+            if (ambilData(user)) return showError("Username sudah terdaftar!");
 
-            errorMsg.style.display = 'none';
             simpanData(user, pass);
-            
+            errorMsg.style.display = 'none';
             document.getElementById('reg-msg').style.display = 'block';
             document.getElementById('reg-user').value = "";
             document.getElementById('reg-pass').value = "";
@@ -357,19 +383,15 @@
         function prosesLogin() {
             const user = document.getElementById('login-user').value.trim();
             const pass = document.getElementById('login-pass').value.trim();
-            const savedPass = ambilData(user);
-
             if (user === "" || pass === "") return showError("Isi Username dan Password!");
 
-            if (savedPass && savedPass === pass) {
+            if (ambilData(user) === pass) {
                 document.getElementById('auth-overlay').style.display = 'none';
-                document.getElementById('display-username').innerText = user;
+                document.getElementById('display-username').innerText = "Hi, " + user;
                 try { sessionStorage.setItem('activeUser', user); } catch(e) {}
-                errorMsg.style.display = 'none';
                 
-                setTimeout(() => {
-                    document.querySelectorAll('.fade-element').forEach(el => el.classList.add('visible'));
-                }, 100);
+                // Show elements
+                setTimeout(() => { document.querySelectorAll('.fade-element').forEach(el => el.classList.add('visible')); }, 100);
             } else {
                 showError("Username atau Password salah!");
             }
@@ -378,41 +400,26 @@
         window.onload = function() {
             let userSesi = "";
             try { userSesi = sessionStorage.getItem('activeUser'); } catch(e) {}
-            
             if (userSesi) {
                 document.getElementById('auth-overlay').style.display = 'none';
-                document.getElementById('display-username').innerText = userSesi;
-                setTimeout(() => {
-                    document.querySelectorAll('.fade-element').forEach(el => el.classList.add('visible'));
-                }, 100);
+                document.getElementById('display-username').innerText = "Hi, " + userSesi;
+                setTimeout(() => { document.querySelectorAll('.fade-element').forEach(el => el.classList.add('visible')); }, 100);
             }
         }
 
-        function logout() {
-            try { sessionStorage.removeItem('activeUser'); } catch(e) {}
-            location.reload();
-        }
+        function logout() { try { sessionStorage.removeItem('activeUser'); } catch(e){} location.reload(); }
 
-        // --- 3. FITUR LAINNYA (MENU, MODAL, SCROLL) ---
+        // --- SCROLL ANIMATION ---
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('visible');
-                else entry.target.classList.remove('visible'); 
-            });
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
         }, { threshold: 0.1 });
         document.querySelectorAll('.fade-element').forEach((el) => observer.observe(el));
 
-        function toggleMenu(e) {
-            e.stopPropagation();
-            document.getElementById('menuDropdown').classList.toggle('show');
-        }
-
-        let currentItem = "";
-        let currentPrice = "";
+        // --- ORDER FLOW ---
+        let currentItem = "", currentPrice = "";
 
         function openDetail(item, price, desc, garansi) {
-            currentItem = item;
-            currentPrice = price;
+            currentItem = item; currentPrice = price;
             document.getElementById('detailTitle').innerText = item;
             document.getElementById('detailPrice').innerText = price;
             document.getElementById('detailDesc').innerText = desc;
@@ -422,12 +429,9 @@
         }
 
         function closeDetailModal() { document.getElementById('detailModal').style.display = 'none'; }
-
+        
         function proceedToPayment() {
-            if (!document.getElementById('tncCheck').checked) {
-                alert("Centang persetujuan Syarat & Ketentuan dulu ya!");
-                return;
-            }
+            if (!document.getElementById('tncCheck').checked) return alert("Centang persetujuan dulu ya!");
             closeDetailModal();
             document.getElementById('orderSummary').innerText = currentItem + " | " + currentPrice;
             document.getElementById('orderModal').style.display = 'flex';
@@ -438,18 +442,9 @@
         function sendWa() {
             let activeUser = "Guest";
             try { activeUser = sessionStorage.getItem('activeUser') || "Guest"; } catch(e) {}
-            const msg = `Halo Pediaboy, saya *${activeUser}*.\n\nSaya sudah menyetujui SnK dan ingin order:\n*Layanan:* ${currentItem}\n*Harga:* ${currentPrice}\n\nSaya telah melakukan transfer pembayaran via QRIS.`;
+            const msg = `Halo Pediaboy, saya *${activeUser}*.\n\nSaya sudah menyetujui Ketentuan dan ingin order:\n*Layanan:* ${currentItem}\n*Harga:* ${currentPrice}\n\nSaya telah transfer pembayaran via QRIS.`;
             window.location.href = `https://wa.me/6282172222494?text=${encodeURIComponent(msg)}`;
-        }
-
-        window.onclick = function(e) {
-            if (!e.target.closest('.kebab-menu')) {
-                const dropdown = document.getElementById('menuDropdown');
-                if(dropdown) dropdown.classList.remove('show');
-            }
-            if (e.target == document.getElementById('detailModal')) closeDetailModal();
-            if (e.target == document.getElementById('orderModal')) closeOrderModal();
         }
     </script>
 </body>
-</html>
+</html>                                                       
