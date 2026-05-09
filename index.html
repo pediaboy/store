@@ -7,19 +7,15 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* Smooth scrolling untuk navigasi */
         html { scroll-behavior: smooth; }
-        /* Sembunyikan scrollbar tapi tetap bisa scroll */
         ::-webkit-scrollbar { display: none; }
         body { -ms-overflow-style: none; scrollbar-width: none; background-color: #f3f4f6; }
     </style>
 </head>
 <body class="text-gray-800">
 
-    <!-- Container Utama (Aspek Rasio Mobile) -->
     <div class="max-w-md mx-auto bg-white min-h-screen shadow-xl relative overflow-hidden">
         
-        <!-- Header -->
         <header class="bg-blue-600 text-white p-4 sticky top-0 z-50 shadow-md flex justify-between items-center">
             <h1 class="text-xl font-bold"><i class="fas fa-store mr-2"></i> Pediaboy</h1>
             <nav class="text-sm">
@@ -28,23 +24,19 @@
             </nav>
         </header>
 
-        <!-- Hero Section -->
         <div class="bg-blue-500 text-white p-6 text-center">
             <img src="https://ui-avatars.com/api/?name=Pediaboy&background=ffffff&color=2563eb&size=100" alt="Pediaboy Logo" class="mx-auto rounded-full mb-3 border-4 border-blue-300">
             <h2 class="text-2xl font-bold mb-1">Pediaboy Digital Store</h2>
             <p class="text-sm text-blue-100">Premium VPN & Jasa Web Design Professional</p>
         </div>
 
-        <!-- Konten Utama -->
         <main class="p-4">
             
-            <!-- Kategori VPN -->
             <section id="katalog" class="mb-8">
                 <h3 class="text-lg font-bold border-b-2 border-blue-500 pb-1 mb-4 flex items-center">
                     <i class="fas fa-shield-alt text-blue-500 mr-2"></i> Aplikasi VPN Premium
                 </h3>
                 <div class="grid grid-cols-2 gap-3">
-                    <!-- Produk 1 -->
                     <div class="border rounded-lg p-3 shadow-sm hover:shadow-md transition">
                         <div class="bg-blue-100 text-blue-600 text-center rounded py-2 mb-2 font-bold"><i class="fas fa-network-wired"></i> Surfshark</div>
                         <h4 class="font-semibold text-sm">Surfshark VPN</h4>
@@ -52,7 +44,6 @@
                         <p class="text-blue-600 font-bold text-sm mb-3">Rp 25.000</p>
                         <button onclick="bukaCheckout('Surfshark VPN Premium', 25000)" class="w-full bg-blue-600 text-white text-sm py-1.5 rounded hover:bg-blue-700 transition">Beli</button>
                     </div>
-                    <!-- Produk 2 -->
                     <div class="border rounded-lg p-3 shadow-sm hover:shadow-md transition">
                         <div class="bg-blue-100 text-blue-600 text-center rounded py-2 mb-2 font-bold"><i class="fas fa-globe"></i> NordVPN</div>
                         <h4 class="font-semibold text-sm">NordVPN</h4>
@@ -60,7 +51,6 @@
                         <p class="text-blue-600 font-bold text-sm mb-3">Rp 30.000</p>
                         <button onclick="bukaCheckout('NordVPN Premium', 30000)" class="w-full bg-blue-600 text-white text-sm py-1.5 rounded hover:bg-blue-700 transition">Beli</button>
                     </div>
-                    <!-- Produk 3 -->
                     <div class="border rounded-lg p-3 shadow-sm hover:shadow-md transition">
                         <div class="bg-blue-100 text-blue-600 text-center rounded py-2 mb-2 font-bold"><i class="fas fa-lock"></i> IP Vanish</div>
                         <h4 class="font-semibold text-sm">IP Vanish VPN</h4>
@@ -68,7 +58,6 @@
                         <p class="text-blue-600 font-bold text-sm mb-3">Rp 20.000</p>
                         <button onclick="bukaCheckout('IP Vanish Premium', 20000)" class="w-full bg-blue-600 text-white text-sm py-1.5 rounded hover:bg-blue-700 transition">Beli</button>
                     </div>
-                    <!-- Produk 4 -->
                     <div class="border rounded-lg p-3 shadow-sm hover:shadow-md transition">
                         <div class="bg-blue-100 text-blue-600 text-center rounded py-2 mb-2 font-bold"><i class="fas fa-bolt"></i> ExpressVPN</div>
                         <h4 class="font-semibold text-sm">ExpressVPN</h4>
@@ -79,7 +68,6 @@
                 </div>
             </section>
 
-            <!-- Kategori Jasa Web -->
             <section class="mb-8">
                 <h3 class="text-lg font-bold border-b-2 border-blue-500 pb-1 mb-4 flex items-center">
                     <i class="fas fa-laptop-code text-blue-500 mr-2"></i> Jasa Design Web
@@ -88,7 +76,7 @@
                     
                     <div class="border rounded-lg p-3 shadow-sm flex flex-col">
                         <div class="flex justify-between items-start mb-2">
-                            <h4 class="font-bold text-md">Paket Basic (Landing Page)</h4>
+                            <h4 class="font-bold text-md">Paket Basic</h4>
                             <span class="bg-blue-100 text-blue-700 text-xs font-bold px-2 py-1 rounded">Rp 100.000</span>
                         </div>
                         <p class="text-xs text-gray-600 mb-3 leading-relaxed">Cocok untuk portofolio atau link tree. Template standar, responsif di HP, pengerjaan 1-2 hari kerja.</p>
@@ -97,7 +85,7 @@
 
                     <div class="border rounded-lg p-3 shadow-sm flex flex-col">
                         <div class="flex justify-between items-start mb-2">
-                            <h4 class="font-bold text-md">Paket Pro (Company/Catalog)</h4>
+                            <h4 class="font-bold text-md">Paket Pro</h4>
                             <span class="bg-blue-100 text-blue-700 text-xs font-bold px-2 py-1 rounded">Rp 1.000.000</span>
                         </div>
                         <p class="text-xs text-gray-600 mb-3 leading-relaxed">Web katalog produk atau company profile (hingga 5 halaman). Desain elegan, terintegrasi tombol WhatsApp, SEO dasar.</p>
@@ -107,7 +95,7 @@
                     <div class="border border-blue-400 rounded-lg p-3 shadow-sm flex flex-col bg-blue-50 relative overflow-hidden">
                         <div class="absolute top-0 right-0 bg-blue-500 text-white text-[10px] px-2 py-1 rounded-bl-lg font-bold">BEST SELLER</div>
                         <div class="flex justify-between items-start mb-2 mt-2">
-                            <h4 class="font-bold text-md text-blue-800">Paket Ultimate (Custom)</h4>
+                            <h4 class="font-bold text-md text-blue-800">Paket Ultimate</h4>
                             <span class="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">Rp 3.000.000</span>
                         </div>
                         <p class="text-xs text-gray-700 mb-3 leading-relaxed">Solusi lengkap! Web aplikasi / toko online full fitur. Integrasi payment gateway (Midtrans/QRIS), panel admin, database lengkap, dan UI/UX premium eksklusif.</p>
@@ -117,7 +105,6 @@
                 </div>
             </section>
 
-            <!-- SnK & FAQ -->
             <section id="faq" class="mb-8 bg-white border rounded-lg p-4 shadow-sm">
                 <h3 class="text-lg font-bold border-b-2 border-gray-200 pb-1 mb-3">Syarat, Ketentuan & FAQ</h3>
                 
@@ -147,7 +134,6 @@
 
         </main>
 
-        <!-- Footer -->
         <footer class="bg-gray-800 text-white text-center p-6 mt-4 rounded-t-xl">
             <h4 class="font-bold text-lg mb-2">Pediaboy</h4>
             <div class="flex justify-center space-x-4 mb-4">
@@ -157,7 +143,6 @@
             <p class="text-xs text-gray-400">© 2026 Pediaboy. All rights reserved.</p>
         </footer>
 
-        <!-- Modal Checkout -->
         <div id="checkoutModal" class="fixed inset-0 bg-black bg-opacity-60 hidden z-[100] flex items-end justify-center sm:items-center">
             <div class="bg-white w-full max-w-md rounded-t-2xl sm:rounded-2xl p-5 transform transition-transform translate-y-full" id="modalContent">
                 <div class="flex justify-between items-center mb-4">
@@ -175,11 +160,6 @@
                     <div class="mb-3">
                         <label class="block text-xs font-semibold text-gray-600 mb-1">Nama Pembeli</label>
                         <input type="text" id="namaPembeli" class="w-full border rounded p-2 focus:border-blue-500 outline-none" placeholder="Masukkan nama..." required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="block text-xs font-semibold text-gray-600 mb-1">No. WhatsApp</label>
-                        <input type="number" id="noWA" class="w-full border rounded p-2 focus:border-blue-500 outline-none" placeholder="628..." required>
                     </div>
 
                     <div class="mb-4">
@@ -200,7 +180,7 @@
                     </div>
 
                     <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition">
-                        Konfirmasi Pembelian
+                        Pesan via WhatsApp
                     </button>
                 </form>
             </div>
@@ -208,21 +188,13 @@
 
     </div>
 
-    <!-- SCRIPT LOGIKA WEB -->
     <script>
-        // === KONFIGURASI BOT TELEGRAM KAMU DI SINI ===
-        // 1. Buat bot di @BotFather dan masukkan tokennya di bawah
-        const TELEGRAM_BOT_TOKEN = "ISI_TOKEN_BOT_KAMU_DISINI"; 
-        
-        // 2. Dapatkan Chat ID kamu (bisa lewat @userinfobot)
-        const TELEGRAM_CHAT_ID = "ISI_CHAT_ID_KAMU_DISINI"; 
-        // =============================================
+        const NOMOR_WA_ADMIN = "628xxxxxxxxxxx"; // Ganti dengan nomor WhatsApp lu yang pakai angka (contoh: 628123456789)
 
         const formatRupiah = (angka) => {
             return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
         }
 
-        // Fungsi Buka Modal
         function bukaCheckout(produk, harga) {
             document.getElementById('checkoutModal').classList.remove('hidden');
             setTimeout(() => {
@@ -234,7 +206,6 @@
             document.getElementById('labelTotal').innerText = formatRupiah(harga);
         }
 
-        // Fungsi Tutup Modal
         function tutupCheckout() {
             document.getElementById('modalContent').classList.add('translate-y-full');
             setTimeout(() => {
@@ -243,75 +214,34 @@
             }, 300);
         }
 
-        // Fungsi Proses Pembelian ke Bot Telegram
         function prosesPembelian(event) {
             event.preventDefault();
 
-            // Ambil data dari form
             const produk = document.getElementById('namaProduk').value;
             const harga = document.getElementById('hargaProduk').value;
             const nama = document.getElementById('namaPembeli').value;
-            const noWA = document.getElementById('noWA').value;
             const metode = document.getElementById('metodeBayar').value;
             
-            // Buat Invoice ID Random
             const invId = "INV-" + Math.floor(Math.random() * 1000000);
-            const tgl = new Date().toLocaleString('id-ID');
 
-            // Format Pesan untuk dikirim ke Telegram
-            const pesanTelegram = `
-🛒 *PESANAN BARU MASUK (PEDIABOY)* 🛒
+            const pesanWA = `Halo Admin Pediaboy, saya ingin melakukan pemesanan:
 
-*Invoice:* \`${invId}\`
-*Tanggal:* ${tgl}
+Invoice: ${invId}
 
-👤 *Data Pembeli:*
+Data Pembeli:
 - Nama: ${nama}
-- WA: wa.me/${noWA.startsWith('0') ? '62' + noWA.substring(1) : noWA}
 
-📦 *Detail Pesanan:*
-- Produk: *${produk}*
-- Total: *${formatRupiah(harga)}*
-- Metode Pembayaran: *${metode}*
+Detail Pesanan:
+- Produk: ${produk}
+- Total: ${formatRupiah(harga)}
+- Metode Pembayaran: ${metode}
 
-_Segera proses pesanan ini dan kirimkan instruksi pembayaran/QRIS ke nomor WA pembeli._
-            `;
+Mohon instruksi pembayaran selanjutnya.`;
 
-            // Kirim ke Telegram API
-            const url = `https://api.telegram.org/bot${8711083395:AAEWxuwTLZmlX5EP8AEc7gQ8MJ5vkeAwZ1c}/sendMessage`;
+            const urlWA = `https://api.whatsapp.com/send?phone=${wa.me/628212222494}&text=${encodeURIComponent(pesanWA)}`;
             
-            // Tombol loading
-            const btnSubmit = event.target.querySelector('button[type="submit"]');
-            const teksAwal = btnSubmit.innerHTML;
-            btnSubmit.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Memproses...`;
-            btnSubmit.disabled = true;
-
-            fetch(url, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    chat_id: 7233272550,
-                    text: pesanTelegram,
-                    parse_mode: 'Markdown'
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if(data.ok) {
-                    alert(`✅ Pesanan berhasil dibuat!\n\nInvoice: ${invId}\nTotal: ${formatRupiah(harga)}\n\nMohon tunggu, admin Pediaboy akan segera menghubungi WA Anda untuk proses pembayaran (${metode}).`);
-                    tutupCheckout();
-                } else {
-                    alert("❌ Gagal mengirim pesanan. Pastikan Token & Chat ID Telegram sudah diatur di script.");
-                }
-            })
-            .catch(error => {
-                alert("❌ Terjadi kesalahan koneksi.");
-                console.error(error);
-            })
-            .finally(() => {
-                btnSubmit.innerHTML = teksAwal;
-                btnSubmit.disabled = false;
-            });
+            window.open(urlWA, '_blank');
+            tutupCheckout();
         }
     </script>
 </body>
