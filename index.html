@@ -4,184 +4,315 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pediaboy Store</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* =========================================
-           1. Pengaturan Dasar & Dark Mode
-           ========================================= */
-        body {
-            background-color: #050505; /* Warna latar sangat gelap (Deep Dark) */
-            color: #ffffff; /* Teks berwarna putih agar kontras */
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 20px;
-            overflow-x: hidden; /* Mencegah geser kanan-kiri yang tidak disengaja di HP */
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 40px;
-            margin-top: 20px;
-        }
-
-        /* Efek Teks Neon Cyan */
-        h1 {
-            font-size: 2.5rem;
-            color: #00ffff;
-            text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 40px #00ffff;
-            margin: 0;
-        }
-
-        p.subtitle {
-            color: #a0a0a0;
-            font-size: 1rem;
-        }
-
-        /* =========================================
-           2. Pengaturan Bento Grid
-           ========================================= */
-        .bento-grid {
-            display: grid;
-            grid-template-columns: 1fr; /* 1 kolom untuk tampilan mobile (HP) */
-            gap: 20px; /* Jarak antar kotak harga */
-            max-width: 400px; /* Lebar maksimal menyerupai layar HP pada umumnya */
-            margin: 0 auto; /* Posisi otomatis di tengah layar */
-        }
-
-        /* =========================================
-           3. Desain Kotak (Card) & Efek Motion Blur
-           ========================================= */
-        .bento-item {
-            background-color: #121212;
-            border: 1px solid #1a1a1a;
-            border-radius: 24px;
-            padding: 24px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            
-            /* Durasi animasi diatur agar efek blur terlihat jelas dan halus */
-            transition: transform 0.6s ease-out, opacity 0.6s ease-out, filter 0.6s ease-out, box-shadow 0.3s ease;
-            
-            /* Persiapan Animasi: Tembus pandang, posisi di bawah, dan buram (blur) */
-            opacity: 0;
-            transform: translateY(40px); 
-            filter: blur(10px); 
-        }
-
-        /* Efek saat kotak disentuh/di-hover (memancar neon) */
-        .bento-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.4); 
-            border-color: #00ffff;
-        }
-
-        /* Kelas untuk memicu animasi saat kotak masuk ke layar */
-        .bento-item.show {
-            opacity: 1; /* Menjadi terlihat sepenuhnya */
-            transform: translateY(0); /* Kembali ke posisi semula */
-            filter: blur(0); /* Blur menghilang menjadi sangat tajam */
-        }
-
-        /* =========================================
-           4. Desain Harga dan Tombol E-Wallet
-           ========================================= */
-        .price {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #ffffff;
-            margin: 15px 0;
-        }
-
-        .btn {
-            width: 100%;
-            padding: 12px;
-            border-radius: 12px;
-            border: none;
-            font-weight: bold;
-            font-size: 1rem;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: 0.3s;
-        }
-
-        /* Tombol QRIS dengan pendaran neon */
-        .btn-qris {
-            background-color: #00ffff;
-            color: #000000;
-            box-shadow: 0 0 10px rgba(0, 255, 255, 0.6);
-        }
-
-        /* Tombol Telegram */
-        .btn-telegram {
-            background-color: #2AABEE; /* Warna biru khas Telegram */
-            color: white;
-        }
+        /* Smooth scrolling untuk navigasi */
+        html { scroll-behavior: smooth; }
+        /* Sembunyikan scrollbar tapi tetap bisa scroll */
+        ::-webkit-scrollbar { display: none; }
+        body { -ms-overflow-style: none; scrollbar-width: none; background-color: #f3f4f6; }
     </style>
 </head>
-<body>
+<body class="text-gray-800">
 
-    <!-- Bagian Judul Halaman -->
-    <header>
-        <h1>PEDIABOY</h1>
-        <p class="subtitle">Futuristic Digital Catalog</p>
-    </header>
+    <!-- Container Utama (Aspek Rasio Mobile) -->
+    <div class="max-w-md mx-auto bg-white min-h-screen shadow-xl relative overflow-hidden">
+        
+        <!-- Header -->
+        <header class="bg-blue-600 text-white p-4 sticky top-0 z-50 shadow-md flex justify-between items-center">
+            <h1 class="text-xl font-bold"><i class="fas fa-store mr-2"></i> Pediaboy</h1>
+            <nav class="text-sm">
+                <a href="#katalog" class="mr-3 hover:text-blue-200">Katalog</a>
+                <a href="#faq" class="hover:text-blue-200">FAQ</a>
+            </nav>
+        </header>
 
-    <!-- Bagian Daftar Harga -->
-    <div class="bento-grid">
-        <!-- Kotak Harga 1 -->
-        <div class="bento-item">
-            <h3>Paket Pemula</h3>
-            <div class="price">Rp 100.000</div>
-            <p style="color: #888; font-size: 0.9rem;">Akses fitur dasar dan panduan.</p>
-            <button class="btn btn-qris">Bayar via QRIS</button>
-            <button class="btn btn-telegram">Telegram Invoice</button>
+        <!-- Hero Section -->
+        <div class="bg-blue-500 text-white p-6 text-center">
+            <img src="https://ui-avatars.com/api/?name=Pediaboy&background=ffffff&color=2563eb&size=100" alt="Pediaboy Logo" class="mx-auto rounded-full mb-3 border-4 border-blue-300">
+            <h2 class="text-2xl font-bold mb-1">Pediaboy Digital Store</h2>
+            <p class="text-sm text-blue-100">Premium VPN & Jasa Web Design Professional</p>
         </div>
 
-        <!-- Kotak Harga 2 -->
-        <div class="bento-item">
-            <h3>Paket Pro</h3>
-            <div class="price">Rp 1.500.000</div>
-            <p style="color: #888; font-size: 0.9rem;">Akses penuh + dukungan prioritas.</p>
-            <button class="btn btn-qris">Bayar via QRIS</button>
-            <button class="btn btn-telegram">Telegram Invoice</button>
+        <!-- Konten Utama -->
+        <main class="p-4">
+            
+            <!-- Kategori VPN -->
+            <section id="katalog" class="mb-8">
+                <h3 class="text-lg font-bold border-b-2 border-blue-500 pb-1 mb-4 flex items-center">
+                    <i class="fas fa-shield-alt text-blue-500 mr-2"></i> Aplikasi VPN Premium
+                </h3>
+                <div class="grid grid-cols-2 gap-3">
+                    <!-- Produk 1 -->
+                    <div class="border rounded-lg p-3 shadow-sm hover:shadow-md transition">
+                        <div class="bg-blue-100 text-blue-600 text-center rounded py-2 mb-2 font-bold"><i class="fas fa-network-wired"></i> Surfshark</div>
+                        <h4 class="font-semibold text-sm">Surfshark VPN</h4>
+                        <p class="text-xs text-gray-500 mb-2">Premium 1 Bulan</p>
+                        <p class="text-blue-600 font-bold text-sm mb-3">Rp 25.000</p>
+                        <button onclick="bukaCheckout('Surfshark VPN Premium', 25000)" class="w-full bg-blue-600 text-white text-sm py-1.5 rounded hover:bg-blue-700 transition">Beli</button>
+                    </div>
+                    <!-- Produk 2 -->
+                    <div class="border rounded-lg p-3 shadow-sm hover:shadow-md transition">
+                        <div class="bg-blue-100 text-blue-600 text-center rounded py-2 mb-2 font-bold"><i class="fas fa-globe"></i> NordVPN</div>
+                        <h4 class="font-semibold text-sm">NordVPN</h4>
+                        <p class="text-xs text-gray-500 mb-2">Premium 1 Bulan</p>
+                        <p class="text-blue-600 font-bold text-sm mb-3">Rp 30.000</p>
+                        <button onclick="bukaCheckout('NordVPN Premium', 30000)" class="w-full bg-blue-600 text-white text-sm py-1.5 rounded hover:bg-blue-700 transition">Beli</button>
+                    </div>
+                    <!-- Produk 3 -->
+                    <div class="border rounded-lg p-3 shadow-sm hover:shadow-md transition">
+                        <div class="bg-blue-100 text-blue-600 text-center rounded py-2 mb-2 font-bold"><i class="fas fa-lock"></i> IP Vanish</div>
+                        <h4 class="font-semibold text-sm">IP Vanish VPN</h4>
+                        <p class="text-xs text-gray-500 mb-2">Premium 1 Bulan</p>
+                        <p class="text-blue-600 font-bold text-sm mb-3">Rp 20.000</p>
+                        <button onclick="bukaCheckout('IP Vanish Premium', 20000)" class="w-full bg-blue-600 text-white text-sm py-1.5 rounded hover:bg-blue-700 transition">Beli</button>
+                    </div>
+                    <!-- Produk 4 -->
+                    <div class="border rounded-lg p-3 shadow-sm hover:shadow-md transition">
+                        <div class="bg-blue-100 text-blue-600 text-center rounded py-2 mb-2 font-bold"><i class="fas fa-bolt"></i> ExpressVPN</div>
+                        <h4 class="font-semibold text-sm">ExpressVPN</h4>
+                        <p class="text-xs text-gray-500 mb-2">Premium 1 Bulan</p>
+                        <p class="text-blue-600 font-bold text-sm mb-3">Rp 35.000</p>
+                        <button onclick="bukaCheckout('ExpressVPN Premium', 35000)" class="w-full bg-blue-600 text-white text-sm py-1.5 rounded hover:bg-blue-700 transition">Beli</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Kategori Jasa Web -->
+            <section class="mb-8">
+                <h3 class="text-lg font-bold border-b-2 border-blue-500 pb-1 mb-4 flex items-center">
+                    <i class="fas fa-laptop-code text-blue-500 mr-2"></i> Jasa Design Web
+                </h3>
+                <div class="space-y-3">
+                    
+                    <div class="border rounded-lg p-3 shadow-sm flex flex-col">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-bold text-md">Paket Basic (Landing Page)</h4>
+                            <span class="bg-blue-100 text-blue-700 text-xs font-bold px-2 py-1 rounded">Rp 100.000</span>
+                        </div>
+                        <p class="text-xs text-gray-600 mb-3 leading-relaxed">Cocok untuk portofolio atau link tree. Template standar, responsif di HP, pengerjaan 1-2 hari kerja.</p>
+                        <button onclick="bukaCheckout('Jasa Web - Paket Basic', 100000)" class="mt-auto bg-gray-800 text-white text-sm py-1.5 rounded hover:bg-gray-900 transition">Pesan Sekarang</button>
+                    </div>
+
+                    <div class="border rounded-lg p-3 shadow-sm flex flex-col">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-bold text-md">Paket Pro (Company/Catalog)</h4>
+                            <span class="bg-blue-100 text-blue-700 text-xs font-bold px-2 py-1 rounded">Rp 1.000.000</span>
+                        </div>
+                        <p class="text-xs text-gray-600 mb-3 leading-relaxed">Web katalog produk atau company profile (hingga 5 halaman). Desain elegan, terintegrasi tombol WhatsApp, SEO dasar.</p>
+                        <button onclick="bukaCheckout('Jasa Web - Paket Pro', 1000000)" class="mt-auto bg-gray-800 text-white text-sm py-1.5 rounded hover:bg-gray-900 transition">Pesan Sekarang</button>
+                    </div>
+
+                    <div class="border border-blue-400 rounded-lg p-3 shadow-sm flex flex-col bg-blue-50 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 bg-blue-500 text-white text-[10px] px-2 py-1 rounded-bl-lg font-bold">BEST SELLER</div>
+                        <div class="flex justify-between items-start mb-2 mt-2">
+                            <h4 class="font-bold text-md text-blue-800">Paket Ultimate (Custom)</h4>
+                            <span class="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">Rp 3.000.000</span>
+                        </div>
+                        <p class="text-xs text-gray-700 mb-3 leading-relaxed">Solusi lengkap! Web aplikasi / toko online full fitur. Integrasi payment gateway (Midtrans/QRIS), panel admin, database lengkap, dan UI/UX premium eksklusif.</p>
+                        <button onclick="bukaCheckout('Jasa Web - Paket Ultimate', 3000000)" class="mt-auto bg-blue-600 text-white text-sm py-1.5 rounded hover:bg-blue-700 transition">Pesan Sekarang</button>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- SnK & FAQ -->
+            <section id="faq" class="mb-8 bg-white border rounded-lg p-4 shadow-sm">
+                <h3 class="text-lg font-bold border-b-2 border-gray-200 pb-1 mb-3">Syarat, Ketentuan & FAQ</h3>
+                
+                <div class="space-y-2 text-sm">
+                    <details class="bg-gray-50 p-2 rounded cursor-pointer">
+                        <summary class="font-semibold">Apakah akun VPN bergaransi?</summary>
+                        <p class="text-xs text-gray-600 mt-2 ml-4">Ya, full garansi selama masa aktif (1 bulan). Jika ada kendala login, akan direplace dengan akun baru.</p>
+                    </details>
+                    <details class="bg-gray-50 p-2 rounded cursor-pointer">
+                        <summary class="font-semibold">Berapa lama pengerjaan web?</summary>
+                        <p class="text-xs text-gray-600 mt-2 ml-4">Basic: 1-2 hari. Pro: 3-5 hari. Ultimate: 7-14 hari tergantung kompleksitas fitur.</p>
+                    </details>
+                    <details class="bg-gray-50 p-2 rounded cursor-pointer">
+                        <summary class="font-semibold">Metode pembayaran apa saja?</summary>
+                        <p class="text-xs text-gray-600 mt-2 ml-4">Kami menerima QRIS (All Payment), E-Wallet (DANA, OVO, GoPay), dan Transfer Bank (BCA, Mandiri).</p>
+                    </details>
+                    <details class="bg-gray-50 p-2 rounded cursor-pointer">
+                        <summary class="font-semibold">Syarat & Ketentuan Umum</summary>
+                        <ul class="text-xs text-gray-600 mt-2 ml-4 list-disc pl-3">
+                            <li>Produk digital (VPN) yang sudah dibeli tidak dapat di-refund.</li>
+                            <li>Revisi desain web berlaku sesuai paket yang disepakati.</li>
+                            <li>Dilarang menggunakan akun untuk tindakan ilegal.</li>
+                        </ul>
+                    </details>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-gray-800 text-white text-center p-6 mt-4 rounded-t-xl">
+            <h4 class="font-bold text-lg mb-2">Pediaboy</h4>
+            <div class="flex justify-center space-x-4 mb-4">
+                <a href="https://wa.me/pediaboy" target="_blank" class="text-green-400 hover:text-green-300 text-2xl"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://instagram.com/elthoriqqqq_" target="_blank" class="text-pink-400 hover:text-pink-300 text-2xl"><i class="fab fa-instagram"></i></a>
+            </div>
+            <p class="text-xs text-gray-400">© 2026 Pediaboy. All rights reserved.</p>
+        </footer>
+
+        <!-- Modal Checkout -->
+        <div id="checkoutModal" class="fixed inset-0 bg-black bg-opacity-60 hidden z-[100] flex items-end justify-center sm:items-center">
+            <div class="bg-white w-full max-w-md rounded-t-2xl sm:rounded-2xl p-5 transform transition-transform translate-y-full" id="modalContent">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold">Checkout</h3>
+                    <button onclick="tutupCheckout()" class="text-gray-500 hover:text-red-500 text-xl"><i class="fas fa-times"></i></button>
+                </div>
+                
+                <form id="formPesanan" onsubmit="prosesPembelian(event)">
+                    <div class="mb-3">
+                        <label class="block text-xs font-semibold text-gray-600 mb-1">Produk</label>
+                        <input type="text" id="namaProduk" class="w-full border rounded p-2 bg-gray-100 font-bold" readonly>
+                        <input type="hidden" id="hargaProduk">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="block text-xs font-semibold text-gray-600 mb-1">Nama Pembeli</label>
+                        <input type="text" id="namaPembeli" class="w-full border rounded p-2 focus:border-blue-500 outline-none" placeholder="Masukkan nama..." required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="block text-xs font-semibold text-gray-600 mb-1">No. WhatsApp</label>
+                        <input type="number" id="noWA" class="w-full border rounded p-2 focus:border-blue-500 outline-none" placeholder="628..." required>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-xs font-semibold text-gray-600 mb-1">Metode Pembayaran</label>
+                        <select id="metodeBayar" class="w-full border rounded p-2 focus:border-blue-500 outline-none" required>
+                            <option value="">Pilih Metode...</option>
+                            <option value="QRIS">QRIS (Otomatis)</option>
+                            <option value="DANA">DANA</option>
+                            <option value="GoPay">GoPay</option>
+                            <option value="BCA">Transfer Bank BCA</option>
+                            <option value="Mandiri">Transfer Bank Mandiri</option>
+                        </select>
+                    </div>
+
+                    <div class="border-t pt-3 flex justify-between items-center mb-4">
+                        <span class="text-sm text-gray-600">Total Pembayaran:</span>
+                        <span id="labelTotal" class="text-lg font-bold text-blue-600">Rp 0</span>
+                    </div>
+
+                    <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition">
+                        Konfirmasi Pembelian
+                    </button>
+                </form>
+            </div>
         </div>
 
-        <!-- Kotak Harga 3 -->
-        <div class="bento-item">
-            <h3>Paket Ultimate</h3>
-            <div class="price">Rp 3.000.000</div>
-            <p style="color: #888; font-size: 0.9rem;">Lisensi tak terbatas & aset premium.</p>
-            <button class="btn btn-qris">Bayar via QRIS</button>
-            <button class="btn btn-telegram">Telegram Invoice</button>
-        </div>
     </div>
 
-    <!-- =========================================
-         5. JavaScript untuk Animasi Scroll
-         ========================================= -->
+    <!-- SCRIPT LOGIKA WEB -->
     <script>
-        // Mencari semua elemen yang memiliki kelas 'bento-item'
-        const items = document.querySelectorAll('.bento-item');
+        // === KONFIGURASI BOT TELEGRAM KAMU DI SINI ===
+        // 1. Buat bot di @BotFather dan masukkan tokennya di bawah
+        const TELEGRAM_BOT_TOKEN = "ISI_TOKEN_BOT_KAMU_DISINI"; 
+        
+        // 2. Dapatkan Chat ID kamu (bisa lewat @userinfobot)
+        const TELEGRAM_CHAT_ID = "ISI_CHAT_ID_KAMU_DISINI"; 
+        // =============================================
 
-        // Membuat pemantau (observer) untuk mendeteksi pergerakan scroll
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                // Jika kotak harga sudah mulai masuk dan terlihat di layar HP
-                if (entry.isIntersecting) {
-                    // Tambahkan kelas 'show' untuk menjalankan animasi blur menjadi tajam
-                    entry.target.classList.add('show'); 
+        const formatRupiah = (angka) => {
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
+        }
+
+        // Fungsi Buka Modal
+        function bukaCheckout(produk, harga) {
+            document.getElementById('checkoutModal').classList.remove('hidden');
+            setTimeout(() => {
+                document.getElementById('modalContent').classList.remove('translate-y-full');
+            }, 10);
+            
+            document.getElementById('namaProduk').value = produk;
+            document.getElementById('hargaProduk').value = harga;
+            document.getElementById('labelTotal').innerText = formatRupiah(harga);
+        }
+
+        // Fungsi Tutup Modal
+        function tutupCheckout() {
+            document.getElementById('modalContent').classList.add('translate-y-full');
+            setTimeout(() => {
+                document.getElementById('checkoutModal').classList.add('hidden');
+                document.getElementById('formPesanan').reset();
+            }, 300);
+        }
+
+        // Fungsi Proses Pembelian ke Bot Telegram
+        function prosesPembelian(event) {
+            event.preventDefault();
+
+            // Ambil data dari form
+            const produk = document.getElementById('namaProduk').value;
+            const harga = document.getElementById('hargaProduk').value;
+            const nama = document.getElementById('namaPembeli').value;
+            const noWA = document.getElementById('noWA').value;
+            const metode = document.getElementById('metodeBayar').value;
+            
+            // Buat Invoice ID Random
+            const invId = "INV-" + Math.floor(Math.random() * 1000000);
+            const tgl = new Date().toLocaleString('id-ID');
+
+            // Format Pesan untuk dikirim ke Telegram
+            const pesanTelegram = `
+🛒 *PESANAN BARU MASUK (PEDIABOY)* 🛒
+
+*Invoice:* \`${invId}\`
+*Tanggal:* ${tgl}
+
+👤 *Data Pembeli:*
+- Nama: ${nama}
+- WA: wa.me/${noWA.startsWith('0') ? '62' + noWA.substring(1) : noWA}
+
+📦 *Detail Pesanan:*
+- Produk: *${produk}*
+- Total: *${formatRupiah(harga)}*
+- Metode Pembayaran: *${metode}*
+
+_Segera proses pesanan ini dan kirimkan instruksi pembayaran/QRIS ke nomor WA pembeli._
+            `;
+
+            // Kirim ke Telegram API
+            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+            
+            // Tombol loading
+            const btnSubmit = event.target.querySelector('button[type="submit"]');
+            const teksAwal = btnSubmit.innerHTML;
+            btnSubmit.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Memproses...`;
+            btnSubmit.disabled = true;
+
+            fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: TELEGRAM_CHAT_ID,
+                    text: pesanTelegram,
+                    parse_mode: 'Markdown'
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.ok) {
+                    alert(`✅ Pesanan berhasil dibuat!\n\nInvoice: ${invId}\nTotal: ${formatRupiah(harga)}\n\nMohon tunggu, admin Pediaboy akan segera menghubungi WA Anda untuk proses pembayaran (${metode}).`);
+                    tutupCheckout();
+                } else {
+                    alert("❌ Gagal mengirim pesanan. Pastikan Token & Chat ID Telegram sudah diatur di script.");
                 }
+            })
+            .catch(error => {
+                alert("❌ Terjadi kesalahan koneksi.");
+                console.error(error);
+            })
+            .finally(() => {
+                btnSubmit.innerHTML = teksAwal;
+                btnSubmit.disabled = false;
             });
-        }, {
-            // Memicu animasi saat 10% bagian kotak sudah terlihat di layar
-            threshold: 0.1 
-        });
-
-        // Memerintahkan observer untuk mengawasi setiap kotak harga satu per satu
-        items.forEach(item => {
-            observer.observe(item);
-        });
+        }
     </script>
 </body>
 </html>
