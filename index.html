@@ -3,246 +3,278 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pediaboy Store</title>
+    <title>Happy Birthday Soraya Natasha!</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Menggunakan font Fredoka One untuk kesan cute/chubby dan Quicksand untuk teks yang rapi -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
     <style>
-        html { scroll-behavior: smooth; }
-        ::-webkit-scrollbar { display: none; }
-        body { -ms-overflow-style: none; scrollbar-width: none; background-color: #f3f4f6; }
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #fff0f5; /* Sangat soft pink */
+            color: #ff4d85;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .font-cute {
+            font-family: 'Fredoka One', cursive;
+            letter-spacing: 1px;
+        }
+
+        /* Loading Screen */
+        #loader {
+            position: fixed; inset: 0; z-index: 9999;
+            background-color: #ffb6c1; /* Soft pink dominan */
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: transform 1s cubic-bezier(0.8, 0, 0.2, 1);
+        }
+
+        .loader-text {
+            color: white;
+            text-shadow: 2px 2px 0px #ff69b4, 4px 4px 0px rgba(255, 105, 180, 0.3);
+            animation: pulse-cute 1.5s infinite;
+        }
+
+        @keyframes pulse-cute {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Wavy SVG Divider */
+        .wave-divider {
+            position: absolute; bottom: 0; left: 0; width: 100%; overflow: hidden; line-height: 0; transform: rotate(180deg);
+        }
+        .wave-divider svg {
+            position: relative; display: block; width: calc(130% + 1.3px); height: 70px;
+        }
+        .wave-divider .shape-fill { fill: #fff0f5; }
+
+        .wave-divider-top {
+            position: absolute; top: 0; left: 0; width: 100%; overflow: hidden; line-height: 0;
+        }
+        .wave-divider-top svg {
+            position: relative; display: block; width: calc(130% + 1.3px); height: 70px;
+        }
+        .wave-divider-top .shape-fill { fill: #ffffff; }
+
+        /* Floating Accents */
+        .floating-flower {
+            position: absolute;
+            animation: float 6s ease-in-out infinite;
+        }
+        .floating-star {
+            position: absolute;
+            animation: float 4s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+
+        /* Custom Box Shadows */
+        .cute-shadow {
+            box-shadow: 0 10px 25px rgba(255, 182, 193, 0.5);
+        }
+        .cute-border {
+            border: 4px solid white;
+        }
+
+        /* Hover effects */
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(255, 105, 180, 0.3);
+        }
     </style>
 </head>
-<body class="text-gray-800">
+<body>
 
-    <div class="max-w-md mx-auto bg-white min-h-screen shadow-xl relative overflow-hidden">
-        
-        <header class="bg-blue-600 text-white p-4 sticky top-0 z-50 shadow-md flex justify-between items-center">
-            <h1 class="text-xl font-bold"><i class="fas fa-store mr-2"></i> Pediaboy</h1>
-            <nav class="text-sm">
-                <a href="#katalog" class="mr-3 hover:text-blue-200">Katalog</a>
-                <a href="#faq" class="hover:text-blue-200">FAQ</a>
-            </nav>
-        </header>
-
-        <div class="bg-blue-500 text-white p-6 text-center">
-            <img src="https://ui-avatars.com/api/?name=Pediaboy&background=ffffff&color=2563eb&size=100" alt="Pediaboy Logo" class="mx-auto rounded-full mb-3 border-4 border-blue-300">
-            <h2 class="text-2xl font-bold mb-1">Pediaboy Digital Store</h2>
-            <p class="text-sm text-blue-100">Premium VPN & Jasa Web Design Professional</p>
-        </div>
-
-        <main class="p-4">
-            
-            <section id="katalog" class="mb-8">
-                <h3 class="text-lg font-bold border-b-2 border-blue-500 pb-1 mb-4 flex items-center">
-                    <i class="fas fa-shield-alt text-blue-500 mr-2"></i> Aplikasi VPN Premium
-                </h3>
-                <div class="grid grid-cols-2 gap-3">
-                    <div class="border rounded-lg p-3 shadow-sm hover:shadow-md transition">
-                        <div class="bg-blue-100 text-blue-600 text-center rounded py-2 mb-2 font-bold"><i class="fas fa-network-wired"></i> Surfshark</div>
-                        <h4 class="font-semibold text-sm">Surfshark VPN</h4>
-                        <p class="text-xs text-gray-500 mb-2">Premium 1 Bulan</p>
-                        <p class="text-blue-600 font-bold text-sm mb-3">Rp 25.000</p>
-                        <button onclick="bukaCheckout('Surfshark VPN Premium', 25000)" class="w-full bg-blue-600 text-white text-sm py-1.5 rounded hover:bg-blue-700 transition">Beli</button>
-                    </div>
-                    <div class="border rounded-lg p-3 shadow-sm hover:shadow-md transition">
-                        <div class="bg-blue-100 text-blue-600 text-center rounded py-2 mb-2 font-bold"><i class="fas fa-globe"></i> NordVPN</div>
-                        <h4 class="font-semibold text-sm">NordVPN</h4>
-                        <p class="text-xs text-gray-500 mb-2">Premium 1 Bulan</p>
-                        <p class="text-blue-600 font-bold text-sm mb-3">Rp 30.000</p>
-                        <button onclick="bukaCheckout('NordVPN Premium', 30000)" class="w-full bg-blue-600 text-white text-sm py-1.5 rounded hover:bg-blue-700 transition">Beli</button>
-                    </div>
-                    <div class="border rounded-lg p-3 shadow-sm hover:shadow-md transition">
-                        <div class="bg-blue-100 text-blue-600 text-center rounded py-2 mb-2 font-bold"><i class="fas fa-lock"></i> IP Vanish</div>
-                        <h4 class="font-semibold text-sm">IP Vanish VPN</h4>
-                        <p class="text-xs text-gray-500 mb-2">Premium 1 Bulan</p>
-                        <p class="text-blue-600 font-bold text-sm mb-3">Rp 20.000</p>
-                        <button onclick="bukaCheckout('IP Vanish Premium', 20000)" class="w-full bg-blue-600 text-white text-sm py-1.5 rounded hover:bg-blue-700 transition">Beli</button>
-                    </div>
-                    <div class="border rounded-lg p-3 shadow-sm hover:shadow-md transition">
-                        <div class="bg-blue-100 text-blue-600 text-center rounded py-2 mb-2 font-bold"><i class="fas fa-bolt"></i> ExpressVPN</div>
-                        <h4 class="font-semibold text-sm">ExpressVPN</h4>
-                        <p class="text-xs text-gray-500 mb-2">Premium 1 Bulan</p>
-                        <p class="text-blue-600 font-bold text-sm mb-3">Rp 35.000</p>
-                        <button onclick="bukaCheckout('ExpressVPN Premium', 35000)" class="w-full bg-blue-600 text-white text-sm py-1.5 rounded hover:bg-blue-700 transition">Beli</button>
-                    </div>
-                </div>
-            </section>
-
-            <section class="mb-8">
-                <h3 class="text-lg font-bold border-b-2 border-blue-500 pb-1 mb-4 flex items-center">
-                    <i class="fas fa-laptop-code text-blue-500 mr-2"></i> Jasa Design Web
-                </h3>
-                <div class="space-y-3">
-                    
-                    <div class="border rounded-lg p-3 shadow-sm flex flex-col">
-                        <div class="flex justify-between items-start mb-2">
-                            <h4 class="font-bold text-md">Paket Basic</h4>
-                            <span class="bg-blue-100 text-blue-700 text-xs font-bold px-2 py-1 rounded">Rp 100.000</span>
-                        </div>
-                        <p class="text-xs text-gray-600 mb-3 leading-relaxed">Cocok untuk portofolio atau link tree. Template standar, responsif di HP, pengerjaan 1-2 hari kerja.</p>
-                        <button onclick="bukaCheckout('Jasa Web - Paket Basic', 100000)" class="mt-auto bg-gray-800 text-white text-sm py-1.5 rounded hover:bg-gray-900 transition">Pesan Sekarang</button>
-                    </div>
-
-                    <div class="border rounded-lg p-3 shadow-sm flex flex-col">
-                        <div class="flex justify-between items-start mb-2">
-                            <h4 class="font-bold text-md">Paket Pro</h4>
-                            <span class="bg-blue-100 text-blue-700 text-xs font-bold px-2 py-1 rounded">Rp 1.000.000</span>
-                        </div>
-                        <p class="text-xs text-gray-600 mb-3 leading-relaxed">Web katalog produk atau company profile (hingga 5 halaman). Desain elegan, terintegrasi tombol WhatsApp, SEO dasar.</p>
-                        <button onclick="bukaCheckout('Jasa Web - Paket Pro', 1000000)" class="mt-auto bg-gray-800 text-white text-sm py-1.5 rounded hover:bg-gray-900 transition">Pesan Sekarang</button>
-                    </div>
-
-                    <div class="border border-blue-400 rounded-lg p-3 shadow-sm flex flex-col bg-blue-50 relative overflow-hidden">
-                        <div class="absolute top-0 right-0 bg-blue-500 text-white text-[10px] px-2 py-1 rounded-bl-lg font-bold">BEST SELLER</div>
-                        <div class="flex justify-between items-start mb-2 mt-2">
-                            <h4 class="font-bold text-md text-blue-800">Paket Ultimate</h4>
-                            <span class="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">Rp 3.000.000</span>
-                        </div>
-                        <p class="text-xs text-gray-700 mb-3 leading-relaxed">Solusi lengkap! Web aplikasi / toko online full fitur. Integrasi payment gateway (Midtrans/QRIS), panel admin, database lengkap, dan UI/UX premium eksklusif.</p>
-                        <button onclick="bukaCheckout('Jasa Web - Paket Ultimate', 3000000)" class="mt-auto bg-blue-600 text-white text-sm py-1.5 rounded hover:bg-blue-700 transition">Pesan Sekarang</button>
-                    </div>
-
-                </div>
-            </section>
-
-            <section id="faq" class="mb-8 bg-white border rounded-lg p-4 shadow-sm">
-                <h3 class="text-lg font-bold border-b-2 border-gray-200 pb-1 mb-3">Syarat, Ketentuan & FAQ</h3>
-                
-                <div class="space-y-2 text-sm">
-                    <details class="bg-gray-50 p-2 rounded cursor-pointer">
-                        <summary class="font-semibold">Apakah akun VPN bergaransi?</summary>
-                        <p class="text-xs text-gray-600 mt-2 ml-4">Ya, full garansi selama masa aktif (1 bulan). Jika ada kendala login, akan direplace dengan akun baru.</p>
-                    </details>
-                    <details class="bg-gray-50 p-2 rounded cursor-pointer">
-                        <summary class="font-semibold">Berapa lama pengerjaan web?</summary>
-                        <p class="text-xs text-gray-600 mt-2 ml-4">Basic: 1-2 hari. Pro: 3-5 hari. Ultimate: 7-14 hari tergantung kompleksitas fitur.</p>
-                    </details>
-                    <details class="bg-gray-50 p-2 rounded cursor-pointer">
-                        <summary class="font-semibold">Metode pembayaran apa saja?</summary>
-                        <p class="text-xs text-gray-600 mt-2 ml-4">Kami menerima QRIS (All Payment), E-Wallet (DANA, OVO, GoPay), dan Transfer Bank (BCA, Mandiri).</p>
-                    </details>
-                    <details class="bg-gray-50 p-2 rounded cursor-pointer">
-                        <summary class="font-semibold">Syarat & Ketentuan Umum</summary>
-                        <ul class="text-xs text-gray-600 mt-2 ml-4 list-disc pl-3">
-                            <li>Produk digital (VPN) yang sudah dibeli tidak dapat di-refund.</li>
-                            <li>Revisi desain web berlaku sesuai paket yang disepakati.</li>
-                            <li>Dilarang menggunakan akun untuk tindakan ilegal.</li>
-                        </ul>
-                    </details>
-                </div>
-            </section>
-
-        </main>
-
-        <footer class="bg-gray-800 text-white text-center p-6 mt-4 rounded-t-xl">
-            <h4 class="font-bold text-lg mb-2">Pediaboy</h4>
-            <div class="flex justify-center space-x-4 mb-4">
-                <a href="https://wa.me/pediaboy" target="_blank" class="text-green-400 hover:text-green-300 text-2xl"><i class="fab fa-whatsapp"></i></a>
-                <a href="https://instagram.com/elthoriqqqq_" target="_blank" class="text-pink-400 hover:text-pink-300 text-2xl"><i class="fab fa-instagram"></i></a>
-            </div>
-            <p class="text-xs text-gray-400">© 2026 Pediaboy. All rights reserved.</p>
-        </footer>
-
-        <div id="checkoutModal" class="fixed inset-0 bg-black bg-opacity-60 hidden z-[100] flex items-end justify-center sm:items-center">
-            <div class="bg-white w-full max-w-md rounded-t-2xl sm:rounded-2xl p-5 transform transition-transform translate-y-full" id="modalContent">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-xl font-bold">Checkout</h3>
-                    <button onclick="tutupCheckout()" class="text-gray-500 hover:text-red-500 text-xl"><i class="fas fa-times"></i></button>
-                </div>
-                
-                <form id="formPesanan" onsubmit="prosesPembelian(event)">
-                    <div class="mb-3">
-                        <label class="block text-xs font-semibold text-gray-600 mb-1">Produk</label>
-                        <input type="text" id="namaProduk" class="w-full border rounded p-2 bg-gray-100 font-bold" readonly>
-                        <input type="hidden" id="hargaProduk">
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label class="block text-xs font-semibold text-gray-600 mb-1">Nama Pembeli</label>
-                        <input type="text" id="namaPembeli" class="w-full border rounded p-2 focus:border-blue-500 outline-none" placeholder="Masukkan nama..." required>
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="block text-xs font-semibold text-gray-600 mb-1">Metode Pembayaran</label>
-                        <select id="metodeBayar" class="w-full border rounded p-2 focus:border-blue-500 outline-none" required>
-                            <option value="">Pilih Metode...</option>
-                            <option value="QRIS">QRIS (Otomatis)</option>
-                            <option value="DANA">DANA</option>
-                            <option value="GoPay">GoPay</option>
-                            <option value="BCA">Transfer Bank BCA</option>
-                            <option value="Mandiri">Transfer Bank Mandiri</option>
-                        </select>
-                    </div>
-
-                    <div class="border-t pt-3 flex justify-between items-center mb-4">
-                        <span class="text-sm text-gray-600">Total Pembayaran:</span>
-                        <span id="labelTotal" class="text-lg font-bold text-blue-600">Rp 0</span>
-                    </div>
-
-                    <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition">
-                        Pesan via WhatsApp
-                    </button>
-                </form>
-            </div>
-        </div>
-
+    <!-- Loading Screen -->
+    <div id="loader">
+        <h1 class="font-cute text-5xl md:text-7xl loader-text">hai soraya ✨</h1>
     </div>
 
+    <!-- Header / Navbar -->
+    <header class="w-full bg-white py-4 px-6 fixed top-0 z-50 shadow-sm">
+        <div class="max-w-6xl mx-auto flex justify-center items-center">
+            <h1 class="font-cute text-3xl text-[#ff69b4]">Happy Birthday!</h1>
+        </div>
+        <!-- Pink Ribbon under navbar -->
+        <div class="absolute bottom-0 left-0 w-full h-1 bg-[#ffb6c1]"></div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative bg-[#ffb6c1] pt-32 pb-40 overflow-hidden mt-16">
+        <!-- Decorative Elements -->
+        <div class="floating-flower text-white opacity-80 text-4xl top-20 left-[10%]">🌸</div>
+        <div class="floating-star text-white opacity-90 text-3xl top-40 right-[15%]">✨</div>
+        <div class="floating-flower text-white opacity-60 text-5xl bottom-32 left-[20%]">🌼</div>
+        <div class="floating-star text-white opacity-70 text-4xl bottom-20 right-[25%]">✨</div>
+
+        <div class="max-w-5xl mx-auto px-6 grid md:grid-cols-2 gap-10 items-center relative z-10">
+            <!-- Image Frame -->
+            <div class="gsap-hero order-2 md:order-1 flex justify-center relative">
+                <!-- Blob Background -->
+                <div class="absolute inset-0 bg-white rounded-full opacity-30 blur-2xl transform scale-110"></div>
+                <!-- Image Container with wavy cute border -->
+                <div class="relative w-64 h-64 md:w-80 md:h-80 rounded-[3rem] overflow-hidden cute-border cute-shadow rotate-3 hover:rotate-0 transition-transform duration-500 bg-[#ffebf0] flex items-center justify-center">
+                    <!-- Placeholder for Soraya's Image -->
+                    <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=800" alt="Birthday Girl" class="w-full h-full object-cover">
+                </div>
+            </div>
+
+            <!-- Text Content -->
+            <div class="gsap-hero order-1 md:order-2 text-center md:text-left">
+                <p class="font-bold text-white text-lg tracking-widest uppercase mb-2">Let's Celebrate 🎉</p>
+                <h2 class="font-cute text-6xl md:text-8xl text-[#ff1493] mb-4 leading-none drop-shadow-md">
+                    Happy<br><span class="text-white">Birthday</span>
+                </h2>
+                <p class="text-white text-xl md:text-2xl font-bold bg-[#ff69b4] inline-block px-6 py-2 rounded-full cute-shadow">
+                    Soraya Natasha! 🎂
+                </p>
+            </div>
+        </div>
+
+        <!-- Wave Divider Bottom -->
+        <div class="wave-divider">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Message Section -->
+    <section class="py-20 px-6 bg-[#fff0f5] relative">
+        <div class="max-w-3xl mx-auto text-center gsap-fade">
+            <h3 class="font-cute text-4xl md:text-5xl text-[#ff69b4] mb-8">Untuk Soraya... 💌</h3>
+            <div class="bg-white p-8 md:p-12 rounded-[2rem] cute-shadow relative">
+                <!-- Decoration -->
+                <div class="absolute -top-6 -left-6 text-5xl">🎀</div>
+                <div class="absolute -bottom-6 -right-6 text-5xl">💖</div>
+                
+                <p class="text-gray-700 text-lg md:text-xl leading-relaxed font-medium mb-6">
+                    "Selamat ulang tahun ya, Soraya! ✨
+                </p>
+                <p class="text-gray-600 text-base md:text-lg leading-relaxed mb-6">
+                    Semoga di umur yang baru ini, hari-harimu selalu semanis permen, secerah senyummu, dan penuh dengan kejutan-kejutan yang menyenangkan. Jangan lupa bahagia hari ini, karena ini hari paling spesial buat kamu!
+                </p>
+                <p class="text-[#ff4d85] font-bold text-lg">
+                    Stay cute, stay awesome, and enjoy your day! 🥳🍰
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Grid / Wishes Section (Matching the Reference Grid) -->
+    <section class="py-20 px-6 bg-white relative overflow-hidden">
+        <!-- Top Wave -->
+        <div class="wave-divider-top">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill" fill="#fff0f5"></path>
+            </svg>
+        </div>
+
+        <div class="max-w-6xl mx-auto pt-16">
+            <h3 class="text-center font-cute text-3xl text-[#ff69b4] mb-12 gsap-fade uppercase tracking-wide">Wishes For You</h3>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 gsap-grid">
+                <!-- Card 1 -->
+                <div class="bg-[#ffb6c1] aspect-square rounded-[2rem] p-6 flex items-center justify-center text-center card-hover relative overflow-hidden">
+                    <div class="absolute top-2 left-2 text-white opacity-50 text-2xl">✨</div>
+                    <h4 class="font-cute text-3xl md:text-4xl text-white drop-shadow-md leading-tight">Be<br>Happy</h4>
+                </div>
+                <!-- Card 2 -->
+                <div class="bg-[#ffebf0] aspect-square rounded-[2rem] p-6 flex items-center justify-center text-center card-hover border-4 border-[#ffb6c1]">
+                    <h4 class="font-cute text-3xl md:text-4xl text-[#ff69b4] drop-shadow-sm leading-tight">Stay<br>Cute</h4>
+                </div>
+                <!-- Card 3 -->
+                <div class="bg-[#ffb6c1] aspect-square rounded-[2rem] p-6 flex items-center justify-center text-center card-hover relative overflow-hidden">
+                    <div class="absolute bottom-2 right-2 text-white opacity-50 text-2xl">🌸</div>
+                    <h4 class="font-cute text-3xl md:text-4xl text-white drop-shadow-md leading-tight">Always<br>Smile</h4>
+                </div>
+                <!-- Card 4 -->
+                <div class="bg-[#ffebf0] aspect-square rounded-[2rem] p-6 flex items-center justify-center text-center card-hover border-4 border-[#ffb6c1]">
+                    <h4 class="font-cute text-3xl md:text-4xl text-[#ff69b4] drop-shadow-sm leading-tight">Much<br>Love</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Outro & Footer -->
+    <footer class="bg-[#ffb6c1] pt-20 pb-10 px-6 relative overflow-hidden text-center">
+        <div class="floating-flower text-white opacity-60 text-4xl top-10 left-[15%]">🌸</div>
+        <div class="floating-star text-white opacity-80 text-3xl bottom-10 right-[15%]">✨</div>
+
+        <div class="max-w-2xl mx-auto relative z-10 gsap-fade">
+            <h2 class="font-cute text-5xl md:text-6xl text-[#ff1493] mb-4 drop-shadow-md">
+                Once Again,<br><span class="text-white">Happy Birthday!</span>
+            </h2>
+            <p class="text-white font-bold mb-10 text-lg">Semoga hari ini jadi salah satu hari terbaikmu! 🎁</p>
+            
+            <div class="w-full h-px bg-white/50 mb-6"></div>
+            <p class="text-white text-xs font-bold uppercase tracking-widest">Made with 💖 for Soraya Natasha</p>
+        </div>
+    </footer>
+
     <script>
-        const NOMOR_WA_ADMIN = "628xxxxxxxxxxx"; // Ganti dengan nomor WhatsApp lu yang pakai angka (contoh: 628123456789)
+        document.addEventListener("DOMContentLoaded", () => {
+            gsap.registerPlugin(ScrollTrigger);
 
-        const formatRupiah = (angka) => {
-            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
-        }
-
-        function bukaCheckout(produk, harga) {
-            document.getElementById('checkoutModal').classList.remove('hidden');
+            // 1. Loading Screen Out Animation
             setTimeout(() => {
-                document.getElementById('modalContent').classList.remove('translate-y-full');
-            }, 10);
-            
-            document.getElementById('namaProduk').value = produk;
-            document.getElementById('hargaProduk').value = harga;
-            document.getElementById('labelTotal').innerText = formatRupiah(harga);
-        }
+                gsap.to("#loader", {
+                    yPercent: -100,
+                    duration: 1.2,
+                    ease: "power4.inOut",
+                    onComplete: () => {
+                        document.getElementById("loader").style.display = "none";
+                        
+                        // Hero Animations Play After Loader Finishes
+                        gsap.from(".gsap-hero", {
+                            y: 50,
+                            opacity: 0,
+                            duration: 1,
+                            stagger: 0.2,
+                            ease: "back.out(1.5)"
+                        });
+                    }
+                });
+            }, 2500); // Tampil 2.5 detik sesuai permintaan
 
-        function tutupCheckout() {
-            document.getElementById('modalContent').classList.add('translate-y-full');
-            setTimeout(() => {
-                document.getElementById('checkoutModal').classList.add('hidden');
-                document.getElementById('formPesanan').reset();
-            }, 300);
-        }
+            // 2. Scroll Animations for Messages
+            gsap.utils.toArray(".gsap-fade").forEach(elem => {
+                gsap.from(elem, {
+                    scrollTrigger: {
+                        trigger: elem,
+                        start: "top 80%",
+                    },
+                    y: 40,
+                    opacity: 0,
+                    duration: 1,
+                    ease: "power3.out"
+                });
+            });
 
-        function prosesPembelian(event) {
-            event.preventDefault();
-
-            const produk = document.getElementById('namaProduk').value;
-            const harga = document.getElementById('hargaProduk').value;
-            const nama = document.getElementById('namaPembeli').value;
-            const metode = document.getElementById('metodeBayar').value;
-            
-            const invId = "INV-" + Math.floor(Math.random() * 1000000);
-
-            const pesanWA = `Halo Admin Pediaboy, saya ingin melakukan pemesanan:
-
-Invoice: ${invId}
-
-Data Pembeli:
-- Nama: ${nama}
-
-Detail Pesanan:
-- Produk: ${produk}
-- Total: ${formatRupiah(harga)}
-- Metode Pembayaran: ${metode}
-
-Mohon instruksi pembayaran selanjutnya.`;
-
-            const urlWA = `https://api.whatsapp.com/send?phone=${6282172222494}&text=${encodeURIComponent(pesanWA)}`;
-            
-            window.open(urlWA, '_blank');
-            tutupCheckout();
-        }
+            // 3. Scroll Animation for the Grid Cards
+            gsap.from(".gsap-grid > div", {
+                scrollTrigger: {
+                    trigger: ".gsap-grid",
+                    start: "top 80%",
+                },
+                y: 50,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.15,
+                ease: "back.out(1.2)"
+            });
+        });
     </script>
 </body>
 </html>
+```eof
