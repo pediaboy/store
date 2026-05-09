@@ -278,7 +278,7 @@ _Segera proses pesanan ini dan kirimkan instruksi pembayaran/QRIS ke nomor WA pe
             `;
 
             // Kirim ke Telegram API
-            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+            const url = `https://api.telegram.org/bot${8711083395:AAEWxuwTLZmlX5EP8AEc7gQ8MJ5vkeAwZ1c}/sendMessage`;
             
             // Tombol loading
             const btnSubmit = event.target.querySelector('button[type="submit"]');
@@ -290,7 +290,7 @@ _Segera proses pesanan ini dan kirimkan instruksi pembayaran/QRIS ke nomor WA pe
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    chat_id: TELEGRAM_CHAT_ID,
+                    chat_id: 7233272550,
                     text: pesanTelegram,
                     parse_mode: 'Markdown'
                 })
