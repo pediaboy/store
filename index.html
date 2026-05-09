@@ -5,15 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Birthday Soraya Natasha!</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Menggunakan font Fredoka One untuk kesan cute/chubby dan Quicksand untuk teks yang rapi -->
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
     <style>
         body {
             font-family: 'Quicksand', sans-serif;
-            background-color: #fff0f5; /* Sangat soft pink */
+            background-color: #fff0f5;
             color: #ff4d85;
             overflow-x: hidden;
             scroll-behavior: smooth;
@@ -21,210 +20,268 @@
 
         .font-cute {
             font-family: 'Fredoka One', cursive;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
         }
 
         /* Loading Screen */
         #loader {
             position: fixed; inset: 0; z-index: 9999;
-            background-color: #ffb6c1; /* Soft pink dominan */
+            background: linear-gradient(135deg, #ffb6c1, #ffc0cb);
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            transition: transform 1s cubic-bezier(0.8, 0, 0.2, 1);
+            transition: transform 1.2s cubic-bezier(0.8, 0, 0.2, 1);
         }
 
         .loader-text {
             color: white;
-            text-shadow: 2px 2px 0px #ff69b4, 4px 4px 0px rgba(255, 105, 180, 0.3);
+            text-shadow: 3px 3px 0px #ff69b4, 6px 6px 0px rgba(255, 105, 180, 0.2);
             animation: pulse-cute 1.5s infinite;
         }
 
         @keyframes pulse-cute {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            0%, 100% { transform: scale(1) rotate(-2deg); }
+            50% { transform: scale(1.08) rotate(2deg); }
         }
 
-        /* Wavy SVG Divider */
-        .wave-divider {
-            position: absolute; bottom: 0; left: 0; width: 100%; overflow: hidden; line-height: 0; transform: rotate(180deg);
+        /* Falling Elements */
+        #falling-elements {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 1;
         }
-        .wave-divider svg {
-            position: relative; display: block; width: calc(130% + 1.3px); height: 70px;
+
+        @keyframes fall {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
         }
+
+        /* Waves */
+        .wave-divider { position: absolute; bottom: 0; left: 0; width: 100%; overflow: hidden; line-height: 0; transform: rotate(180deg); z-index: 2; }
+        .wave-divider svg { position: relative; display: block; width: calc(130% + 1.3px); height: 90px; }
         .wave-divider .shape-fill { fill: #fff0f5; }
 
-        .wave-divider-top {
-            position: absolute; top: 0; left: 0; width: 100%; overflow: hidden; line-height: 0;
-        }
-        .wave-divider-top svg {
-            position: relative; display: block; width: calc(130% + 1.3px); height: 70px;
-        }
+        .wave-divider-top { position: absolute; top: 0; left: 0; width: 100%; overflow: hidden; line-height: 0; z-index: 2; }
+        .wave-divider-top svg { position: relative; display: block; width: calc(130% + 1.3px); height: 90px; }
         .wave-divider-top .shape-fill { fill: #ffffff; }
 
         /* Floating Accents */
-        .floating-flower {
-            position: absolute;
-            animation: float 6s ease-in-out infinite;
-        }
-        .floating-star {
-            position: absolute;
-            animation: float 4s ease-in-out infinite reverse;
-        }
+        .floating-accent { animation: float 5s ease-in-out infinite; }
+        .floating-accent-reverse { animation: float 6s ease-in-out infinite reverse; }
 
         @keyframes float {
             0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(10deg); }
+            50% { transform: translateY(-25px) rotate(15deg); }
         }
 
-        /* Custom Box Shadows */
-        .cute-shadow {
-            box-shadow: 0 10px 25px rgba(255, 182, 193, 0.5);
-        }
-        .cute-border {
-            border: 4px solid white;
-        }
+        /* Shadows & Borders */
+        .cute-shadow { box-shadow: 0 15px 35px rgba(255, 182, 193, 0.6); }
+        .glass-panel { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px); border: 2px solid white; }
 
-        /* Hover effects */
-        .card-hover {
-            transition: all 0.3s ease;
+        /* Card Hover Effects */
+        .card-hover { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; }
+        .card-hover:hover { transform: translateY(-15px) scale(1.05) rotate(2deg); box-shadow: 0 20px 40px rgba(255, 105, 180, 0.4); z-index: 10; }
+
+        /* Photo Frame */
+        .polaroid {
+            background: white;
+            padding: 15px 15px 40px 15px;
+            box-shadow: 0 15px 35px rgba(255, 105, 180, 0.3);
+            transform: rotate(-3deg);
+            transition: transform 0.5s ease;
         }
-        .card-hover:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 15px 30px rgba(255, 105, 180, 0.3);
+        .polaroid:hover { transform: rotate(0deg) scale(1.02); }
+
+        /* Typewriter cursor */
+        .cursor::after {
+            content: '|';
+            animation: blink 1s step-end infinite;
         }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
     </style>
 </head>
 <body>
 
     <!-- Loading Screen -->
     <div id="loader">
-        <h1 class="font-cute text-5xl md:text-7xl loader-text">hai soraya ✨</h1>
+        <div class="text-7xl mb-4 animate-bounce">💖</div>
+        <h1 class="font-cute text-5xl md:text-7xl loader-text">hai soraya...</h1>
+        <p class="text-white mt-4 font-bold tracking-widest uppercase text-sm animate-pulse">Tunggu sebentar ya ✨</p>
     </div>
 
-    <!-- Header / Navbar -->
-    <header class="w-full bg-white py-4 px-6 fixed top-0 z-50 shadow-sm">
+    <!-- Hujan Cinta / Falling Elements Container -->
+    <div id="falling-elements"></div>
+
+    <!-- Header -->
+    <header class="w-full bg-white/90 backdrop-blur-md py-4 px-6 fixed top-0 z-50 shadow-sm">
         <div class="max-w-6xl mx-auto flex justify-center items-center">
-            <h1 class="font-cute text-3xl text-[#ff69b4]">Happy Birthday!</h1>
+            <h1 class="font-cute text-2xl md:text-3xl text-transparent bg-clip-text bg-gradient-to-r from-[#ff69b4] to-[#ff1493] tracking-widest hover:scale-110 transition cursor-pointer">
+                Special Day! 🎈
+            </h1>
         </div>
-        <!-- Pink Ribbon under navbar -->
-        <div class="absolute bottom-0 left-0 w-full h-1 bg-[#ffb6c1]"></div>
+        <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-[#ffb6c1] via-[#ff69b4] to-[#ffb6c1]"></div>
     </header>
 
     <!-- Hero Section -->
-    <section class="relative bg-[#ffb6c1] pt-32 pb-40 overflow-hidden mt-16">
-        <!-- Decorative Elements -->
-        <div class="floating-flower text-white opacity-80 text-4xl top-20 left-[10%]">🌸</div>
-        <div class="floating-star text-white opacity-90 text-3xl top-40 right-[15%]">✨</div>
-        <div class="floating-flower text-white opacity-60 text-5xl bottom-32 left-[20%]">🌼</div>
-        <div class="floating-star text-white opacity-70 text-4xl bottom-20 right-[25%]">✨</div>
+    <section class="relative bg-gradient-to-b from-[#ffb6c1] to-[#ff9bc2] pt-32 pb-40 overflow-hidden mt-[60px]">
+        <!-- Ornamen Latar -->
+        <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] mix-blend-overlay"></div>
+        <div class="floating-accent absolute text-white opacity-80 text-5xl top-20 left-[10%]">🌸</div>
+        <div class="floating-accent-reverse absolute text-white opacity-90 text-4xl top-40 right-[15%]">✨</div>
+        <div class="floating-accent absolute text-white opacity-60 text-6xl bottom-40 left-[20%]">🌼</div>
+        <div class="floating-accent-reverse absolute text-white opacity-70 text-5xl bottom-20 right-[15%]">🎁</div>
 
-        <div class="max-w-5xl mx-auto px-6 grid md:grid-cols-2 gap-10 items-center relative z-10">
-            <!-- Image Frame -->
+        <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center relative z-10">
+            <!-- Frame Foto Soraya -->
             <div class="gsap-hero order-2 md:order-1 flex justify-center relative">
-                <!-- Blob Background -->
-                <div class="absolute inset-0 bg-white rounded-full opacity-30 blur-2xl transform scale-110"></div>
-                <!-- Image Container with wavy cute border -->
-                <div class="relative w-64 h-64 md:w-80 md:h-80 rounded-[3rem] overflow-hidden cute-border cute-shadow rotate-3 hover:rotate-0 transition-transform duration-500 bg-[#ffebf0] flex items-center justify-center">
-                    <!-- Placeholder for Soraya's Image -->
-                    <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=800" alt="Birthday Girl" class="w-full h-full object-cover">
-                </div>
-            </div>
-
-            <!-- Text Content -->
-            <div class="gsap-hero order-1 md:order-2 text-center md:text-left">
-                <p class="font-bold text-white text-lg tracking-widest uppercase mb-2">Let's Celebrate 🎉</p>
-                <h2 class="font-cute text-6xl md:text-8xl text-[#ff1493] mb-4 leading-none drop-shadow-md">
-                    Happy<br><span class="text-white">Birthday</span>
-                </h2>
-                <p class="text-white text-xl md:text-2xl font-bold bg-[#ff69b4] inline-block px-6 py-2 rounded-full cute-shadow">
-                    Soraya Natasha! 🎂
-                </p>
-            </div>
-        </div>
-
-        <!-- Wave Divider Bottom -->
-        <div class="wave-divider">
-            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
-            </svg>
-        </div>
-    </section>
-
-    <!-- Message Section -->
-    <section class="py-20 px-6 bg-[#fff0f5] relative">
-        <div class="max-w-3xl mx-auto text-center gsap-fade">
-            <h3 class="font-cute text-4xl md:text-5xl text-[#ff69b4] mb-8">Untuk Soraya... 💌</h3>
-            <div class="bg-white p-8 md:p-12 rounded-[2rem] cute-shadow relative">
-                <!-- Decoration -->
-                <div class="absolute -top-6 -left-6 text-5xl">🎀</div>
-                <div class="absolute -bottom-6 -right-6 text-5xl">💖</div>
+                <div class="absolute inset-0 bg-white rounded-full opacity-40 blur-3xl transform scale-125 animate-pulse"></div>
                 
-                <p class="text-gray-700 text-lg md:text-xl leading-relaxed font-medium mb-6">
-                    "Selamat ulang tahun ya, Soraya! ✨
+                <!-- 
+                ==========================================================
+                GANTI NAMA FOTO KAMU MENJADI "foto-soraya.jpg" DI KOMPUTER 
+                ========================================================== 
+                -->
+                <div class="polaroid z-10 w-64 md:w-80 relative">
+                    <div class="overflow-hidden rounded-lg aspect-[3/4] bg-[#ffe4e1]">
+                        <img src="foto-soraya.jpg" alt="Soraya Natasha" class="w-full h-full object-cover hover:scale-110 transition duration-700" onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=800';">
+                    </div>
+                    <p class="font-cute text-center mt-4 text-[#ff1493] text-xl">The Birthday Girl ✨</p>
+                </div>
+            </div>
+
+            <!-- Teks Hero Utama -->
+            <div class="gsap-hero order-1 md:order-2 text-center md:text-left mt-10 md:mt-0">
+                <div class="inline-block px-4 py-1.5 rounded-full bg-white/30 border border-white/50 text-white text-sm font-bold tracking-widest uppercase mb-4 backdrop-blur-sm">
+                    Today is all about you!
+                </div>
+                <h2 class="font-cute text-6xl md:text-8xl text-[#ff1493] mb-4 leading-[0.9] drop-shadow-xl">
+                    Happy<br><span class="text-white drop-shadow-[0_5px_10px_rgba(255,105,180,0.5)]">Birthday</span>
+                </h2>
+                <div class="inline-block bg-white p-2 rounded-full cute-shadow mt-4">
+                    <p class="text-[#ff1493] text-xl md:text-3xl font-black px-6 py-2 rounded-full border-2 border-dashed border-[#ff69b4]">
+                        SORAYA NATASHA 🎂
+                    </p>
+                </div>
+                <p class="text-white font-medium text-lg mt-6 max-w-md mx-auto md:mx-0 drop-shadow-md">
+                    Yeay! Bertambah lagi satu tahun usiamu. Hari ini dunia merayakan orang yang super istimewa.
                 </p>
-                <p class="text-gray-600 text-base md:text-lg leading-relaxed mb-6">
-                    Semoga di umur yang baru ini, hari-harimu selalu semanis permen, secerah senyummu, dan penuh dengan kejutan-kejutan yang menyenangkan. Jangan lupa bahagia hari ini, karena ini hari paling spesial buat kamu!
-                </p>
-                <p class="text-[#ff4d85] font-bold text-lg">
-                    Stay cute, stay awesome, and enjoy your day! 🥳🍰
-                </p>
+            </div>
+        </div>
+
+        <div class="wave-divider">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path></svg>
+        </div>
+    </section>
+
+    <!-- Surat Spesial / Message Section dengan Efek Typewriter -->
+    <section class="py-24 px-6 bg-[#fff0f5] relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-[#ffb6c1] rounded-full blur-[100px] opacity-50"></div>
+        <div class="absolute bottom-0 left-0 w-80 h-80 bg-[#ff69b4] rounded-full blur-[120px] opacity-30"></div>
+
+        <div class="max-w-4xl mx-auto text-center relative z-10">
+            <h3 class="font-cute text-4xl md:text-5xl text-[#ff69b4] mb-10 gsap-fade drop-shadow-sm">A Special Note For You 💌</h3>
+            
+            <div class="glass-panel p-8 md:p-14 rounded-[3rem] cute-shadow relative gsap-fade border-4 border-white/50">
+                <div class="absolute -top-8 left-1/2 transform -translate-x-1/2 text-6xl animate-bounce">👑</div>
+                <div class="absolute -bottom-6 -right-6 text-6xl floating-accent">💖</div>
+                <div class="absolute -bottom-6 -left-6 text-6xl floating-accent-reverse">✨</div>
+                
+                <!-- Area Teks Mengetik -->
+                <div class="text-gray-700 text-lg md:text-2xl leading-relaxed font-semibold min-h-[250px] md:min-h-[200px] flex items-center justify-center text-center px-4" id="typewriter-container">
+                    <span id="typewriter" class="cursor"></span>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Grid / Wishes Section (Matching the Reference Grid) -->
-    <section class="py-20 px-6 bg-white relative overflow-hidden">
-        <!-- Top Wave -->
+    <!-- Grid / Wishes Section Modern -->
+    <section class="py-28 px-6 bg-white relative">
         <div class="wave-divider-top">
-            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill" fill="#fff0f5"></path>
-            </svg>
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill" fill="#fff0f5"></path></svg>
         </div>
 
-        <div class="max-w-6xl mx-auto pt-16">
-            <h3 class="text-center font-cute text-3xl text-[#ff69b4] mb-12 gsap-fade uppercase tracking-wide">Wishes For You</h3>
+        <div class="max-w-6xl mx-auto pt-10 relative z-10">
+            <h3 class="text-center font-cute text-4xl text-[#ff69b4] mb-16 gsap-fade drop-shadow-sm">4 Things To Remember! 🌟</h3>
             
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 gsap-grid">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 gsap-grid">
+                
                 <!-- Card 1 -->
-                <div class="bg-[#ffb6c1] aspect-square rounded-[2rem] p-6 flex items-center justify-center text-center card-hover relative overflow-hidden">
-                    <div class="absolute top-2 left-2 text-white opacity-50 text-2xl">✨</div>
-                    <h4 class="font-cute text-3xl md:text-4xl text-white drop-shadow-md leading-tight">Be<br>Happy</h4>
+                <div class="bg-gradient-to-br from-[#ffb6c1] to-[#ff9bc2] rounded-[2.5rem] p-8 text-center card-hover relative overflow-hidden group">
+                    <div class="absolute -right-4 -top-4 text-7xl opacity-20 group-hover:scale-150 transition duration-500">😊</div>
+                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-3xl mx-auto mb-6 cute-shadow">🎉</div>
+                    <h4 class="font-cute text-3xl text-white drop-shadow-md mb-3">Be Happy</h4>
+                    <p class="text-white/90 text-sm font-bold">Tinggalkan semua beban, nikmati harimu sepenuhnya tanpa ragu!</p>
                 </div>
+
                 <!-- Card 2 -->
-                <div class="bg-[#ffebf0] aspect-square rounded-[2rem] p-6 flex items-center justify-center text-center card-hover border-4 border-[#ffb6c1]">
-                    <h4 class="font-cute text-3xl md:text-4xl text-[#ff69b4] drop-shadow-sm leading-tight">Stay<br>Cute</h4>
+                <div class="bg-white rounded-[2.5rem] p-8 text-center card-hover border-4 border-[#ffb6c1] group">
+                    <div class="w-16 h-16 bg-[#ffebf0] rounded-full flex items-center justify-center text-3xl mx-auto mb-6 cute-shadow group-hover:bg-[#ffb6c1] transition">🥺</div>
+                    <h4 class="font-cute text-3xl text-[#ff69b4] drop-shadow-sm mb-3">Stay Cute</h4>
+                    <p class="text-gray-500 text-sm font-bold">Pesona dan kebaikan kamu nggak pernah gagal bikin orang lain kagum.</p>
                 </div>
+
                 <!-- Card 3 -->
-                <div class="bg-[#ffb6c1] aspect-square rounded-[2rem] p-6 flex items-center justify-center text-center card-hover relative overflow-hidden">
-                    <div class="absolute bottom-2 right-2 text-white opacity-50 text-2xl">🌸</div>
-                    <h4 class="font-cute text-3xl md:text-4xl text-white drop-shadow-md leading-tight">Always<br>Smile</h4>
+                <div class="bg-gradient-to-bl from-[#ff9bc2] to-[#ff69b4] rounded-[2.5rem] p-8 text-center card-hover relative overflow-hidden group">
+                    <div class="absolute -left-4 -bottom-4 text-7xl opacity-20 group-hover:scale-150 transition duration-500">✨</div>
+                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-3xl mx-auto mb-6 cute-shadow">🌻</div>
+                    <h4 class="font-cute text-3xl text-white drop-shadow-md mb-3">Always Smile</h4>
+                    <p class="text-white/90 text-sm font-bold">Senyummu itu energi paling positif dan menular buat sekitarmu.</p>
                 </div>
+
                 <!-- Card 4 -->
-                <div class="bg-[#ffebf0] aspect-square rounded-[2rem] p-6 flex items-center justify-center text-center card-hover border-4 border-[#ffb6c1]">
-                    <h4 class="font-cute text-3xl md:text-4xl text-[#ff69b4] drop-shadow-sm leading-tight">Much<br>Love</h4>
+                <div class="bg-white rounded-[2.5rem] p-8 text-center card-hover border-4 border-[#ffb6c1] group">
+                    <div class="w-16 h-16 bg-[#ffebf0] rounded-full flex items-center justify-center text-3xl mx-auto mb-6 cute-shadow group-hover:bg-[#ffb6c1] transition">💖</div>
+                    <h4 class="font-cute text-3xl text-[#ff69b4] drop-shadow-sm mb-3">Much Love</h4>
+                    <p class="text-gray-500 text-sm font-bold">Banyak sekali yang sayang sama kamu, karena kamu berhak dicintai!</p>
                 </div>
+
             </div>
         </div>
     </section>
 
     <!-- Outro & Footer -->
-    <footer class="bg-[#ffb6c1] pt-20 pb-10 px-6 relative overflow-hidden text-center">
-        <div class="floating-flower text-white opacity-60 text-4xl top-10 left-[15%]">🌸</div>
-        <div class="floating-star text-white opacity-80 text-3xl bottom-10 right-[15%]">✨</div>
+    <footer class="bg-gradient-to-t from-[#ff69b4] to-[#ffb6c1] pt-28 pb-12 px-6 relative overflow-hidden text-center">
+        <!-- Decoration Footer -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden opacity-30 pointer-events-none">
+            <div class="absolute w-[200vw] h-[200vw] bg-[radial-gradient(circle,rgba(255,255,255,0.8)_0%,transparent_60%)] -top-[100vw] -left-[50vw]"></div>
+        </div>
 
-        <div class="max-w-2xl mx-auto relative z-10 gsap-fade">
-            <h2 class="font-cute text-5xl md:text-6xl text-[#ff1493] mb-4 drop-shadow-md">
-                Once Again,<br><span class="text-white">Happy Birthday!</span>
+        <div class="max-w-3xl mx-auto relative z-10 gsap-fade">
+            <div class="text-6xl mb-6 animate-bounce">🎂</div>
+            <h2 class="font-cute text-5xl md:text-7xl text-white mb-6 drop-shadow-[0_5px_15px_rgba(255,20,147,0.4)]">
+                Once Again,<br>Happy Birthday!
             </h2>
-            <p class="text-white font-bold mb-10 text-lg">Semoga hari ini jadi salah satu hari terbaikmu! 🎁</p>
+            <p class="text-white font-bold text-xl md:text-2xl mb-12 bg-white/20 inline-block px-8 py-3 rounded-full backdrop-blur-sm border border-white/40">
+                Enjoy your super special day, Soraya! 🎁
+            </p>
             
-            <div class="w-full h-px bg-white/50 mb-6"></div>
-            <p class="text-white text-xs font-bold uppercase tracking-widest">Made with 💖 for Soraya Natasha</p>
+            <div class="w-full h-px bg-white/40 mb-8 max-w-md mx-auto"></div>
+            <p class="text-white text-xs font-black uppercase tracking-[0.3em] flex items-center justify-center gap-2">
+                <span>Made with</span> <span class="animate-pulse text-xl">💖</span> <span>Just For You</span>
+            </p>
         </div>
     </footer>
 
     <script>
+        // Membangkitkan Efek Hujan Cinta / Falling Elements
+        function createFallingElements() {
+            const container = document.getElementById('falling-elements');
+            const items = ['💖', '✨', '🌸', '🎂', '🎀'];
+            const maxElements = window.innerWidth < 768 ? 20 : 35; // Sesuaikan untuk HP vs PC
+
+            for(let i = 0; i < maxElements; i++) {
+                let elem = document.createElement('div');
+                elem.innerHTML = items[Math.floor(Math.random() * items.length)];
+                elem.className = 'absolute text-2xl md:text-3xl filter drop-shadow-md';
+                elem.style.left = Math.random() * 100 + 'vw';
+                elem.style.animation = `fall ${Math.random() * 4 + 4}s linear infinite`;
+                elem.style.animationDelay = `${Math.random() * 5}s`;
+                elem.style.opacity = Math.random() * 0.5 + 0.3; // Random opacity
+                container.appendChild(elem);
+            }
+        }
+
         document.addEventListener("DOMContentLoaded", () => {
             gsap.registerPlugin(ScrollTrigger);
+
+            // Jalankan hujan elemen
+            createFallingElements();
 
             // 1. Loading Screen Out Animation
             setTimeout(() => {
@@ -237,44 +294,79 @@
                         
                         // Hero Animations Play After Loader Finishes
                         gsap.from(".gsap-hero", {
-                            y: 50,
+                            y: 60,
                             opacity: 0,
-                            duration: 1,
-                            stagger: 0.2,
+                            duration: 1.2,
+                            stagger: 0.3,
                             ease: "back.out(1.5)"
                         });
                     }
                 });
-            }, 2500); // Tampil 2.5 detik sesuai permintaan
+            }, 3000); // Durasi Loading Screen
 
-            // 2. Scroll Animations for Messages
+            // 2. Scroll Animations (Fade Up Elements)
             gsap.utils.toArray(".gsap-fade").forEach(elem => {
                 gsap.from(elem, {
                     scrollTrigger: {
                         trigger: elem,
-                        start: "top 80%",
+                        start: "top 85%",
                     },
-                    y: 40,
+                    y: 50,
                     opacity: 0,
                     duration: 1,
                     ease: "power3.out"
                 });
             });
 
-            // 3. Scroll Animation for the Grid Cards
+            // 3. Grid Cards Stagger Animation
             gsap.from(".gsap-grid > div", {
                 scrollTrigger: {
                     trigger: ".gsap-grid",
                     start: "top 80%",
                 },
-                y: 50,
+                y: 60,
+                scale: 0.9,
                 opacity: 0,
                 duration: 0.8,
-                stagger: 0.15,
-                ease: "back.out(1.2)"
+                stagger: 0.2,
+                ease: "back.out(1.5)"
+            });
+
+            // 4. Animasi Typewriter (Scroll Triggered)
+            const pesanSurat = `"Hai orang paling spesial! Di hari ulang tahunmu ini, aku cuma mau bilang terima kasih udah lahir dan jadi versi terbaik dari dirimu.\n\nKamu itu luar biasa, kuat, dan selalu bisa bikin suasana jadi lebih hangat. Semoga semua doa yang kamu panjatkan tahun ini dijabah oleh Tuhan. Semoga sedihnya makin berkurang, senyumnya makin banyak, dan rezekinya makin lancar.\n\nYou deserve all the happiness in the world, Soraya. Jangan pernah lelah buat jadi orang baik ya! ✨"`;
+            
+            let i = 0;
+            let typeWriterStarted = false;
+            const speed = 40; // Kecepatan ketik (ms)
+
+            function typeWriter() {
+                if (i < pesanSurat.length) {
+                    let char = pesanSurat.charAt(i);
+                    // Handle enter / line breaks
+                    if(char === '\n') {
+                        document.getElementById("typewriter").innerHTML += '<br>';
+                    } else {
+                        document.getElementById("typewriter").innerHTML += char;
+                    }
+                    i++;
+                    setTimeout(typeWriter, speed);
+                } else {
+                    document.getElementById("typewriter").classList.remove('cursor'); // Hapus kursor jika selesai
+                }
+            }
+
+            // Trigger Typewriter saat bagian surat muncul di layar
+            ScrollTrigger.create({
+                trigger: "#typewriter-container",
+                start: "top 75%",
+                onEnter: () => {
+                    if(!typeWriterStarted) {
+                        typeWriterStarted = true;
+                        setTimeout(typeWriter, 500); // Delay sedikit sebelum mengetik
+                    }
+                }
             });
         });
     </script>
 </body>
 </html>
-```eof
