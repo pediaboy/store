@@ -3,246 +3,287 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pediaboy Store</title>
+    <title>Price List Jasa Web | Pediaboy</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800;900&display=swap" rel="stylesheet">
     <style>
-        html { scroll-behavior: smooth; }
-        ::-webkit-scrollbar { display: none; }
-        body { -ms-overflow-style: none; scrollbar-width: none; background-color: #f3f4f6; }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #040114;
+            color: #ffffff;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Abstract Glowing Backgrounds */
+        .glow-bg-1 {
+            position: absolute; top: -10%; left: -10%; width: 50vw; height: 50vw;
+            background: radial-gradient(circle, rgba(0, 85, 255, 0.4) 0%, transparent 60%);
+            border-radius: 50%; z-index: -1; filter: blur(80px);
+            animation: pulse 8s infinite alternate;
+        }
+        .glow-bg-2 {
+            position: absolute; bottom: -10%; right: -10%; width: 60vw; height: 60vw;
+            background: radial-gradient(circle, rgba(176, 38, 255, 0.3) 0%, transparent 60%);
+            border-radius: 50%; z-index: -1; filter: blur(100px);
+            animation: pulse 10s infinite alternate-reverse;
+        }
+        .glow-bg-3 {
+            position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); width: 100vw; height: 30vw;
+            background: radial-gradient(ellipse, rgba(0, 242, 255, 0.1) 0%, transparent 70%);
+            z-index: -1; filter: blur(60px);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.7; }
+            100% { transform: scale(1.2); opacity: 1; }
+        }
+
+        /* Ambient Wave Lines */
+        .ambient-waves {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.15;
+            background-image: 
+                repeating-radial-gradient(circle at 0 0, transparent 0, #040114 20px, rgba(0, 242, 255, 0.2) 21px, transparent 22px),
+                repeating-radial-gradient(circle at 100% 100%, transparent 0, #040114 20px, rgba(176, 38, 255, 0.2) 21px, transparent 22px);
+        }
+
+        /* Text Glows */
+        .title-glow {
+            text-shadow: 0 0 10px rgba(255,255,255,0.8), 0 0 20px rgba(255,255,255,0.4), 0 0 40px rgba(0, 162, 255, 0.6);
+            letter-spacing: 0.15em;
+        }
+
+        /* Pill Categories */
+        .category-pill {
+            background: rgba(0, 85, 255, 0.2);
+            border: 1px solid rgba(0, 162, 255, 0.6);
+            box-shadow: 0 0 20px rgba(0, 85, 255, 0.4), inset 0 0 10px rgba(0, 162, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Package Cards */
+        .package-title-box {
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5), inset 0 -3px 5px rgba(0,0,0,0.1);
+        }
+
+        /* Starburst Badge Styles */
+        .badge-blue { filter: drop-shadow(0 0 15px rgba(0, 119, 255, 0.8)); color: #1d4ed8; }
+        .badge-green { filter: drop-shadow(0 0 15px rgba(0, 255, 136, 0.8)); color: #16a34a; }
+        .badge-purple { filter: drop-shadow(0 0 15px rgba(176, 38, 255, 0.8)); color: #9333ea; }
+        
+        .list-marker li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .list-marker li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #00f2ff;
+            font-size: 1.5rem;
+            line-height: 1rem;
+            top: 0;
+            text-shadow: 0 0 10px #00f2ff;
+        }
     </style>
 </head>
-<body class="text-gray-800">
+<body class="antialiased min-h-screen pb-20">
 
-    <div class="max-w-md mx-auto bg-white min-h-screen shadow-xl relative overflow-hidden">
+    <!-- Background Effects -->
+    <div class="glow-bg-1"></div>
+    <div class="glow-bg-2"></div>
+    <div class="glow-bg-3"></div>
+    <div class="ambient-waves"></div>
+
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-16">
         
-        <header class="bg-blue-600 text-white p-4 sticky top-0 z-50 shadow-md flex justify-between items-center">
-            <h1 class="text-xl font-bold"><i class="fas fa-store mr-2"></i> Pediaboy</h1>
-            <nav class="text-sm">
-                <a href="#katalog" class="mr-3 hover:text-blue-200">Katalog</a>
-                <a href="#faq" class="hover:text-blue-200">FAQ</a>
-            </nav>
-        </header>
-
-        <div class="bg-blue-500 text-white p-6 text-center">
-            <img src="https://ui-avatars.com/api/?name=Pediaboy&background=ffffff&color=2563eb&size=100" alt="Pediaboy Logo" class="mx-auto rounded-full mb-3 border-4 border-blue-300">
-            <h2 class="text-2xl font-bold mb-1">Pediaboy Digital Store</h2>
-            <p class="text-sm text-blue-100">Premium VPN & Jasa Web Design Professional</p>
+        <!-- Header Title -->
+        <div class="text-center mb-16">
+            <h1 class="text-5xl md:text-7xl font-black title-glow text-white leading-tight">
+                PRICE LIST<br>PEDIABOY
+            </h1>
         </div>
 
-        <main class="p-4">
+        <!-- Main Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 relative">
             
-            <section id="katalog" class="mb-8">
-                <h3 class="text-lg font-bold border-b-2 border-blue-500 pb-1 mb-4 flex items-center">
-                    <i class="fas fa-shield-alt text-blue-500 mr-2"></i> Aplikasi VPN Premium
-                </h3>
-                <div class="grid grid-cols-2 gap-3">
-                    <div class="border rounded-lg p-3 shadow-sm hover:shadow-md transition">
-                        <div class="bg-blue-100 text-blue-600 text-center rounded py-2 mb-2 font-bold"><i class="fas fa-network-wired"></i> Surfshark</div>
-                        <h4 class="font-semibold text-sm">Surfshark VPN</h4>
-                        <p class="text-xs text-gray-500 mb-2">Premium 1 Bulan</p>
-                        <p class="text-blue-600 font-bold text-sm mb-3">Rp 25.000</p>
-                        <button onclick="bukaCheckout('Surfshark VPN Premium', 25000)" class="w-full bg-blue-600 text-white text-sm py-1.5 rounded hover:bg-blue-700 transition">Beli</button>
-                    </div>
-                    <div class="border rounded-lg p-3 shadow-sm hover:shadow-md transition">
-                        <div class="bg-blue-100 text-blue-600 text-center rounded py-2 mb-2 font-bold"><i class="fas fa-globe"></i> NordVPN</div>
-                        <h4 class="font-semibold text-sm">NordVPN</h4>
-                        <p class="text-xs text-gray-500 mb-2">Premium 1 Bulan</p>
-                        <p class="text-blue-600 font-bold text-sm mb-3">Rp 30.000</p>
-                        <button onclick="bukaCheckout('NordVPN Premium', 30000)" class="w-full bg-blue-600 text-white text-sm py-1.5 rounded hover:bg-blue-700 transition">Beli</button>
-                    </div>
-                    <div class="border rounded-lg p-3 shadow-sm hover:shadow-md transition">
-                        <div class="bg-blue-100 text-blue-600 text-center rounded py-2 mb-2 font-bold"><i class="fas fa-lock"></i> IP Vanish</div>
-                        <h4 class="font-semibold text-sm">IP Vanish VPN</h4>
-                        <p class="text-xs text-gray-500 mb-2">Premium 1 Bulan</p>
-                        <p class="text-blue-600 font-bold text-sm mb-3">Rp 20.000</p>
-                        <button onclick="bukaCheckout('IP Vanish Premium', 20000)" class="w-full bg-blue-600 text-white text-sm py-1.5 rounded hover:bg-blue-700 transition">Beli</button>
-                    </div>
-                    <div class="border rounded-lg p-3 shadow-sm hover:shadow-md transition">
-                        <div class="bg-blue-100 text-blue-600 text-center rounded py-2 mb-2 font-bold"><i class="fas fa-bolt"></i> ExpressVPN</div>
-                        <h4 class="font-semibold text-sm">ExpressVPN</h4>
-                        <p class="text-xs text-gray-500 mb-2">Premium 1 Bulan</p>
-                        <p class="text-blue-600 font-bold text-sm mb-3">Rp 35.000</p>
-                        <button onclick="bukaCheckout('ExpressVPN Premium', 35000)" class="w-full bg-blue-600 text-white text-sm py-1.5 rounded hover:bg-blue-700 transition">Beli</button>
+            <!-- Divider Line (Desktop only) -->
+            <div class="hidden lg:block absolute left-1/2 top-10 bottom-0 w-px bg-gradient-to-b from-transparent via-blue-500 to-transparent opacity-30 transform -translate-x-1/2"></div>
+
+            <!-- ================= COLUMN 1: BISNIS / UMKM ================= -->
+            <div class="flex flex-col gap-12">
+                <!-- Category Label -->
+                <div class="flex justify-center">
+                    <div class="category-pill rounded-full py-3 px-10 text-sm md:text-base font-bold tracking-widest uppercase text-white">
+                        WEBSITE <span class="text-[#00f2ff]">BISNIS / UMKM</span>
                     </div>
                 </div>
-            </section>
 
-            <section class="mb-8">
-                <h3 class="text-lg font-bold border-b-2 border-blue-500 pb-1 mb-4 flex items-center">
-                    <i class="fas fa-laptop-code text-blue-500 mr-2"></i> Jasa Design Web
-                </h3>
-                <div class="space-y-3">
-                    
-                    <div class="border rounded-lg p-3 shadow-sm flex flex-col">
-                        <div class="flex justify-between items-start mb-2">
-                            <h4 class="font-bold text-md">Paket Basic</h4>
-                            <span class="bg-blue-100 text-blue-700 text-xs font-bold px-2 py-1 rounded">Rp 100.000</span>
+                <!-- Package 1: Landing Page -->
+                <div class="relative pl-2 md:pl-8">
+                    <!-- Title & Badge -->
+                    <div class="relative z-10 flex items-center">
+                        <div class="package-title-box bg-white rounded-full py-3 md:py-4 px-6 md:px-8 w-[80%] md:w-[70%]">
+                            <h3 class="text-[#0f172a] font-extrabold text-xs md:text-sm tracking-widest uppercase text-center">Landing Page</h3>
                         </div>
-                        <p class="text-xs text-gray-600 mb-3 leading-relaxed">Cocok untuk portofolio atau link tree. Template standar, responsif di HP, pengerjaan 1-2 hari kerja.</p>
-                        <button onclick="bukaCheckout('Jasa Web - Paket Basic', 100000)" class="mt-auto bg-gray-800 text-white text-sm py-1.5 rounded hover:bg-gray-900 transition">Pesan Sekarang</button>
-                    </div>
-
-                    <div class="border rounded-lg p-3 shadow-sm flex flex-col">
-                        <div class="flex justify-between items-start mb-2">
-                            <h4 class="font-bold text-md">Paket Pro</h4>
-                            <span class="bg-blue-100 text-blue-700 text-xs font-bold px-2 py-1 rounded">Rp 1.000.000</span>
+                        <div class="absolute right-0 md:right-8 lg:right-12 xl:right-24 top-1/2 transform -translate-y-1/2 w-[5.5rem] h-[5.5rem] md:w-24 md:h-24 badge-blue flex items-center justify-center z-20 hover:scale-110 transition-transform">
+                            <svg viewBox="0 0 100 100" class="absolute inset-0 w-full h-full">
+                                <polygon fill="currentColor" points="50,0 61,11 76,7 82,21 97,24 93,39 100,50 93,61 97,76 82,79 76,93 61,89 50,100 39,89 24,93 21,79 3,76 7,61 0,50 7,39 3,24 21,21 24,7 39,11" />
+                            </svg>
+                            <span class="relative z-10 font-black text-white text-lg md:text-xl drop-shadow-md transform -rotate-3">150k</span>
                         </div>
-                        <p class="text-xs text-gray-600 mb-3 leading-relaxed">Web katalog produk atau company profile (hingga 5 halaman). Desain elegan, terintegrasi tombol WhatsApp, SEO dasar.</p>
-                        <button onclick="bukaCheckout('Jasa Web - Paket Pro', 1000000)" class="mt-auto bg-gray-800 text-white text-sm py-1.5 rounded hover:bg-gray-900 transition">Pesan Sekarang</button>
                     </div>
-
-                    <div class="border border-blue-400 rounded-lg p-3 shadow-sm flex flex-col bg-blue-50 relative overflow-hidden">
-                        <div class="absolute top-0 right-0 bg-blue-500 text-white text-[10px] px-2 py-1 rounded-bl-lg font-bold">BEST SELLER</div>
-                        <div class="flex justify-between items-start mb-2 mt-2">
-                            <h4 class="font-bold text-md text-blue-800">Paket Ultimate</h4>
-                            <span class="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">Rp 3.000.000</span>
-                        </div>
-                        <p class="text-xs text-gray-700 mb-3 leading-relaxed">Solusi lengkap! Web aplikasi / toko online full fitur. Integrasi payment gateway (Midtrans/QRIS), panel admin, database lengkap, dan UI/UX premium eksklusif.</p>
-                        <button onclick="bukaCheckout('Jasa Web - Paket Ultimate', 3000000)" class="mt-auto bg-blue-600 text-white text-sm py-1.5 rounded hover:bg-blue-700 transition">Pesan Sekarang</button>
-                    </div>
-
+                    <!-- Details -->
+                    <ul class="list-marker mt-6 text-sm md:text-base font-medium text-blue-50 w-[85%]">
+                        <li>Desain Single Page Eksklusif</li>
+                        <li>Copywriting Persuasif & Menarik</li>
+                        <li>Integrasi Tombol WhatsApp</li>
+                        <li>Mobile Friendly & Fast Loading</li>
+                    </ul>
                 </div>
-            </section>
 
-            <section id="faq" class="mb-8 bg-white border rounded-lg p-4 shadow-sm">
-                <h3 class="text-lg font-bold border-b-2 border-gray-200 pb-1 mb-3">Syarat, Ketentuan & FAQ</h3>
-                
-                <div class="space-y-2 text-sm">
-                    <details class="bg-gray-50 p-2 rounded cursor-pointer">
-                        <summary class="font-semibold">Apakah akun VPN bergaransi?</summary>
-                        <p class="text-xs text-gray-600 mt-2 ml-4">Ya, full garansi selama masa aktif (1 bulan). Jika ada kendala login, akan direplace dengan akun baru.</p>
-                    </details>
-                    <details class="bg-gray-50 p-2 rounded cursor-pointer">
-                        <summary class="font-semibold">Berapa lama pengerjaan web?</summary>
-                        <p class="text-xs text-gray-600 mt-2 ml-4">Basic: 1-2 hari. Pro: 3-5 hari. Ultimate: 7-14 hari tergantung kompleksitas fitur.</p>
-                    </details>
-                    <details class="bg-gray-50 p-2 rounded cursor-pointer">
-                        <summary class="font-semibold">Metode pembayaran apa saja?</summary>
-                        <p class="text-xs text-gray-600 mt-2 ml-4">Kami menerima QRIS (All Payment), E-Wallet (DANA, OVO, GoPay), dan Transfer Bank (BCA, Mandiri).</p>
-                    </details>
-                    <details class="bg-gray-50 p-2 rounded cursor-pointer">
-                        <summary class="font-semibold">Syarat & Ketentuan Umum</summary>
-                        <ul class="text-xs text-gray-600 mt-2 ml-4 list-disc pl-3">
-                            <li>Produk digital (VPN) yang sudah dibeli tidak dapat di-refund.</li>
-                            <li>Revisi desain web berlaku sesuai paket yang disepakati.</li>
-                            <li>Dilarang menggunakan akun untuk tindakan ilegal.</li>
-                        </ul>
-                    </details>
+                <!-- Package 2: Company Profile -->
+                <div class="relative pl-2 md:pl-8">
+                    <div class="relative z-10 flex items-center">
+                        <div class="package-title-box bg-white rounded-full py-3 md:py-4 px-6 md:px-8 w-[80%] md:w-[70%]">
+                            <h3 class="text-[#0f172a] font-extrabold text-xs md:text-sm tracking-widest uppercase text-center">Company Profile</h3>
+                        </div>
+                        <div class="absolute right-0 md:right-8 lg:right-12 xl:right-24 top-1/2 transform -translate-y-1/2 w-[5.5rem] h-[5.5rem] md:w-24 md:h-24 badge-blue flex items-center justify-center z-20 hover:scale-110 transition-transform">
+                            <svg viewBox="0 0 100 100" class="absolute inset-0 w-full h-full">
+                                <polygon fill="currentColor" points="50,0 61,11 76,7 82,21 97,24 93,39 100,50 93,61 97,76 82,79 76,93 61,89 50,100 39,89 24,93 21,79 3,76 7,61 0,50 7,39 3,24 21,21 24,7 39,11" />
+                            </svg>
+                            <span class="relative z-10 font-black text-white text-lg md:text-xl drop-shadow-md transform -rotate-3">400k</span>
+                        </div>
+                    </div>
+                    <ul class="list-marker mt-6 text-sm md:text-base font-medium text-blue-50 w-[85%]">
+                        <li>Maksimal 5 Halaman Premium</li>
+                        <li>Galeri, Layanan & Profil Usaha</li>
+                        <li>Form Kontak & Integrasi Maps</li>
+                        <li>Optimasi SEO Basic / Google</li>
+                    </ul>
                 </div>
-            </section>
 
-        </main>
-
-        <footer class="bg-gray-800 text-white text-center p-6 mt-4 rounded-t-xl">
-            <h4 class="font-bold text-lg mb-2">Pediaboy</h4>
-            <div class="flex justify-center space-x-4 mb-4">
-                <a href="https://wa.me/pediaboy" target="_blank" class="text-green-400 hover:text-green-300 text-2xl"><i class="fab fa-whatsapp"></i></a>
-                <a href="https://instagram.com/elthoriqqqq_" target="_blank" class="text-pink-400 hover:text-pink-300 text-2xl"><i class="fab fa-instagram"></i></a>
+                <!-- Package 3: E-Commerce -->
+                <div class="relative pl-2 md:pl-8">
+                    <div class="relative z-10 flex items-center">
+                        <div class="package-title-box bg-white rounded-full py-3 md:py-4 px-6 md:px-8 w-[80%] md:w-[70%]">
+                            <h3 class="text-[#0f172a] font-extrabold text-xs md:text-sm tracking-widest uppercase text-center">E-Commerce Pro</h3>
+                        </div>
+                        <div class="absolute right-0 md:right-8 lg:right-12 xl:right-24 top-1/2 transform -translate-y-1/2 w-[5.5rem] h-[5.5rem] md:w-24 md:h-24 badge-purple flex items-center justify-center z-20 hover:scale-110 transition-transform">
+                            <svg viewBox="0 0 100 100" class="absolute inset-0 w-full h-full">
+                                <polygon fill="currentColor" points="50,0 61,11 76,7 82,21 97,24 93,39 100,50 93,61 97,76 82,79 76,93 61,89 50,100 39,89 24,93 21,79 3,76 7,61 0,50 7,39 3,24 21,21 24,7 39,11" />
+                            </svg>
+                            <span class="relative z-10 font-black text-white text-lg md:text-xl drop-shadow-md transform -rotate-3">1.5jt</span>
+                        </div>
+                    </div>
+                    <ul class="list-marker mt-6 text-sm md:text-base font-medium text-blue-50 w-[85%]">
+                        <li>Sistem Keranjang & Checkout</li>
+                        <li>Payment Gateway (QRIS/Transfer Otomatis)</li>
+                        <li>Dashboard Admin Kelola Produk</li>
+                        <li>Fitur Kalkulasi Ongkir Otomatis</li>
+                    </ul>
+                </div>
             </div>
-            <p class="text-xs text-gray-400">© 2026 Pediaboy. All rights reserved.</p>
-        </footer>
 
-        <div id="checkoutModal" class="fixed inset-0 bg-black bg-opacity-60 hidden z-[100] flex items-end justify-center sm:items-center">
-            <div class="bg-white w-full max-w-md rounded-t-2xl sm:rounded-2xl p-5 transform transition-transform translate-y-full" id="modalContent">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-xl font-bold">Checkout</h3>
-                    <button onclick="tutupCheckout()" class="text-gray-500 hover:text-red-500 text-xl"><i class="fas fa-times"></i></button>
+            <!-- ================= COLUMN 2: PROJECT / CUSTOM ================= -->
+            <div class="flex flex-col gap-12 mt-8 lg:mt-0">
+                <!-- Category Label -->
+                <div class="flex justify-center">
+                    <div class="category-pill rounded-full py-3 px-10 text-sm md:text-base font-bold tracking-widest uppercase text-white">
+                        WEBSITE <span class="text-[#00f2ff]">PROJECT</span>
+                    </div>
                 </div>
-                
-                <form id="formPesanan" onsubmit="prosesPembelian(event)">
-                    <div class="mb-3">
-                        <label class="block text-xs font-semibold text-gray-600 mb-1">Produk</label>
-                        <input type="text" id="namaProduk" class="w-full border rounded p-2 bg-gray-100 font-bold" readonly>
-                        <input type="hidden" id="hargaProduk">
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label class="block text-xs font-semibold text-gray-600 mb-1">Nama Pembeli</label>
-                        <input type="text" id="namaPembeli" class="w-full border rounded p-2 focus:border-blue-500 outline-none" placeholder="Masukkan nama..." required>
-                    </div>
 
-                    <div class="mb-4">
-                        <label class="block text-xs font-semibold text-gray-600 mb-1">Metode Pembayaran</label>
-                        <select id="metodeBayar" class="w-full border rounded p-2 focus:border-blue-500 outline-none" required>
-                            <option value="">Pilih Metode...</option>
-                            <option value="QRIS">QRIS (Otomatis)</option>
-                            <option value="DANA">DANA</option>
-                            <option value="GoPay">GoPay</option>
-                            <option value="BCA">Transfer Bank BCA</option>
-                            <option value="Mandiri">Transfer Bank Mandiri</option>
-                        </select>
+                <!-- Package 4: Web Sederhana -->
+                <div class="relative pl-2 md:pl-8">
+                    <div class="relative z-10 flex items-center">
+                        <div class="package-title-box bg-white rounded-full py-3 md:py-4 px-6 md:px-8 w-[80%] md:w-[70%]">
+                            <h3 class="text-[#0f172a] font-extrabold text-xs md:text-sm tracking-widest uppercase text-center">Web Sederhana</h3>
+                        </div>
+                        <div class="absolute right-0 md:right-8 lg:right-12 xl:right-24 top-1/2 transform -translate-y-1/2 w-[5.5rem] h-[5.5rem] md:w-24 md:h-24 badge-green flex items-center justify-center z-20 hover:scale-110 transition-transform">
+                            <svg viewBox="0 0 100 100" class="absolute inset-0 w-full h-full">
+                                <polygon fill="currentColor" points="50,0 61,11 76,7 82,21 97,24 93,39 100,50 93,61 97,76 82,79 76,93 61,89 50,100 39,89 24,93 21,79 3,76 7,61 0,50 7,39 3,24 21,21 24,7 39,11" />
+                            </svg>
+                            <span class="relative z-10 font-black text-white text-lg md:text-xl drop-shadow-md transform -rotate-3">100k</span>
+                        </div>
                     </div>
+                    <ul class="list-marker mt-6 text-sm md:text-base font-medium text-blue-50 w-[85%]">
+                        <li>Desain Statis (HTML, CSS, JS)</li>
+                        <li>Maksimal 3 Halaman</li>
+                        <li>Struktur Code Rapi & Responsif</li>
+                        <li>Penyerahan Full Source Code</li>
+                    </ul>
+                </div>
 
-                    <div class="border-t pt-3 flex justify-between items-center mb-4">
-                        <span class="text-sm text-gray-600">Total Pembayaran:</span>
-                        <span id="labelTotal" class="text-lg font-bold text-blue-600">Rp 0</span>
+                <!-- Package 5: Web CRUD -->
+                <div class="relative pl-2 md:pl-8">
+                    <div class="relative z-10 flex items-center">
+                        <div class="package-title-box bg-white rounded-full py-3 md:py-4 px-6 md:px-8 w-[80%] md:w-[70%]">
+                            <h3 class="text-[#0f172a] font-extrabold text-xs md:text-sm tracking-widest uppercase text-center">Website CRUD</h3>
+                        </div>
+                        <div class="absolute right-0 md:right-8 lg:right-12 xl:right-24 top-1/2 transform -translate-y-1/2 w-[5.5rem] h-[5.5rem] md:w-24 md:h-24 badge-blue flex items-center justify-center z-20 hover:scale-110 transition-transform">
+                            <svg viewBox="0 0 100 100" class="absolute inset-0 w-full h-full">
+                                <polygon fill="currentColor" points="50,0 61,11 76,7 82,21 97,24 93,39 100,50 93,61 97,76 82,79 76,93 61,89 50,100 39,89 24,93 21,79 3,76 7,61 0,50 7,39 3,24 21,21 24,7 39,11" />
+                            </svg>
+                            <span class="relative z-10 font-black text-white text-lg md:text-xl drop-shadow-md transform -rotate-3">350k</span>
+                        </div>
                     </div>
+                    <ul class="list-marker mt-6 text-sm md:text-base font-medium text-blue-50 w-[85%]">
+                        <li>Sistem Login & Autentikasi</li>
+                        <li>Manajemen Data (Create, Read, Update, Delete)</li>
+                        <li>Database MySQL Terstruktur</li>
+                        <li>Sangat Cocok untuk Tugas / Sistem Internal</li>
+                    </ul>
+                </div>
 
-                    <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition">
-                        Pesan via WhatsApp
-                    </button>
-                </form>
+                <!-- Package 6: Web Framework -->
+                <div class="relative pl-2 md:pl-8">
+                    <div class="relative z-10 flex items-center">
+                        <div class="package-title-box bg-white rounded-full py-3 md:py-4 px-6 md:px-8 w-[80%] md:w-[70%]">
+                            <h3 class="text-[#0f172a] font-extrabold text-xs md:text-sm tracking-widest uppercase text-center">Web Framework</h3>
+                        </div>
+                        <div class="absolute right-0 md:right-8 lg:right-12 xl:right-24 top-1/2 transform -translate-y-1/2 w-[5.5rem] h-[5.5rem] md:w-24 md:h-24 badge-purple flex items-center justify-center z-20 hover:scale-110 transition-transform">
+                            <svg viewBox="0 0 100 100" class="absolute inset-0 w-full h-full">
+                                <polygon fill="currentColor" points="50,0 61,11 76,7 82,21 97,24 93,39 100,50 93,61 97,76 82,79 76,93 61,89 50,100 39,89 24,93 21,79 3,76 7,61 0,50 7,39 3,24 21,21 24,7 39,11" />
+                            </svg>
+                            <span class="relative z-10 font-black text-white text-lg md:text-xl drop-shadow-md transform -rotate-3">1jt</span>
+                        </div>
+                    </div>
+                    <ul class="list-marker mt-6 text-sm md:text-base font-medium text-blue-50 w-[85%]">
+                        <li>Menggunakan Framework Modern (Laravel/React)</li>
+                        <li>Arsitektur MVC & Keamanan Ekstra</li>
+                        <li>Integrasi API & Logika Kompleks</li>
+                        <li>Siap Presentasi & Skalabilitas Tinggi</li>
+                    </ul>
+                </div>
             </div>
+
+        </div>
+
+        <!-- Footer / Contact Info -->
+        <div class="mt-20 pt-10 border-t border-blue-900/50 flex flex-col md:flex-row justify-center items-center gap-8 text-white font-bold tracking-widest">
+            <a href="https://instagram.com/elthoriqqqq_" target="_blank" class="flex items-center gap-3 hover:text-[#00f2ff] transition">
+                <!-- IG Icon -->
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+                @pediaboy
+            </a>
+            <a href="mailto:admin@pediaboy.my.id" class="flex items-center gap-3 hover:text-[#00f2ff] transition">
+                <!-- Mail Icon -->
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                admin@pediaboy.my.id
+            </a>
         </div>
 
     </div>
 
-    <script>
-        const NOMOR_WA_ADMIN = "628xxxxxxxxxxx"; // Ganti dengan nomor WhatsApp lu yang pakai angka (contoh: 628123456789)
-
-        const formatRupiah = (angka) => {
-            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
-        }
-
-        function bukaCheckout(produk, harga) {
-            document.getElementById('checkoutModal').classList.remove('hidden');
-            setTimeout(() => {
-                document.getElementById('modalContent').classList.remove('translate-y-full');
-            }, 10);
-            
-            document.getElementById('namaProduk').value = produk;
-            document.getElementById('hargaProduk').value = harga;
-            document.getElementById('labelTotal').innerText = formatRupiah(harga);
-        }
-
-        function tutupCheckout() {
-            document.getElementById('modalContent').classList.add('translate-y-full');
-            setTimeout(() => {
-                document.getElementById('checkoutModal').classList.add('hidden');
-                document.getElementById('formPesanan').reset();
-            }, 300);
-        }
-
-        function prosesPembelian(event) {
-            event.preventDefault();
-
-            const produk = document.getElementById('namaProduk').value;
-            const harga = document.getElementById('hargaProduk').value;
-            const nama = document.getElementById('namaPembeli').value;
-            const metode = document.getElementById('metodeBayar').value;
-            
-            const invId = "INV-" + Math.floor(Math.random() * 1000000);
-
-            const pesanWA = `Halo Admin Pediaboy, saya ingin melakukan pemesanan:
-
-Invoice: ${invId}
-
-Data Pembeli:
-- Nama: ${nama}
-
-Detail Pesanan:
-- Produk: ${produk}
-- Total: ${formatRupiah(harga)}
-- Metode Pembayaran: ${metode}
-
-Mohon instruksi pembayaran selanjutnya.`;
-
-            const urlWA = `https://api.whatsapp.com/send?phone=${NOMOR_WA_ADMIN}&text=${encodeURIComponent(pesanWA)}`;
-            
-            window.open(urlWA, '_blank');
-            tutupCheckout();
-        }
-    </script>
 </body>
 </html>
+```eof
